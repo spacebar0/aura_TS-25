@@ -31,7 +31,7 @@ export default function RootLayout({
         <ParallaxBackground />
         <div className="relative z-10 flex flex-col h-full">
           <Header />
-          <main className="flex-1 overflow-y-auto pb-24">{children}</main>
+          <main className="flex-1 overflow-y-auto pb-24 flex">{children}</main>
           <Dock />
         </div>
         <Toaster />

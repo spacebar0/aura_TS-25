@@ -1,10 +1,14 @@
-import Image from 'next/image';
+'use client';
+
+import { useRef, useEffect, useCallback } from 'react';
 import { GameCard } from '@/components/aura/GameCard';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  type CarouselApi,
 } from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
 import { games } from '@/lib/mock-data';
 import { MusicCard } from '@/components/aura/MusicCard';
 import { LibraryCard } from '@/components/aura/LibraryCard';
@@ -17,15 +21,61 @@ export default function HomePage() {
     { type: 'library', id: 'library-card' },
   ];
 
+  const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true }));
+  const inactivityTimer = useRef<NodeJS.Timeout>();
+  const [api, setApi] = React.useState<CarouselApi>()
+
+  const startAutoplay = useCallback(() => {
+    plugin.current.play();
+  }, []);
+
+  const resetInactivityTimer = useCallback(() => {
+    if (inactivityTimer.current) {
+      clearTimeout(inactivityTimer.current);
+    }
+    plugin.current.stop();
+    inactivityTimer.current = setTimeout(startAutoplay, 180000); // 3 minutes
+  }, [startAutoplay]);
+
+  useEffect(() => {
+    if (!api) {
+      return
+    }
+
+    resetInactivityTimer();
+
+    window.addEventListener('mousemove', resetInactivityTimer);
+    window.addEventListener('keydown', resetInactivityTimer);
+    window.addEventListener('scroll', resetInactivityTimer);
+    window.addEventListener('click', resetInactivityTimer);
+
+    api.on('pointerDown', resetInactivityTimer)
+    
+    return () => {
+      if (inactivityTimer.current) {
+        clearTimeout(inactivityTimer.current);
+      }
+      window.removeEventListener('mousemove', resetInactivityTimer);
+      window.removeEventListener('keydown', resetInactivityTimer);
+      window.removeEventListener('scroll', resetInactivityTimer);
+      window.removeEventListener('click', resetInactivityTimer);
+    };
+  }, [api, resetInactivityTimer]);
+
+
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center justify-center h-full animate-in fade-in duration-500">
-      <Clock />
+    <div className="w-full h-full flex flex-col items-center justify-center animate-in fade-in duration-500">
+      <div className="py-8 text-center">
+        <Clock />
+      </div>
       <Carousel
+        setApi={setApi}
+        plugins={[plugin.current]}
         opts={{
           align: 'center',
           loop: true,
         }}
-        className="w-full max-w-5xl"
+        className="w-full"
       >
         <CarouselContent className="-ml-4">
           {allItems.map((item, index) => (
