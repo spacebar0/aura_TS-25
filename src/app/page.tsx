@@ -14,16 +14,7 @@ import { Play } from 'lucide-react';
 export default function HomePage() {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500">
-      <header className="mb-12">
-        <h1 className="text-5xl font-headline font-bold text-glow">
-          Welcome to AURA
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          Your next-generation gaming experience begins now.
-        </p>
-      </header>
-
-      <section className="mb-16">
+      <section className="my-12">
         <h2 className="text-3xl font-headline mb-6">Featured</h2>
         <Carousel
           opts={{
