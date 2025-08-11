@@ -94,7 +94,7 @@
   }
 
   .text-reflect {
-    -webkit-box-reflect: below -5px linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.05));
+    -webkit-box-reflect: below -5px linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.02));
   }
 }
 
