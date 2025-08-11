@@ -4,8 +4,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from '@/components/ui/carousel';
 import { games } from '@/lib/mock-data';
 import { MusicCard } from '@/components/aura/MusicCard';
@@ -43,8 +41,6 @@ export default function HomePage() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden md:flex" />
-        <CarouselNext className="hidden md:flex" />
       </Carousel>
     </div>
   );
