@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import { GameCard } from '@/components/aura/GameCard';
 import {
   Carousel,
@@ -23,7 +23,7 @@ export default function HomePage() {
 
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true }));
   const inactivityTimer = useRef<NodeJS.Timeout>();
-  const [api, setApi] = React.useState<CarouselApi>()
+  const [api, setApi] = useState<CarouselApi>()
 
   const startAutoplay = useCallback(() => {
     plugin.current.play();
