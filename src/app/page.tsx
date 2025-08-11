@@ -10,6 +10,7 @@ import {
 import { games } from '@/lib/mock-data';
 import { MusicCard } from '@/components/aura/MusicCard';
 import { LibraryCard } from '@/components/aura/LibraryCard';
+import { Clock } from '@/components/aura/Clock';
 
 export default function HomePage() {
   const allItems = [
@@ -21,9 +22,7 @@ export default function HomePage() {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center justify-center h-full animate-in fade-in duration-500">
       <h1 className="text-5xl font-headline font-bold text-glow mb-2">AURA</h1>
-      <p className="text-muted-foreground mb-12">
-        Your portal to new worlds.
-      </p>
+      <Clock />
       <Carousel
         opts={{
           align: 'center',
