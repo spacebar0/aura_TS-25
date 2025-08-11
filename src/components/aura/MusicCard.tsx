@@ -8,7 +8,7 @@ export function MusicCard({ className }: { className?: string }) {
   return (
     <Card
       className={cn(
-        'group relative aspect-[3/4] w-60 overflow-hidden rounded-lg transition-all duration-300 ease-in-out',
+        'group relative aspect-square w-full h-full overflow-hidden rounded-lg transition-all duration-300 ease-in-out',
         'flex flex-col items-center justify-center bg-accent/20 border-accent/50',
         'hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 focus-within:scale-105 focus-within:shadow-2xl focus-within:shadow-accent/40',
         className

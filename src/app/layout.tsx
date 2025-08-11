@@ -3,7 +3,6 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { Dock } from '@/components/aura/Dock';
-import ParallaxBackground from '@/components/aura/ParallaxBackground';
 import { Header } from '@/components/aura/Header';
 
 export const metadata: Metadata = {
@@ -28,7 +27,6 @@ export default function RootLayout({
           'h-full font-body antialiased bg-background text-foreground overflow-hidden'
         )}
       >
-        <ParallaxBackground />
         <div className="relative z-10 flex flex-col h-full">
           <Header />
           <main className="flex-1 overflow-y-auto pb-24 flex">{children}</main>
