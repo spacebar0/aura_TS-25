@@ -63,12 +63,22 @@ export function Clock() {
   }, [isClient]);
 
   if (!isClient) {
-    return <div className="h-6 mb-12"></div>;
+    return (
+      <>
+        <div className="h-12 mb-2"></div>
+        <div className="h-6 mb-12"></div>
+      </>
+    );
   }
 
   return (
-    <p className="text-muted-foreground mb-12">
-      {greeting} &bull; {time} (IST)
-    </p>
+    <>
+       <h1 className="text-5xl font-headline font-bold mb-2 relative">
+          <span className="sparkle-text">{greeting}</span>
+        </h1>
+      <p className="text-muted-foreground mb-12">
+        {time} (IST)
+      </p>
+    </>
   );
 }
