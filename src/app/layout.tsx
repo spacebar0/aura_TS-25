@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { Dock } from '@/components/aura/Dock';
 import ParallaxBackground from '@/components/aura/ParallaxBackground';
+import { Header } from '@/components/aura/Header';
 
 export const metadata: Metadata = {
   title: 'AURA Console UI',
@@ -29,6 +30,7 @@ export default function RootLayout({
       >
         <ParallaxBackground />
         <div className="relative z-10 flex flex-col h-full">
+          <Header />
           <main className="flex-1 overflow-y-auto pb-24">{children}</main>
           <Dock />
         </div>
