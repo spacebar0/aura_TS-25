@@ -1,3 +1,4 @@
+// src/components/aura/Clock.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -25,35 +26,19 @@ export function Clock() {
     };
     
     const updateClock = () => {
-      try {
-        const now = new Date();
-        const timeString = now.toLocaleTimeString('en-US', {
-          timeZone: 'Asia/Kolkata',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true,
-        });
+      const now = new Date();
+      // To ensure consistency, we'll use a specific time zone for display if possible,
+      // but calculate the greeting based on the user's local time.
+      const timeString = now.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+      });
 
-        const hourString = now.toLocaleTimeString('en-US', {
-            timeZone: 'Asia/Kolkata',
-            hour: '2-digit',
-            hour12: false
-        })
-        const currentHour = parseInt(hourString, 10);
-        
-        setTime(timeString);
-        setGreeting(getGreeting(currentHour));
-      } catch (error) {
-        // Timezone not supported, fallback to local time
-        const now = new Date();
-        const timeString = now.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true,
-        });
-        setTime(timeString);
-        setGreeting(getGreeting(now.getHours()));
-      }
+      const currentHour = now.getHours();
+      
+      setTime(timeString);
+      setGreeting(getGreeting(currentHour));
     };
 
     updateClock();
@@ -77,7 +62,7 @@ export function Clock() {
           <span className="sparkle-text">{greeting}</span>
         </h1>
       <p className="text-muted-foreground mb-12">
-        {time} (IST)
+        {time}
       </p>
     </>
   );

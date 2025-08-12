@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useCallback, useState } from 'react';
+import { useRef, useEffect, useCallback, useState, useMemo } from 'react';
 import { GameCard } from '@/components/aura/GameCard';
 import {
   Carousel,
@@ -9,7 +9,7 @@ import {
   type CarouselApi,
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import { Game, games, userProfile } from '@/lib/mock-data';
+import { Game, games } from '@/lib/mock-data';
 import { MusicCard } from '@/components/aura/MusicCard';
 import { LibraryCard } from '@/components/aura/LibraryCard';
 import { Clock } from '@/components/aura/Clock';
@@ -20,17 +20,23 @@ import ParallaxBackground from '@/components/aura/ParallaxBackground';
 type CarouselItemType = (Game & { type: 'game' }) | { type: 'music', id: string } | { type: 'library', id: string };
 
 export default function HomePage() {
-  const allItems: CarouselItemType[] = [
+  const allItems: CarouselItemType[] = useMemo(() => [
     { type: 'music', id: 'music-card' },
     ...games.map((g) => ({ ...g, type: 'game' as const })),
     { type: 'library', id: 'library-card' },
-  ];
+  ], []);
 
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true }));
   const inactivityTimer = useRef<NodeJS.Timeout>();
   const [api, setApi] = useState<CarouselApi>()
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [backgroundUrl, setBackgroundUrl] = useState<string | null>(null);
+  const [friendsPlaying, setFriendsPlaying] = useState(0);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const startAutoplay = useCallback(() => {
     plugin.current.play();
@@ -81,10 +87,13 @@ export default function HomePage() {
     const currentItem = allItems[selectedIndex];
     if (currentItem?.type === 'game') {
       setBackgroundUrl(currentItem.cover);
+       if (isClient) {
+        setFriendsPlaying(Math.floor(Math.random() * 10));
+      }
     } else {
       setBackgroundUrl(null);
     }
-  }, [selectedIndex, allItems]);
+  }, [selectedIndex, allItems, isClient]);
 
   const selectedGame = allItems[selectedIndex]?.type === 'game' ? allItems[selectedIndex] as Game : null;
   
@@ -105,7 +114,7 @@ export default function HomePage() {
           className="w-full"
         >
           <CarouselContent className="-ml-4">
-            {allItems.map((item) => (
+            {allItems.map((item, index) => (
               <CarouselItem
                 key={item.id}
                 className="pl-4 basis-[40%] sm:basis-[30%] md:basis-1/4 lg:basis-1/5"
@@ -121,7 +130,7 @@ export default function HomePage() {
         </Carousel>
 
         <AnimatePresence>
-          {selectedGame && (
+          {selectedGame && isClient && (
             <motion.div
               key={selectedGame.id}
               initial={{ opacity: 0, y: 20 }}
@@ -140,7 +149,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Users className="w-4 h-4" />
-                  <span>{Math.floor(Math.random() * 10)} friends playing</span>
+                  <span>{friendsPlaying} friends playing</span>
                 </div>
               </div>
             </motion.div>
