@@ -48,8 +48,8 @@ export function Clock() {
     // Render a placeholder on the server and during the initial client render
     return (
       <div className="text-center">
-        <div className="h-12 mb-2 bg-muted/20 rounded-md w-72 mx-auto"></div>
-        <div className="h-6 bg-muted/20 rounded-md w-24 mx-auto"></div>
+        <div className="h-12 mb-2 bg-muted/20 rounded-md w-72 mx-auto animate-pulse"></div>
+        <div className="h-6 bg-muted/20 rounded-md w-24 mx-auto animate-pulse"></div>
       </div>
     );
   }

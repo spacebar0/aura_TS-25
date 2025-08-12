@@ -98,7 +98,15 @@ export default function HomePage() {
   const selectedGame = allItems[selectedIndex]?.type === 'game' ? allItems[selectedIndex] as Game : null;
   
   if (!isClient) {
-    return null; // or a loading skeleton
+    // Render a skeleton or loading state on the server
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center relative">
+        <div className="py-8 text-center">
+          <div className="h-12 mb-2 bg-muted/20 rounded-md w-72 mx-auto animate-pulse"></div>
+          <div className="h-6 bg-muted/20 rounded-md w-24 mx-auto animate-pulse"></div>
+        </div>
+      </div>
+    );
   }
 
   return (

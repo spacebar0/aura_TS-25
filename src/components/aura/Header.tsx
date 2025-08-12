@@ -1,3 +1,4 @@
+// src/components/aura/Header.tsx
 'use client';
 
 import Link from 'next/link';
@@ -16,23 +17,19 @@ export function Header() {
     setActiveFriends(Math.floor(Math.random() * 20));
   }, []);
 
-  if (!isClient) {
-    return (
-      <header className="fixed top-0 left-0 right-0 z-40 p-4">
-        <div className="container mx-auto flex justify-end items-center h-[40px]" />
-      </header>
-    );
-  }
-
   return (
     <header className="fixed top-0 left-0 right-0 z-40 p-4">
       <div className="container mx-auto flex justify-end items-center">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" className="relative">
-            <Users className="h-6 w-6 text-white" />
-            <span className="ml-2 text-white font-bold">{activeFriends}</span>
-            <div className="absolute top-1 right-1 h-2 w-2 rounded-full bg-green-500 ring-2 ring-background" />
-          </Button>
+          {isClient ? (
+            <Button variant="ghost" className="relative">
+              <Users className="h-6 w-6 text-white" />
+              <span className="ml-2 text-white font-bold">{activeFriends}</span>
+              <div className="absolute top-1 right-1 h-2 w-2 rounded-full bg-green-500 ring-2 ring-background" />
+            </Button>
+          ) : (
+             <div className="h-10 w-20 bg-muted/20 rounded-md" />
+          )}
           <Link href="/profile">
             <Image
               src={userProfile.avatar}
