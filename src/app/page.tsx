@@ -130,7 +130,7 @@ export default function HomePage() {
               transition={{ duration: 0.5, ease: 'easeInOut' }}
               className="fixed bottom-24 left-8 z-20 p-4 rounded-lg glass-pane"
             >
-              <h3 className="font-headline text-2xl font-bold text-white text-glow">
+              <h3 className="font-headline text-2xl font-medium text-white text-glow">
                 {selectedGame.title}
               </h3>
               <div className="mt-2 space-y-2 text-sm text-white/80">

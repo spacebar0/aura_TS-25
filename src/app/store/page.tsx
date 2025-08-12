@@ -8,7 +8,7 @@ export default function StorePage() {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500">
       <header className="mb-8">
-        <h1 className="text-5xl font-headline font-bold text-glow">Store</h1>
+        <h1 className="text-5xl font-headline font-medium text-glow">Store</h1>
         <p className="text-muted-foreground mt-2">
           Discover your next favorite game.
         </p>

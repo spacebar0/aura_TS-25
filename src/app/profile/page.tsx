@@ -17,7 +17,7 @@ export default function ProfilePage() {
           data-ai-hint="futuristic avatar"
         />
         <div>
-          <h1 className="text-5xl font-headline font-bold text-glow">
+          <h1 className="text-5xl font-headline font-medium text-glow">
             {userProfile.name}
           </h1>
           <p className="text-muted-foreground mt-2">
