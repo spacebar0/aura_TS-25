@@ -82,13 +82,13 @@
     width: 120%;
     height: 140%;
     background-image:
-      radial-gradient(circle at 15% 20%, hsl(var(--secondary) / 0.5), transparent 10px),
-      radial-gradient(circle at 85% 30%, hsl(var(--primary) / 0.4), transparent 10px),
-      radial-gradient(circle at 40% 80%, hsl(var(--secondary) / 0.5), transparent 10px),
-      radial-gradient(circle at 90% 90%, hsl(var(--primary) / 0.3), transparent 10px);
+      radial-gradient(circle at 15% 20%, hsl(var(--secondary) / 0.6), transparent 10px),
+      radial-gradient(circle at 85% 30%, hsl(var(--primary) / 0.5), transparent 10px),
+      radial-gradient(circle at 40% 80%, hsl(var(--secondary) / 0.6), transparent 10px),
+      radial-gradient(circle at 90% 90%, hsl(var(--primary) / 0.4), transparent 10px);
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    animation: sparkle 15s linear infinite;
+    animation: sparkle 12s linear infinite;
     pointer-events: none;
     z-index: -1;
   }
@@ -99,9 +99,9 @@
 }
 
 @keyframes sparkle {
-  0% { transform: rotate(0deg); opacity: 0.3; }
-  25% { transform: rotate(5deg) scale(1.05); opacity: 0.6; }
-  50% { transform: rotate(-5deg) scale(1); opacity: 0.4; }
-  75% { transform: rotate(5deg) scale(1.05); opacity: 0.6; }
-  100% { transform: rotate(0deg); opacity: 0.3; }
+  0% { transform: rotate(0deg) scale(1); opacity: 0.5; }
+  25% { transform: rotate(10deg) scale(1.1); opacity: 0.8; }
+  50% { transform: rotate(-10deg) scale(1); opacity: 0.6; }
+  75% { transform: rotate(10deg) scale(1.1); opacity: 0.8; }
+  100% { transform: rotate(0deg) scale(1); opacity: 0.5; }
 }
