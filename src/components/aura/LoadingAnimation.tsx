@@ -36,7 +36,7 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     exit: {
       opacity: 0,
       scaleY: 20,
-      transition: { duration: 1.5, ease: [0.6, 0.01, 0.05, 0.95] }
+      transition: { duration: 1.5, ease: [0.6, 0.01, -0.05, 0.95] }
     }
   };
 
