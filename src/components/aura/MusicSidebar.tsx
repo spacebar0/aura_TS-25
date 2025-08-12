@@ -29,7 +29,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { ScrollArea } from '../ui/scroll-area';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Progress } from '../ui/progress';
 
 interface MusicSidebarProps {
@@ -38,12 +38,36 @@ interface MusicSidebarProps {
 }
 
 export function MusicSidebar({ isOpen, onOpenChange }: MusicSidebarProps) {
-  const [nowPlaying, setNowPlaying] = useState<Song | null>(recentlyPlayed[0]);
+  const [nowPlaying, setNowPlaying] = useState<Song | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const [progress, setProgress] = useState(33);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (isClient && !nowPlaying) {
+        setNowPlaying(recentlyPlayed[0]);
+    }
+  }, [isClient, nowPlaying]);
+
+   useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isPlaying && nowPlaying) {
+      interval = setInterval(() => {
+        setProgress((prev) => (prev >= 100 ? 0 : prev + 1));
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, nowPlaying]);
+
 
   const handlePlaySong = (song: Song) => {
     setNowPlaying(song);
     setIsPlaying(true);
+    setProgress(0);
   };
   
   const togglePlay = () => {
@@ -107,7 +131,7 @@ export function MusicSidebar({ isOpen, onOpenChange }: MusicSidebarProps) {
                     </div>
                 </div>
                 <div className='mt-2'>
-                    <Progress value={33} className="h-1" />
+                    <Progress value={progress} className="h-1" />
                     <div className="flex justify-between text-xs text-muted-foreground mt-1">
                         <span>1:10</span>
                         <span>{nowPlaying.duration}</span>
@@ -145,7 +169,7 @@ function SongItem({ song, onPlay, isPlaying }: { song: Song, onPlay: (song: Song
           <p className="text-sm text-muted-foreground truncate">{song.artist}</p>
         </div>
         <Button variant="ghost" size="icon" onClick={() => onPlay(song)}>
-            <PlayCircle className={cn("w-6 h-6", isPlaying && 'text-primary')} />
+            {isPlaying ? <PauseCircle className="w-6 h-6 text-primary" /> : <PlayCircle className={cn("w-6 h-6")} />}
         </Button>
       </div>
     );
