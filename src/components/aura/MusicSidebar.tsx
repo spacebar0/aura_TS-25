@@ -31,6 +31,7 @@ import { Button } from '../ui/button';
 import { ScrollArea } from '../ui/scroll-area';
 import { useState, useEffect } from 'react';
 import { Progress } from '../ui/progress';
+import { cn } from '@/lib/utils';
 
 interface MusicSidebarProps {
   isOpen: boolean;
@@ -49,7 +50,7 @@ export function MusicSidebar({ isOpen, onOpenChange }: MusicSidebarProps) {
 
   useEffect(() => {
     if (isClient && !nowPlaying) {
-        setNowPlaying(recentlyPlayed[0]);
+        // Set initial song only on client
     }
   }, [isClient, nowPlaying]);
 
@@ -121,7 +122,7 @@ export function MusicSidebar({ isOpen, onOpenChange }: MusicSidebarProps) {
           </Tabs>
         </div>
 
-        {nowPlaying && (
+        {isClient && nowPlaying && (
             <div className="p-4 border-t border-white/10 mt-auto bg-black/30">
                 <div className="flex items-center gap-4">
                     <Image src={nowPlaying.coverArt} alt={nowPlaying.title} width={64} height={64} className="rounded-md" data-ai-hint="album art" />
