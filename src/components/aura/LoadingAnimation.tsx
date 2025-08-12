@@ -25,12 +25,12 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
 
   const hcetVariants = {
     hidden: { opacity: 0, scaleY: 0 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       scaleY: 1,
-      transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] } 
+      transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] }
     },
-    exit: { 
+    exit: {
       opacity: 0,
       scaleY: 20,
       transition: { duration: 1.5, ease: [0.6, 0.04, 0.98, 0.34] }
@@ -78,7 +78,7 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
 
 
   return (
-     <motion.div 
+     <motion.div
       key="loading-screen"
       variants={containerVariants}
       initial="hidden"
@@ -87,7 +87,7 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
       className="w-full h-full flex items-center justify-center bg-background overflow-hidden fixed inset-0 z-50"
     >
        <AnimatePresence>
-        {(stage >= 1) && (
+        {stage >= 1 && (
           <motion.div
             key="particles"
             variants={particleContainerVariants}
