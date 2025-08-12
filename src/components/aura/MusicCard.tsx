@@ -18,6 +18,7 @@ export function MusicCard({ className }: { className?: string }) {
 
   const handleConnect = (service: MusicService) => {
     setConnectedService(service);
+    setIsDialogOpen(false); // Close dialog on connect
   };
 
   const handleCardClick = () => {
@@ -64,7 +65,7 @@ export function MusicCard({ className }: { className?: string }) {
                   setIsDialogOpen(true);
                 }}
               >
-                <ListMusic className="mr-2" />
+                <ListMusic className="mr-2 h-4 w-4" />
                 Connect
               </Button>
             </>
@@ -76,7 +77,7 @@ export function MusicCard({ className }: { className?: string }) {
         onOpenChange={setIsDialogOpen}
         onConnect={handleConnect}
       />
-      {connectedService && <MusicSidebar isOpen={isSidebarOpen} onOpenChange={setIsSidebarOpen} />}
+      <MusicSidebar isOpen={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
     </>
   );
 }
