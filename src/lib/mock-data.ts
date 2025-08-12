@@ -14,7 +14,7 @@ export const featuredGames: Game[] = [
     id: 1,
     title: 'Cyber Runner 2099',
     description: 'Race through neon-drenched cityscapes.',
-    cover: 'https://placehold.co/300x400.png',
+    cover: '/images/Untitled-1.png',
     genre: 'Racing',
     rating: 4.8,
     lastPlayed: '2 hours ago',
