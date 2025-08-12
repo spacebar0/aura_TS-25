@@ -4,19 +4,22 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete: () => void }) {
-  const [stage, setStage] = useState(0);
+  const [showText, setShowText] = useState(false);
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setStage(1), 500), // Start HCET animation
-      setTimeout(() => setStage(2), 3000), // Fade out everything
-      setTimeout(onAnimationComplete, 4000), // Complete
-    ];
-    return () => timers.forEach(clearTimeout);
+    const showTimer = setTimeout(() => setShowText(true), 500);
+    const hideTimer = setTimeout(() => setShowText(false), 3000);
+    const completeTimer = setTimeout(onAnimationComplete, 4000);
+
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+      clearTimeout(completeTimer);
+    };
   }, [onAnimationComplete]);
 
   const containerVariants = {
-    hidden: { opacity: 1 },
+    initial: { opacity: 1 },
     exit: {
       opacity: 0,
       transition: { duration: 1, ease: 'easeInOut' }
@@ -33,17 +36,20 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     exit: {
       opacity: 0,
       scaleY: 20,
-      transition: { duration: 1.5, ease: [0.6, 0.04, 0.98, 0.34] }
+      transition: { duration: 1.5, ease: [0.6, 0.01, 0.05, 0.95] }
     }
   };
 
   const particleContainerVariants = {
-    visible: {
+    initial: { opacity: 0 },
+    animate: { 
+      opacity: 1,
       transition: {
         staggerChildren: 0.02,
       },
     },
-     exit: {
+    exit: { 
+      opacity: 0,
       transition: {
         staggerChildren: 0.01,
       },
@@ -51,12 +57,12 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
   };
 
   const particleVariants = {
-    hidden: { opacity: 0, scale: 0 },
-    visible: (i: number) => ({
+    initial: { opacity: 0, scale: 0 },
+    animate: (i: number) => ({
       opacity: Math.random() * 0.5 + 0.2,
       scale: Math.random() * 0.8 + 0.2,
-      x: (Math.random() - 0.5) * window.innerWidth * 1.5,
-      y: (Math.random() - 0.5) * window.innerHeight * 1.5,
+      x: (Math.random() - 0.5) * (typeof window !== 'undefined' ? window.innerWidth * 1.5 : 0),
+      y: (Math.random() - 0.5) * (typeof window !== 'undefined' ? window.innerHeight * 1.5 : 0),
       transition: {
         duration: Math.random() * 8 + 8,
         ease: 'linear',
@@ -65,7 +71,7 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
         repeatType: 'mirror',
       },
     }),
-     exit: {
+    exit: {
       opacity: 0,
       scale: 0,
       filter: 'blur(10px)',
@@ -76,58 +82,55 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     }
   };
 
-
   return (
-     <motion.div
+    <motion.div
       key="loading-screen"
       variants={containerVariants}
-      initial="hidden"
-      animate="visible"
+      initial="initial"
+      animate="animate"
       exit="exit"
       className="w-full h-full flex items-center justify-center bg-background overflow-hidden fixed inset-0 z-50"
     >
-       <AnimatePresence>
-        {stage >= 1 && (
-          <motion.div
-            key="particles"
-            variants={particleContainerVariants}
-            initial="hidden"
-            animate="visible"
-            exit={stage === 2 ? "exit" : "hidden"}
-            className="absolute inset-0 z-0"
-          >
-            {[...Array(100)].map((_, i) => (
-              <motion.div
-                key={i}
-                custom={i}
-                variants={particleVariants}
-                className="absolute rounded-full bg-primary/50"
-                style={{
-                  width: `${Math.random() * 15 + 5}px`,
-                  height: `${Math.random() * 15 + 5}px`,
-                  top: '50%',
-                  left: '50%',
-                }}
-              />
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <AnimatePresence>
-        {stage === 1 && (
-          <motion.div
-            key="hcet"
-            variants={hcetVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="font-extralight text-8xl md:text-9xl tracking-widest text-center text-foreground/80 leading-none z-10"
-            style={{ fontFamily: "'Inter', sans-serif", fontWeight: 100 }}
-          >
-            <div>HCET</div>
-            <div className="text-reflect-vertical">TECH</div>
-          </motion.div>
+        {showText && (
+          <>
+            <motion.div
+              key="particles"
+              variants={particleContainerVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="absolute inset-0 z-0"
+            >
+              {[...Array(100)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  custom={i}
+                  variants={particleVariants}
+                  className="absolute rounded-full bg-primary/50"
+                  style={{
+                    width: `${Math.random() * 15 + 5}px`,
+                    height: `${Math.random() * 15 + 5}px`,
+                    top: '50%',
+                    left: '50%',
+                  }}
+                />
+              ))}
+            </motion.div>
+
+            <motion.div
+              key="hcet"
+              variants={hcetVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="font-extralight text-8xl md:text-9xl tracking-widest text-center text-foreground/80 leading-none z-10"
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 100 }}
+            >
+              <div>HCET</div>
+              <div className="text-reflect-vertical">TECH</div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.div>
