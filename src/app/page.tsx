@@ -40,6 +40,12 @@ export default function HomePage() {
 
   useEffect(() => {
     setIsClient(true);
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 6000); // 6 seconds
+
+    return () => clearTimeout(timer);
   }, []);
 
   const startAutoplay = useCallback(() => {

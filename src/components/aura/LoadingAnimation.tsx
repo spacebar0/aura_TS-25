@@ -12,9 +12,9 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     setShowParticles(true);
     const completeTimer = setTimeout(() => {
       setIsAnimating(false);
-    }, 3000);
+    }, 5000); // Start fade-out at 5 seconds
 
-    const unmountTimer = setTimeout(onAnimationComplete, 4000);
+    const unmountTimer = setTimeout(onAnimationComplete, 6000); // Unmount at 6 seconds
 
     return () => {
       clearTimeout(completeTimer);
