@@ -97,6 +97,10 @@ export default function HomePage() {
 
   const selectedGame = allItems[selectedIndex]?.type === 'game' ? allItems[selectedIndex] as Game : null;
   
+  if (!isClient) {
+    return null; // or a loading skeleton
+  }
+
   return (
     <>
       <ParallaxBackground backgroundUrl={backgroundUrl} />
@@ -130,7 +134,7 @@ export default function HomePage() {
         </Carousel>
 
         <AnimatePresence>
-          {selectedGame && isClient && (
+          {selectedGame && (
             <motion.div
               key={selectedGame.id}
               initial={{ opacity: 0, y: 20 }}

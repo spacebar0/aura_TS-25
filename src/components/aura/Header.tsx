@@ -9,11 +9,20 @@ import { useState, useEffect } from 'react';
 
 export function Header() {
   const [activeFriends, setActiveFriends] = useState(0);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // Mock active friends count
+    setIsClient(true);
     setActiveFriends(Math.floor(Math.random() * 20));
   }, []);
+
+  if (!isClient) {
+    return (
+      <header className="fixed top-0 left-0 right-0 z-40 p-4">
+        <div className="container mx-auto flex justify-end items-center h-[40px]" />
+      </header>
+    );
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 p-4">

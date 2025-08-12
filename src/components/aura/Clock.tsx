@@ -1,4 +1,3 @@
-// src/components/aura/Clock.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -27,8 +26,6 @@ export function Clock() {
     
     const updateClock = () => {
       const now = new Date();
-      // To ensure consistency, we'll use a specific time zone for display if possible,
-      // but calculate the greeting based on the user's local time.
       const timeString = now.toLocaleTimeString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
@@ -48,22 +45,23 @@ export function Clock() {
   }, [isClient]);
 
   if (!isClient) {
+    // Render a placeholder on the server and during the initial client render
     return (
-      <>
-        <div className="h-12 mb-2"></div>
-        <div className="h-6 mb-12"></div>
-      </>
+      <div className="text-center">
+        <div className="h-12 mb-2 bg-muted/20 rounded-md w-72 mx-auto"></div>
+        <div className="h-6 bg-muted/20 rounded-md w-24 mx-auto"></div>
+      </div>
     );
   }
 
   return (
-    <>
+    <div className="text-center">
        <h1 className="text-5xl font-headline font-normal mb-2 relative text-reflect">
           <span className="sparkle-text">{greeting}</span>
         </h1>
-      <p className="text-muted-foreground mb-12">
+      <p className="text-muted-foreground">
         {time}
       </p>
-    </>
+    </div>
   );
 }
