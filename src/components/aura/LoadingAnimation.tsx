@@ -2,24 +2,25 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete: () => void }) {
-  const [showText, setShowText] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(true);
 
   useEffect(() => {
-    const showTimer = setTimeout(() => setShowText(true), 500);
-    const hideTimer = setTimeout(() => setShowText(false), 3000);
-    const completeTimer = setTimeout(onAnimationComplete, 4000);
+    const completeTimer = setTimeout(() => {
+        setIsAnimating(false);
+    }, 3000); 
+
+    const unmountTimer = setTimeout(onAnimationComplete, 4000);
 
     return () => {
-      clearTimeout(showTimer);
-      clearTimeout(hideTimer);
       clearTimeout(completeTimer);
+      clearTimeout(unmountTimer);
     };
   }, [onAnimationComplete]);
 
   const containerVariants = {
-    initial: { opacity: 1 },
     exit: {
       opacity: 0,
       transition: { duration: 1, ease: 'easeInOut' }
@@ -61,8 +62,8 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     animate: (i: number) => ({
       opacity: Math.random() * 0.5 + 0.2,
       scale: Math.random() * 0.8 + 0.2,
-      x: (Math.random() - 0.5) * (typeof window !== 'undefined' ? window.innerWidth * 1.5 : 0),
-      y: (Math.random() - 0.5) * (typeof window !== 'undefined' ? window.innerHeight * 1.5 : 0),
+      x: `${(Math.random() - 0.5) * 150}vw`,
+      y: `${(Math.random() - 0.5) * 150}vh`,
       transition: {
         duration: Math.random() * 8 + 8,
         ease: 'linear',
@@ -91,48 +92,48 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
       exit="exit"
       className="w-full h-full flex items-center justify-center bg-background overflow-hidden fixed inset-0 z-50"
     >
-      <AnimatePresence>
-        {showText && (
-          <>
-            <motion.div
-              key="particles"
-              variants={particleContainerVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className="absolute inset-0 z-0"
-            >
-              {[...Array(100)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  custom={i}
-                  variants={particleVariants}
-                  className="absolute rounded-full bg-primary/50"
-                  style={{
-                    width: `${Math.random() * 15 + 5}px`,
-                    height: `${Math.random() * 15 + 5}px`,
-                    top: '50%',
-                    left: '50%',
-                  }}
-                />
-              ))}
-            </motion.div>
-
-            <motion.div
-              key="hcet"
-              variants={hcetVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="font-extralight text-8xl md:text-9xl tracking-widest text-center text-foreground/80 leading-none z-10"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 100 }}
-            >
-              <div>HCET</div>
-              <div className="text-reflect-vertical">TECH</div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+        <AnimatePresence>
+            {isAnimating && (
+                 <>
+                    <motion.div
+                      key="particles"
+                      variants={particleContainerVariants}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      className="absolute inset-0 z-0"
+                    >
+                      {[...Array(100)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          custom={i}
+                          variants={particleVariants}
+                          className="absolute rounded-full bg-primary/50"
+                          style={{
+                            width: `${Math.random() * 15 + 5}px`,
+                            height: `${Math.random() * 15 + 5}px`,
+                            top: '50%',
+                            left: '50%',
+                          }}
+                        />
+                      ))}
+                    </motion.div>
+        
+                    <motion.div
+                      key="hcet"
+                      variants={hcetVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      className="font-extralight text-8xl md:text-9xl tracking-widest text-center text-foreground/80 leading-none z-10"
+                      style={{ fontFamily: "'Inter', sans-serif", fontWeight: 100 }}
+                    >
+                      <div>HCET</div>
+                      <div className="text-reflect-vertical">TECH</div>
+                    </motion.div>
+                  </>
+            )}
+        </AnimatePresence>
     </motion.div>
   );
 }
