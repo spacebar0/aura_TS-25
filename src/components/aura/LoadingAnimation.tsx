@@ -2,7 +2,6 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
 
 export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete: () => void }) {
   const [isAnimating, setIsAnimating] = useState(true);
@@ -46,12 +45,14 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     animate: { 
       opacity: 1,
       transition: {
+        duration: 0.5,
         staggerChildren: 0.02,
       },
     },
     exit: { 
       opacity: 0,
       transition: {
+        duration: 0.5,
         staggerChildren: 0.01,
       },
     }
@@ -65,22 +66,13 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
       x: `${(Math.random() - 0.5) * 150}vw`,
       y: `${(Math.random() - 0.5) * 150}vh`,
       transition: {
-        duration: Math.random() * 8 + 8,
+        duration: Math.random() * 2 + 1, // Shortened duration
         ease: 'linear',
         delay: i * 0.01,
         repeat: Infinity,
         repeatType: 'mirror',
       },
     }),
-    exit: {
-      opacity: 0,
-      scale: 0,
-      filter: 'blur(10px)',
-      transition: {
-        duration: 0.5,
-        ease: 'easeOut'
-      }
-    }
   };
 
   return (
