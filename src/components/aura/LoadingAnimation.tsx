@@ -5,8 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete: () => void }) {
   const [isAnimating, setIsAnimating] = useState(true);
+  const [showParticles, setShowParticles] = useState(false);
 
   useEffect(() => {
+    setShowParticles(true);
     const completeTimer = setTimeout(() => {
         setIsAnimating(false);
     }, 3000); 
@@ -36,7 +38,7 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     exit: {
       opacity: 0,
       scaleY: 20,
-      transition: { duration: 1.5, ease: [0.6, 0.01, -0.05, 0.95] }
+      transition: { duration: 1.5, ease: [0.6, 0.01, 0.05, 0.95] }
     }
   };
 
@@ -66,7 +68,7 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
       x: `${(Math.random() - 0.5) * 150}vw`,
       y: `${(Math.random() - 0.5) * 150}vh`,
       transition: {
-        duration: Math.random() * 2 + 1, // Shortened duration
+        duration: Math.random() * 2 + 1,
         ease: 'linear',
         delay: i * 0.01,
         repeat: Infinity,
@@ -87,29 +89,31 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
         <AnimatePresence>
             {isAnimating && (
                  <>
-                    <motion.div
-                      key="particles"
-                      variants={particleContainerVariants}
-                      initial="initial"
-                      animate="animate"
-                      exit="exit"
-                      className="absolute inset-0 z-0"
-                    >
-                      {[...Array(100)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          custom={i}
-                          variants={particleVariants}
-                          className="absolute rounded-full bg-primary/50"
-                          style={{
-                            width: `${Math.random() * 15 + 5}px`,
-                            height: `${Math.random() * 15 + 5}px`,
-                            top: '50%',
-                            left: '50%',
-                          }}
-                        />
-                      ))}
-                    </motion.div>
+                    {showParticles && (
+                      <motion.div
+                        key="particles"
+                        variants={particleContainerVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        className="absolute inset-0 z-0"
+                      >
+                        {[...Array(100)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            custom={i}
+                            variants={particleVariants}
+                            className="absolute rounded-full bg-primary/50"
+                            style={{
+                              width: `${Math.random() * 15 + 5}px`,
+                              height: `${Math.random() * 15 + 5}px`,
+                              top: '50%',
+                              left: '50%',
+                            }}
+                          />
+                        ))}
+                      </motion.div>
+                    )}
         
                     <motion.div
                       key="hcet"

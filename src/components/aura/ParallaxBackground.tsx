@@ -1,3 +1,4 @@
+// src/components/aura/ParallaxBackground.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -10,8 +11,7 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
   const [showParticles, setShowParticles] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowParticles(true), 100);
-    return () => clearTimeout(timer);
+    setShowParticles(true);
   }, []);
 
   useEffect(() => {
