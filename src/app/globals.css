@@ -96,6 +96,12 @@
   .text-reflect {
     -webkit-box-reflect: below -5px linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.02));
   }
+
+  .text-reflect-vertical {
+    -webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+    transform: scaleY(-1);
+    opacity: 0.5;
+  }
 }
 
 @keyframes sparkle {

@@ -16,6 +16,7 @@ import { Clock } from '@/components/aura/Clock';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Users, History } from 'lucide-react';
 import ParallaxBackground from '@/components/aura/ParallaxBackground';
+import { LoadingAnimation } from '@/components/aura/LoadingAnimation';
 
 type CarouselItemType = (Game & { type: 'game' }) | { type: 'music', id: string } | { type: 'library', id: string };
 
@@ -33,6 +34,7 @@ export default function HomePage() {
   const [backgroundUrl, setBackgroundUrl] = useState<string | null>(null);
   const [friendsPlaying, setFriendsPlaying] = useState(0);
   const [isClient, setIsClient] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsClient(true);
@@ -97,16 +99,8 @@ export default function HomePage() {
 
   const selectedGame = allItems[selectedIndex]?.type === 'game' ? allItems[selectedIndex] as Game : null;
   
-  if (!isClient) {
-    // Render a skeleton or loading state on the server
-    return (
-      <div className="w-full h-full flex flex-col items-center justify-center relative">
-        <div className="py-8 text-center">
-          <div className="h-12 mb-2 bg-muted/20 rounded-md w-72 mx-auto animate-pulse"></div>
-          <div className="h-6 bg-muted/20 rounded-md w-24 mx-auto animate-pulse"></div>
-        </div>
-      </div>
-    );
+  if (isLoading) {
+    return <LoadingAnimation onAnimationComplete={() => setIsLoading(false)} />;
   }
 
   return (
