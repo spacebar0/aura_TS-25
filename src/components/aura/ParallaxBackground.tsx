@@ -7,6 +7,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: string | null }) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const isMobile = useIsMobile();
+  const [showParticles, setShowParticles] = useState(false);
+
+  useEffect(() => {
+    // Show particles after a delay to sync with loading animation end
+    const timer = setTimeout(() => setShowParticles(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (isMobile) return;
@@ -30,8 +37,50 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
     transition: 'transform 0.2s ease-out',
   });
 
+  const particleVariants = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: (i: number) => ({
+      opacity: Math.random() * 0.2 + 0.1,
+      scale: Math.random() * 0.5 + 0.2,
+      x: (Math.random() - 0.5) * 400, // smaller spread
+      y: (Math.random() - 0.5) * 400, // smaller spread
+      transition: {
+        duration: Math.random() * 5 + 5,
+        ease: 'linear',
+        delay: i * 0.05,
+        repeat: Infinity,
+        repeatType: 'mirror',
+      },
+    }),
+  };
+
   return (
     <div className="fixed inset-0 z-0 overflow-hidden bg-background">
+       <AnimatePresence>
+        {showParticles && (
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            className="absolute inset-0 z-10"
+          >
+            {[...Array(50)].map((_, i) => (
+              <motion.div
+                key={i}
+                custom={i}
+                variants={particleVariants}
+                className="absolute rounded-full bg-primary/30"
+                style={{
+                  width: `${Math.random() * 3 + 1}px`,
+                  height: `${Math.random() * 3 + 1}px`,
+                  top: '50%',
+                  left: '50%',
+                }}
+              />
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {backgroundUrl && (
           <motion.div
@@ -50,7 +99,7 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
           </motion.div>
         )}
       </AnimatePresence>
-
+      
       <div 
         className="absolute inset-[-20%] bg-gradient-to-br from-primary/10 via-transparent to-accent/10"
         style={layerStyle(5)}

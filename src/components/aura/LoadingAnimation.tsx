@@ -3,24 +3,14 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const getGreeting = () => {
-  const hour = new Date().getHours();
-  if (hour < 12) return 'Good morning';
-  if (hour < 18) return 'Good afternoon';
-  return 'Good evening';
-};
-
 export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete: () => void }) {
   const [stage, setStage] = useState(0);
-  const [greeting, setGreeting] = useState('');
 
   useEffect(() => {
-    setGreeting(getGreeting());
     const timers = [
       setTimeout(() => setStage(1), 500), // Start HCET animation
-      setTimeout(() => setStage(2), 2500), // Start greeting animation
-      setTimeout(() => setStage(3), 4000), // Fade out everything
-      setTimeout(onAnimationComplete, 5000), // Complete
+      setTimeout(() => setStage(2), 3000), // Fade out everything
+      setTimeout(onAnimationComplete, 4000), // Complete
     ];
     return () => timers.forEach(clearTimeout);
   }, [onAnimationComplete]);
@@ -32,17 +22,11 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
       scaleY: 1,
       transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] } 
     },
-    exit: { opacity: 0, transition: { duration: 0.5 } }
-  };
-
-  const greetingVariants = {
-    hidden: { opacity: 0, scale: 0.5 },
-    visible: { 
-      opacity: 1, 
-      scale: 1.5,
-      transition: { duration: 1.5, ease: [0.34, 1.56, 0.64, 1] } 
-    },
-     exit: { opacity: 0, transition: { duration: 0.5 } }
+    exit: { 
+        opacity: 0,
+        y: -100,
+        transition: { duration: 1, ease: 'easeInOut' }
+    }
   };
 
   const particleContainerVariants = {
@@ -78,8 +62,7 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
           <motion.div
             variants={particleContainerVariants}
             initial="hidden"
-            animate="visible"
-            exit="exit"
+            animate={stage === 2 ? 'hidden' : 'visible'}
             className="absolute inset-0 z-0"
           >
             {[...Array(100)].map((_, i) => (
@@ -114,21 +97,6 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
             <div>HCET</div>
             <div className="text-reflect-vertical">TECH</div>
           </motion.div>
-        )}
-      </AnimatePresence>
-      
-      <AnimatePresence>
-        {stage === 2 && (
-          <motion.h1
-            key="greeting"
-            variants={greetingVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="text-6xl md:text-8xl font-headline font-medium text-glow z-10"
-          >
-            {greeting}
-          </motion.h1>
         )}
       </AnimatePresence>
     </div>

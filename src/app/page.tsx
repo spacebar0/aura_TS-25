@@ -17,6 +17,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Users, History } from 'lucide-react';
 import ParallaxBackground from '@/components/aura/ParallaxBackground';
 import { LoadingAnimation } from '@/components/aura/LoadingAnimation';
+import { Header } from '@/components/aura/Header';
+import { Dock } from '@/components/aura/Dock';
 
 type CarouselItemType = (Game & { type: 'game' }) | { type: 'music', id: string } | { type: 'library', id: string };
 
@@ -105,11 +107,17 @@ export default function HomePage() {
 
   return (
     <>
+      <Header />
       <ParallaxBackground backgroundUrl={backgroundUrl} />
       <div className="w-full h-full flex flex-col items-center justify-center animate-in fade-in duration-500 relative">
-        <div className="py-8 text-center">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
+          className="py-8 text-center"
+        >
           <Clock />
-        </div>
+        </motion.div>
         <Carousel
           setApi={setApi}
           plugins={[plugin.current]}
@@ -162,6 +170,7 @@ export default function HomePage() {
           )}
         </AnimatePresence>
       </div>
+      <Dock />
     </>
   );
 }

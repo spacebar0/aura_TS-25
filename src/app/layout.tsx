@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
-import { Dock } from '@/components/aura/Dock';
-import { Header } from '@/components/aura/Header';
 
 export const metadata: Metadata = {
   title: 'AURA Console UI',
@@ -28,9 +26,7 @@ export default function RootLayout({
         )}
       >
         <div className="relative z-10 flex flex-col h-full">
-          <Header />
-          <main className="flex-1 overflow-y-auto pb-24 flex">{children}</main>
-          <Dock />
+          <main className="flex-1 flex">{children}</main>
         </div>
         <Toaster />
       </body>
