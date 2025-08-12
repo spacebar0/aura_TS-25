@@ -131,3 +131,43 @@ export const userProfile = {
   pinnedGames: [games[0], games[4], games[7]],
   preferences: 'Likes fast-paced action, sci-fi themes, and competitive multiplayer games. Enjoys vibrant, neon aesthetics and synthwave music.'
 };
+
+export type Song = {
+  id: string;
+  title: string;
+  artist: string;
+  album: string;
+  duration: string;
+  coverArt: string;
+};
+
+export type Playlist = {
+  id: string;
+  name: string;
+  songs: Song[];
+};
+
+export const recentlyPlayed: Song[] = [
+  { id: 's1', title: 'Mirage', artist: 'Else', album: 'Mirage', duration: '4:20', coverArt: 'https://placehold.co/100x100.png' },
+  { id: 's2', title: 'Hotline', artist: 'Kavinsky', album: 'OutRun', duration: '3:25', coverArt: 'https://placehold.co/100x100.png' },
+  { id: 's3', title: 'Genesis', artist: 'Justice', album: 'Cross', duration: '3:54', coverArt: 'https://placehold.co/100x100.png' },
+];
+
+export const userPlaylists: Playlist[] = [
+  {
+    id: 'p1',
+    name: 'Synthwave Dreams',
+    songs: [
+        { id: 's4', title: 'Nightcall', artist: 'Kavinsky', album: 'OutRun', duration: '4:18', coverArt: 'https://placehold.co/100x100.png' },
+        { id: 's5', title: 'Resonance', artist: 'Home', album: 'Odyssey', duration: '3:32', coverArt: 'https://placehold.co/100x100.png' },
+        ...recentlyPlayed,
+    ],
+  },
+  {
+    id: 'p2',
+    name: 'Focus Flow',
+    songs: [
+      { id: 's6', title: 'Dayvan Cowboy', artist: 'Boards of Canada', album: 'The Campfire Headphase', duration: '5:01', coverArt: 'https://placehold.co/100x100.png' },
+    ],
+  },
+];
