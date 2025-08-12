@@ -1,7 +1,7 @@
 // src/components/aura/MusicCard.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Music, ListMusic, CheckCircle2 } from 'lucide-react';
@@ -20,6 +20,12 @@ export function MusicCard({ className }: { className?: string }) {
     setConnectedService(service);
     setIsDialogOpen(false); // Close dialog on connect
   };
+
+  useEffect(() => {
+    if (connectedService) {
+      setIsSidebarOpen(true);
+    }
+  }, [connectedService]);
 
   const handleCardClick = () => {
     if (connectedService) {
