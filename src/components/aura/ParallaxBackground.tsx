@@ -11,6 +11,7 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
   const [showParticles, setShowParticles] = useState(false);
 
   useEffect(() => {
+    // Client-side only effect
     setShowParticles(true);
   }, []);
 
@@ -44,7 +45,7 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
       x: (Math.random() - 0.5) * 400,
       y: (Math.random() - 0.5) * 400,
       transition: {
-        duration: Math.random() * 8 + 8,
+        duration: Math.random() * 10 + 15, // Slower: 15 to 25 seconds
         ease: 'linear',
         delay: i * 0.05,
         repeat: Infinity,
@@ -55,12 +56,12 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden bg-background">
-       <AnimatePresence>
+      <AnimatePresence>
         {showParticles && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1.5 }}
+            transition={{ duration: 1.5, delay: 0.5 }}
             className="absolute inset-0 z-10"
           >
             {[...Array(50)].map((_, i) => (
@@ -70,7 +71,7 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
                 variants={particleVariants}
                 initial="hidden"
                 animate="visible"
-                className="absolute rounded-full bg-primary/30"
+                className="absolute particle bg-primary/30"
                 style={{
                   width: `${Math.random() * 3 + 1}px`,
                   height: `${Math.random() * 3 + 1}px`,
