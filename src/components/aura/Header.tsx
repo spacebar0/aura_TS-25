@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { userProfile } from '@/lib/mock-data';
 import { Button } from '../ui/button';
-import { Users, Wifi } from 'lucide-react';
+import { Users } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export function Header() {
@@ -14,8 +14,14 @@ export function Header() {
 
   useEffect(() => {
     setIsClient(true);
-    setActiveFriends(Math.floor(Math.random() * 20));
   }, []);
+  
+  useEffect(() => {
+    if (isClient) {
+      setActiveFriends(Math.floor(Math.random() * 20));
+    }
+  }, [isClient]);
+
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 p-4">
@@ -28,7 +34,7 @@ export function Header() {
               <div className="absolute top-1 right-1 h-2 w-2 rounded-full bg-green-500 ring-2 ring-background" />
             </Button>
           ) : (
-             <div className="h-10 w-20 bg-muted/20 rounded-md" />
+             <div className="h-10 w-20 bg-muted/20 rounded-md animate-pulse" />
           )}
           <Link href="/profile">
             <Image
