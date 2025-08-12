@@ -33,7 +33,7 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     exit: { 
       opacity: 0,
       scaleY: 20,
-      transition: { duration: 1.5, ease: [0.6, 0.01, -0.05, 0.95] }
+      transition: { duration: 1.5, ease: [0.6, 0.04, 0.98, 0.34] }
     }
   };
 
@@ -58,7 +58,7 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
       x: (Math.random() - 0.5) * window.innerWidth * 1.5,
       y: (Math.random() - 0.5) * window.innerHeight * 1.5,
       transition: {
-        duration: Math.random() * 4 + 4,
+        duration: Math.random() * 8 + 8,
         ease: 'linear',
         delay: i * 0.01,
         repeat: Infinity,
