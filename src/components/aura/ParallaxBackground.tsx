@@ -10,8 +10,7 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
   const [showParticles, setShowParticles] = useState(false);
 
   useEffect(() => {
-    // Show particles after a delay to sync with loading animation end
-    const timer = setTimeout(() => setShowParticles(true), 500);
+    const timer = setTimeout(() => setShowParticles(true), 100);
     return () => clearTimeout(timer);
   }, []);
 
@@ -42,10 +41,10 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
     visible: (i: number) => ({
       opacity: Math.random() * 0.2 + 0.1,
       scale: Math.random() * 0.5 + 0.2,
-      x: (Math.random() - 0.5) * 400, // smaller spread
-      y: (Math.random() - 0.5) * 400, // smaller spread
+      x: (Math.random() - 0.5) * 400,
+      y: (Math.random() - 0.5) * 400,
       transition: {
-        duration: Math.random() * 5 + 5,
+        duration: Math.random() * 8 + 8,
         ease: 'linear',
         delay: i * 0.05,
         repeat: Infinity,
@@ -59,8 +58,9 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
        <AnimatePresence>
         {showParticles && (
           <motion.div
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5 }}
             className="absolute inset-0 z-10"
           >
             {[...Array(50)].map((_, i) => (
@@ -68,6 +68,8 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
                 key={i}
                 custom={i}
                 variants={particleVariants}
+                initial="hidden"
+                animate="visible"
                 className="absolute rounded-full bg-primary/30"
                 style={{
                   width: `${Math.random() * 3 + 1}px`,

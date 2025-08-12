@@ -15,6 +15,14 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     return () => timers.forEach(clearTimeout);
   }, [onAnimationComplete]);
 
+  const containerVariants = {
+    hidden: { opacity: 1 },
+    exit: {
+      opacity: 0,
+      transition: { duration: 1, ease: 'easeInOut' }
+    }
+  };
+
   const hcetVariants = {
     hidden: { opacity: 0, scaleY: 0 },
     visible: { 
@@ -23,9 +31,9 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
       transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] } 
     },
     exit: { 
-        opacity: 0,
-        y: -100,
-        transition: { duration: 1, ease: 'easeInOut' }
+      opacity: 0,
+      scaleY: 20,
+      transition: { duration: 1.5, ease: [0.6, 0.01, -0.05, 0.95] }
     }
   };
 
@@ -35,6 +43,11 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
         staggerChildren: 0.02,
       },
     },
+     exit: {
+      transition: {
+        staggerChildren: 0.01,
+      },
+    }
   };
 
   const particleVariants = {
@@ -45,24 +58,42 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
       x: (Math.random() - 0.5) * window.innerWidth * 1.5,
       y: (Math.random() - 0.5) * window.innerHeight * 1.5,
       transition: {
-        duration: Math.random() * 2 + 1,
-        ease: 'easeInOut',
+        duration: Math.random() * 4 + 4,
+        ease: 'linear',
         delay: i * 0.01,
         repeat: Infinity,
         repeatType: 'mirror',
       },
     }),
+     exit: {
+      opacity: 0,
+      scale: 0,
+      filter: 'blur(10px)',
+      transition: {
+        duration: 0.5,
+        ease: 'easeOut'
+      }
+    }
   };
 
 
   return (
-    <div className="w-full h-full flex items-center justify-center bg-background overflow-hidden relative">
+     <motion.div 
+      key="loading-screen"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="w-full h-full flex items-center justify-center bg-background overflow-hidden fixed inset-0 z-50"
+    >
        <AnimatePresence>
         {(stage >= 1) && (
           <motion.div
+            key="particles"
             variants={particleContainerVariants}
             initial="hidden"
-            animate={stage === 2 ? 'hidden' : 'visible'}
+            animate="visible"
+            exit={stage === 2 ? "exit" : "hidden"}
             className="absolute inset-0 z-0"
           >
             {[...Array(100)].map((_, i) => (
@@ -91,7 +122,7 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="font-extralight text-8xl md:text-9xl tracking-widest text-center text-foreground/80 leading-none"
+            className="font-extralight text-8xl md:text-9xl tracking-widest text-center text-foreground/80 leading-none z-10"
             style={{ fontFamily: "'Inter', sans-serif", fontWeight: 100 }}
           >
             <div>HCET</div>
@@ -99,6 +130,6 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }
