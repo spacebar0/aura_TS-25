@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Music, ListMusic, CheckCircle2 } from 'lucide-react';
+import { Music, ListMusic, CheckCircle2, Loader2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { MusicLoginDialog } from './MusicLoginDialog';
 import { MusicSidebar } from './MusicSidebar';
@@ -15,21 +15,30 @@ export function MusicCard({ className }: { className?: string }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [connectedService, setConnectedService] = useState<MusicService | null>(null);
+  const [isConnecting, setIsConnecting] = useState(false);
 
   const handleConnect = (service: MusicService) => {
-    setConnectedService(service);
-    setIsDialogOpen(false); // Close dialog on connect
+    setIsConnecting(true);
+    setIsDialogOpen(false); // Close dialog
+
+    // Simulate API call to connect service
+    setTimeout(() => {
+      setConnectedService(service);
+      setIsConnecting(false);
+    }, 1500); // 1.5 second delay to simulate auth
   };
 
   useEffect(() => {
-    if (connectedService) {
+    if (connectedService && !isConnecting) {
       setIsSidebarOpen(true);
     }
-  }, [connectedService]);
+  }, [connectedService, isConnecting]);
 
   const handleCardClick = () => {
     if (connectedService) {
       setIsSidebarOpen(true);
+    } else {
+        setIsDialogOpen(true);
     }
   };
 
@@ -40,7 +49,7 @@ export function MusicCard({ className }: { className?: string }) {
           'group relative aspect-square w-full h-full overflow-hidden rounded-lg transition-all duration-300 ease-in-out',
           'flex flex-col items-center justify-center bg-accent/20 border-accent/50',
           'hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 focus-within:scale-105 focus-within:shadow-2xl focus-within:shadow-accent/40',
-          connectedService ? 'cursor-pointer' : 'cursor-default',
+          'cursor-pointer',
           className
         )}
         onClick={handleCardClick}
@@ -52,7 +61,12 @@ export function MusicCard({ className }: { className?: string }) {
             {connectedService ? `${connectedService}` : 'Music'}
           </h3>
 
-          {connectedService ? (
+          {isConnecting ? (
+            <div className="flex items-center gap-2 mt-4 text-white/80">
+                <Loader2 className="w-5 h-5 animate-spin" />
+                <span className="text-sm font-medium">Connecting...</span>
+            </div>
+          ) : connectedService ? (
              <div className="flex items-center gap-2 mt-4 text-green-400">
                 <CheckCircle2 className="w-5 h-5" />
                 <span className="text-sm font-medium">Connected</span>
