@@ -11,6 +11,54 @@ export type Game = {
 
 export const featuredGames: Game[] = [
   {
+    id: 101,
+    title: 'Voidfall',
+    description: 'A 4X game that brings the genre to a new level.',
+    cover: 'https://placehold.co/1920x1080.png',
+    genre: 'Strategy',
+    rating: 4.9,
+    lastPlayed: 'N/A',
+  },
+  {
+    id: 102,
+    title: 'Helldivers II',
+    description: 'A 3rd person squad-based shooter.',
+    cover: 'https://placehold.co/1920x1080.png',
+    genre: 'Shooter',
+    rating: 4.8,
+    lastPlayed: 'N/A',
+  },
+  {
+    id: 103,
+    title: 'Manor Lords',
+    description: 'A medieval strategy game featuring in-depth city building.',
+    cover: 'https://placehold.co/1920x1080.png',
+    genre: 'Strategy',
+    rating: 4.7,
+    lastPlayed: 'N/A',
+  },
+    {
+    id: 104,
+    title: 'Frostpunk 2',
+    description: 'A city-survival game where heat means life.',
+    cover: 'https://placehold.co/1920x1080.png',
+    genre: 'Strategy',
+    rating: 4.9,
+    lastPlayed: 'N/A',
+  },
+  {
+    id: 105,
+    title: 'Elden Ring',
+    description: 'An action RPG developed by FromSoftware.',
+    cover: 'https://placehold.co/1920x1080.png',
+    genre: 'Action RPG',
+    rating: 5.0,
+    lastPlayed: 'N/A',
+  },
+];
+
+export const games: Game[] = [
+  {
     id: 1,
     title: 'Cyber Runner 2099',
     description: 'Race through neon-drenched cityscapes.',
@@ -37,10 +85,6 @@ export const featuredGames: Game[] = [
     rating: 4.7,
     lastPlayed: '3 days ago',
   },
-];
-
-export const games: Game[] = [
-  ...featuredGames,
   {
     id: 4,
     title: 'Chrono Weavers',

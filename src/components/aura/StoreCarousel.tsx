@@ -11,7 +11,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from '@/components/ui/carousel';
-import { games } from '@/lib/mock-data';
+import { featuredGames } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
 
 export function StoreCarousel() {
@@ -21,10 +21,6 @@ export function StoreCarousel() {
   const plugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
   );
-
-  const featuredGames = [...games]
-    .sort((a, b) => b.rating - a.rating)
-    .slice(0, 5);
 
   React.useEffect(() => {
     if (!api) {
