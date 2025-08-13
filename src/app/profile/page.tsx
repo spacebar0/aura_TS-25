@@ -30,7 +30,7 @@ export default function ProfilePage() {
         <h2 className="text-3xl font-headline mb-6">Pinned Games</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
           {userProfile.pinnedGames.map((game) => (
-            <GameCard key={game.id} game={game} />
+            <GameCard key={game.id} game={game} variant="landscape" />
           ))}
         </div>
       </section>

@@ -6,14 +6,19 @@ import { Card } from '@/components/ui/card';
 type GameCardProps = {
   game: Game;
   className?: string;
+  variant?: 'portrait' | 'landscape';
 };
 
-export function GameCard({ game, className }: GameCardProps) {
+export function GameCard({ game, className, variant = 'portrait' }: GameCardProps) {
   return (
     <Card
       className={cn(
-        'group relative aspect-[4/3] w-full overflow-hidden rounded-lg transition-all duration-300 ease-in-out',
+        'group relative w-full overflow-hidden rounded-lg transition-all duration-300 ease-in-out',
         'hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 focus-within:scale-105 focus-within:shadow-2xl focus-within:shadow-primary/40',
+        {
+          'aspect-square': variant === 'portrait',
+          'aspect-[4/3]': variant === 'landscape',
+        },
         className
       )}
     >
