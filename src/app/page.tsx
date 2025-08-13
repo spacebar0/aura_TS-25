@@ -94,6 +94,18 @@ export default function HomePage() {
   }, [api, resetInactivityTimer, onSelect]);
 
   useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() === 's') {
+        startAutoplay();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [startAutoplay]);
+
+  useEffect(() => {
     const currentItem = allItems[selectedIndex];
     if (currentItem?.type === 'game') {
       setBackgroundUrl(currentItem.cover);
