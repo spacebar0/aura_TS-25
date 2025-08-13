@@ -12,7 +12,7 @@ export function GameCard({ game, className }: GameCardProps) {
   return (
     <Card
       className={cn(
-        'group relative aspect-square w-full overflow-hidden rounded-lg transition-all duration-300 ease-in-out',
+        'group relative aspect-[4/3] w-full overflow-hidden rounded-lg transition-all duration-300 ease-in-out',
         'hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 focus-within:scale-105 focus-within:shadow-2xl focus-within:shadow-primary/40',
         className
       )}
