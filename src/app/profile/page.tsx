@@ -6,7 +6,7 @@ import { Award } from 'lucide-react';
 
 export default function ProfilePage() {
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500 pt-24">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500">
       <header className="flex items-center gap-6 mb-12">
         <Image
           src={userProfile.avatar}

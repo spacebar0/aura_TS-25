@@ -17,8 +17,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Users, History } from 'lucide-react';
 import ParallaxBackground from '@/components/aura/ParallaxBackground';
 import { LoadingAnimation } from '@/components/aura/LoadingAnimation';
-import { Header } from '@/components/aura/Header';
-import { Dock } from '@/components/aura/Dock';
 
 type CarouselItemType = (Game & { type: 'game' }) | { type: 'music', id: string } | { type: 'library', id: string };
 
@@ -127,7 +125,6 @@ export default function HomePage() {
 
       {!isLoading && (
         <>
-          <Header />
           <ParallaxBackground backgroundUrl={backgroundUrl} />
           <motion.div 
              initial={{ opacity: 0 }}
@@ -195,7 +192,6 @@ export default function HomePage() {
               )}
             </AnimatePresence>
           </motion.div>
-          <Dock />
         </>
       )}
     </>
