@@ -1,0 +1,38 @@
+'use client';
+
+import { Header } from "@/components/aura/Header";
+import { Dock } from "@/components/aura/Dock";
+import { LoadingAnimation } from "@/components/aura/LoadingAnimation";
+import { AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+
+export function AppLifecycle({ children }: { children: React.ReactNode }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 6000); // 6 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      <AnimatePresence>
+        {isLoading && <LoadingAnimation onAnimationComplete={() => setIsLoading(false)} />}
+      </AnimatePresence>
+
+      {!isLoading && (
+        <>
+          <Header />
+          <div className="relative z-10 flex flex-col h-full">
+            <main className="flex-1 flex pt-16 pb-24 overflow-y-auto">{children}</main>
+          </div>
+          <Dock />
+        </>
+      )}
+    </>
+  );
+}

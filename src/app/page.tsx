@@ -16,7 +16,6 @@ import { Clock } from '@/components/aura/Clock';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Users, History } from 'lucide-react';
 import ParallaxBackground from '@/components/aura/ParallaxBackground';
-import { LoadingAnimation } from '@/components/aura/LoadingAnimation';
 
 type CarouselItemType = (Game & { type: 'game' }) | { type: 'music', id: string } | { type: 'library', id: string };
 
@@ -34,16 +33,9 @@ export default function HomePage() {
   const [backgroundUrl, setBackgroundUrl] = useState<string | null>(null);
   const [friendsPlaying, setFriendsPlaying] = useState(0);
   const [isClient, setIsClient] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsClient(true);
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 6000); // 6 seconds
-
-    return () => clearTimeout(timer);
   }, []);
 
   const startAutoplay = useCallback(() => {
@@ -119,81 +111,73 @@ export default function HomePage() {
   
   return (
     <>
-      <AnimatePresence>
-        {isLoading && <LoadingAnimation onAnimationComplete={() => setIsLoading(false)} />}
-      </AnimatePresence>
+      <ParallaxBackground backgroundUrl={backgroundUrl} />
+      <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        className="w-full h-full flex flex-col items-center justify-center relative"
+      >
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
+          className="py-8 text-center"
+        >
+          <Clock />
+        </motion.div>
+        <Carousel
+          setApi={setApi}
+          plugins={[plugin.current]}
+          opts={{
+            align: 'center',
+            loop: true,
+          }}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-4">
+            {allItems.map((item, index) => (
+              <CarouselItem
+                key={item.id}
+                className="pl-4 basis-[40%] sm:basis-[30%] md:basis-1/4 lg:basis-1/5"
+              >
+                <div className="flex justify-center">
+                  {item.type === 'game' && <GameCard game={item} />}
+                  {item.type === 'music' && <MusicCard />}
+                  {item.type === 'library' && <LibraryCard />}
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
 
-      {!isLoading && (
-        <>
-          <ParallaxBackground backgroundUrl={backgroundUrl} />
-          <motion.div 
-             initial={{ opacity: 0 }}
-             animate={{ opacity: 1 }}
-             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full h-full flex flex-col items-center justify-center relative"
-          >
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
-              className="py-8 text-center"
+        <AnimatePresence>
+          {selectedGame && (
+            <motion.div
+              key={selectedGame.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              className="fixed bottom-24 left-8 z-20 p-4 rounded-lg glass-pane"
             >
-              <Clock />
+              <h3 className="font-headline text-2xl font-medium text-white text-glow">
+                {selectedGame.title}
+              </h3>
+              <div className="mt-2 space-y-2 text-sm text-white/80">
+                <div className="flex items-center gap-2">
+                  <History className="w-4 h-4" />
+                  <span>Last played: {selectedGame.lastPlayed}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4" />
+                  <span>{friendsPlaying} friends playing</span>
+                </div>
+              </div>
             </motion.div>
-            <Carousel
-              setApi={setApi}
-              plugins={[plugin.current]}
-              opts={{
-                align: 'center',
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent className="-ml-4">
-                {allItems.map((item, index) => (
-                  <CarouselItem
-                    key={item.id}
-                    className="pl-4 basis-[40%] sm:basis-[30%] md:basis-1/4 lg:basis-1/5"
-                  >
-                    <div className="flex justify-center">
-                      {item.type === 'game' && <GameCard game={item} />}
-                      {item.type === 'music' && <MusicCard />}
-                      {item.type === 'library' && <LibraryCard />}
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
-
-            <AnimatePresence>
-              {selectedGame && (
-                <motion.div
-                  key={selectedGame.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5, ease: 'easeInOut' }}
-                  className="fixed bottom-24 left-8 z-20 p-4 rounded-lg glass-pane"
-                >
-                  <h3 className="font-headline text-2xl font-medium text-white text-glow">
-                    {selectedGame.title}
-                  </h3>
-                  <div className="mt-2 space-y-2 text-sm text-white/80">
-                    <div className="flex items-center gap-2">
-                      <History className="w-4 h-4" />
-                      <span>Last played: {selectedGame.lastPlayed}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4" />
-                      <span>{friendsPlaying} friends playing</span>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        </>
-      )}
+          )}
+        </AnimatePresence>
+      </motion.div>
     </>
   );
 }

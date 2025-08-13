@@ -2,9 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
-import { AnimatePresence } from 'framer-motion';
-import { Header } from '@/components/aura/Header';
-import { Dock } from '@/components/aura/Dock';
+import { AppLifecycle } from './app-lifecycle';
 
 export const metadata: Metadata = {
   title: 'AURA Console UI',
@@ -28,11 +26,7 @@ export default function RootLayout({
           'h-full font-body antialiased bg-background text-foreground overflow-hidden'
         )}
       >
-        <Header />
-        <div className="relative z-10 flex flex-col h-full">
-          <main className="flex-1 flex pt-16 pb-24 overflow-y-auto">{children}</main>
-        </div>
-        <Dock />
+        <AppLifecycle>{children}</AppLifecycle>
         <Toaster />
       </body>
     </html>
