@@ -9,13 +9,15 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+  type CarouselApi,
 } from '@/components/ui/carousel';
-import { games, type Game } from '@/lib/mock-data';
-import { Button } from '../ui/button';
+import { games } from '@/lib/mock-data';
+import { cn } from '@/lib/utils';
 
 export function StoreCarousel() {
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+
   const plugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
   );
@@ -24,46 +26,65 @@ export function StoreCarousel() {
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 5);
 
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap());
+
+    const onSelect = (api: CarouselApi) => {
+      setCurrent(api.selectedScrollSnap());
+    };
+
+    api.on('select', onSelect);
+
+    return () => {
+      api.off('select', onSelect);
+    };
+  }, [api]);
+
   return (
-    <Carousel
-      plugins={[plugin.current]}
-      className="w-full"
-      onMouseEnter={plugin.current.stop}
-      onMouseLeave={plugin.current.reset}
-      opts={{
-        loop: true,
-      }}
-    >
-      <CarouselContent>
-        {featuredGames.map((game) => (
-          <CarouselItem key={game.id}>
-            <div className="relative w-full h-[50vh] md:h-[60vh]">
-              <Image
-                src={game.cover}
-                alt={game.title}
-                fill
-                className="object-cover object-center"
-                data-ai-hint="gameplay screenshot"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/50 to-transparent" />
-              <div className="absolute bottom-0 left-0 p-8 md:p-12 lg:p-16 max-w-2xl">
-                <h2 className="text-4xl md:text-6xl font-headline font-bold text-glow text-white mb-4">
-                  {game.title}
-                </h2>
-                <p className="text-base md:text-lg text-white/80 mb-6">
-                  {game.description}
-                </p>
-                <Button size="lg" className="text-lg py-6 px-8">
-                  Play Now
-                </Button>
+    <div className="relative w-full">
+      <Carousel
+        setApi={setApi}
+        plugins={[plugin.current]}
+        className="w-full"
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
+        opts={{
+          loop: true,
+        }}
+      >
+        <CarouselContent>
+          {featuredGames.map((game) => (
+            <CarouselItem key={game.id}>
+              <div className="relative w-full h-[50vh] md:h-[60vh] overflow-hidden rounded-2xl">
+                <Image
+                  src={game.cover}
+                  alt={game.title}
+                  fill
+                  className="object-cover object-center"
+                  data-ai-hint="gameplay screenshot"
+                />
               </div>
-            </div>
-          </CarouselItem>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+        {featuredGames.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => api?.scrollTo(index)}
+            className={cn(
+              'w-2 h-2 rounded-full transition-colors',
+              current === index ? 'bg-primary' : 'bg-muted/50'
+            )}
+            aria-label={`Go to slide ${index + 1}`}
+          />
         ))}
-      </CarouselContent>
-      <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10 hidden md:flex" />
-      <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10 hidden md:flex" />
-    </Carousel>
+      </div>
+    </div>
   );
 }

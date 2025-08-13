@@ -9,10 +9,12 @@ export default function StorePage() {
 
   return (
     <div className="w-full animate-in fade-in duration-500">
-      <StoreCarousel />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <StoreCarousel />
+      </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <section className="mb-16">
+        <section className="my-16">
           <h2 className="text-3xl font-headline mb-6">AI Curator Weekly</h2>
           <AiCurator />
         </section>
