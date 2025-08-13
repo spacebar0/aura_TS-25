@@ -26,13 +26,14 @@ const CurateStoreCapsulesInputSchema = z.object({
 });
 export type CurateStoreCapsulesInput = z.infer<typeof CurateStoreCapsulesInputSchema>;
 
+const CapsuleSchema = z.object({
+  title: z.string().describe('The name of the capsule collection.'),
+  description: z.string().describe('A brief description of the collection and why the games fit.'),
+});
+
 // Define the output schema
 const CurateStoreCapsulesOutputSchema = z.object({
-  capsuleCollections: z
-    .string()
-    .describe(
-      'A list of capsule collections names for the week, each with a description of why games are included.'
-    ),
+  capsuleCollections: z.array(CapsuleSchema).describe('An array of 3 capsule collections for the week.'),
 });
 export type CurateStoreCapsulesOutput = z.infer<typeof CurateStoreCapsulesOutputSchema>;
 
@@ -54,7 +55,7 @@ const curateStoreCapsulesPrompt = ai.definePrompt({
   Trending Games: {{{trendingGames}}}
   Store Games: {{{storeGames}}}
 
-  Create a list of 3 capsule collection names, and for each, describe what games should be included and why:
+  Create a list of 3 capsule collections. For each, provide a title and a description of what games should be included and why.
   `,
 });
 

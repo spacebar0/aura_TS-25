@@ -23,20 +23,11 @@ export function AiCurator() {
     setCapsules([]);
     try {
       const result = await getCuratedCapsules();
-      const parsedCapsules = result
-        .split('\n\n')
-        .map((part) => {
-          const lines = part.split('\n');
-          const title = lines[0]?.replace(/\*/g, '').trim();
-          const description = lines.slice(1).join(' ').trim();
-          return { title, description };
-        })
-        .filter((c) => c.title && c.description);
       
-      if (parsedCapsules.length === 0 && result) {
-         setCapsules([{ title: 'AI Recommendations', description: result }]);
+      if ('error' in result) {
+        setError(result.error);
       } else {
-         setCapsules(parsedCapsules);
+        setCapsules(result);
       }
 
     } catch (e) {
@@ -61,7 +52,7 @@ export function AiCurator() {
           </div>
         ) : (
           <>
-            {error && <p className="text-destructive">{error}</p>}
+            {error && <p className="text-destructive text-center py-8">{error}</p>}
             {capsules.length === 0 && !error && (
               <div className="flex flex-col items-center justify-center h-64 text-center">
                 <p className="text-muted-foreground mb-4">

@@ -17,6 +17,7 @@ export async function getCuratedCapsules() {
     return result.capsuleCollections;
   } catch (error) {
     console.error('Error curating store capsules:', error);
-    return 'Could not generate AI recommendations at this time. Please try again later.';
+    // Return a more structured error
+    return { error: 'Could not generate AI recommendations at this time. Please try again later.' };
   }
 }
