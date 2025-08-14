@@ -73,13 +73,10 @@ export function MusicCard({ className }: { className?: string }) {
             </div>
           ) : (
             <>
-              <p className="text-xs text-white/80 mt-1 mb-4">
-                Connect your favorite music service.
-              </p>
               <Button
                 variant="outline"
                 size="sm"
-                className="bg-transparent border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+                className="bg-transparent border-accent text-accent hover:bg-accent hover:text-accent-foreground mt-4"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsDialogOpen(true);
