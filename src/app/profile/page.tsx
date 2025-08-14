@@ -20,7 +20,7 @@ export default function ProfilePage() {
           <h1 className="text-5xl font-silkscreen font-medium text-glow">
             {userProfile.name}
           </h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="font-silkscreen mt-2 text-primary/90">
             AURA Founder | Level 99
           </p>
         </div>
