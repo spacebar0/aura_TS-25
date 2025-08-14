@@ -13,7 +13,7 @@ export function AppLifecycle({ children }: { children: React.ReactNode }) {
     // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 6000); // 6 seconds
+    }, 9000); // 9 seconds
 
     return () => clearTimeout(timer);
   }, []);

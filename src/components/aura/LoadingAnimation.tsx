@@ -12,9 +12,9 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     setShowParticles(true);
     const completeTimer = setTimeout(() => {
       setIsAnimating(false);
-    }, 5000); // Start fade-out at 5 seconds
+    }, 8000); // Start fade-out at 8 seconds
 
-    const unmountTimer = setTimeout(onAnimationComplete, 6000); // Unmount at 6 seconds
+    const unmountTimer = setTimeout(onAnimationComplete, 9000); // Unmount at 9 seconds
 
     return () => {
       clearTimeout(completeTimer);
@@ -63,8 +63,8 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
   const particleVariants = {
     initial: { opacity: 0, scale: 0 },
     animate: (i: number) => ({
-      opacity: Math.random() * 0.6 + 0.3,
-      scale: Math.random() * 0.8 + 0.2,
+      opacity: Math.random() * 0.8 + 0.4,
+      scale: Math.random() * 1.2 + 0.3,
       x: `${(Math.random() - 0.5) * 150}vw`,
       y: `${(Math.random() - 0.5) * 150}vh`,
       transition: {
