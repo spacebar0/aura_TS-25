@@ -21,30 +21,30 @@ export default function StorePage() {
 
         <section className="mb-16">
           <h2 className="text-3xl font-headline mb-6">Top Rated</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-12">
             <div className="md:col-span-2">
-               {topRated.length > 0 && <GameCard game={topRated[0]} variant="landscape" />}
+               {topRated.length > 0 && <GameCard game={topRated[0]} variant="landscape" showPrice />}
             </div>
              {topRated.slice(1, 3).map((game) => (
-              <GameCard key={game.id} game={game} variant="landscape" />
+              <GameCard key={game.id} game={game} variant="landscape" showPrice />
             ))}
             {topRated.slice(3, 7).map((game) => (
-              <GameCard key={game.id} game={game} variant="landscape" />
+              <GameCard key={game.id} game={game} variant="landscape" showPrice />
             ))}
           </div>
         </section>
         
         <section>
           <h2 className="text-3xl font-headline mb-6">New Releases</h2>
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-12">
             {newReleases.slice(0, 2).map((game) => (
-              <GameCard key={game.id} game={game} variant="landscape" />
+              <GameCard key={game.id} game={game} variant="landscape" showPrice />
             ))}
             <div className="md:col-span-2">
-               {newReleases.length > 2 && <GameCard game={newReleases[2]} variant="landscape" />}
+               {newReleases.length > 2 && <GameCard game={newReleases[2]} variant="landscape" showPrice />}
             </div>
             {newReleases.slice(3, 7).map((game) => (
-              <GameCard key={game.id} game={game} variant="landscape" />
+              <GameCard key={game.id} game={game} variant="landscape" showPrice />
             ))}
           </div>
         </section>

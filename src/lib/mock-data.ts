@@ -7,6 +7,9 @@ export type Game = {
   genre: string;
   rating: number;
   lastPlayed: string;
+  price: string;
+  originalPrice?: string;
+  discount?: string;
 };
 
 export const featuredGames: Game[] = [
@@ -18,6 +21,7 @@ export const featuredGames: Game[] = [
     genre: 'Strategy',
     rating: 4.9,
     lastPlayed: 'N/A',
+    price: '$59.99'
   },
   {
     id: 102,
@@ -27,6 +31,7 @@ export const featuredGames: Game[] = [
     genre: 'Shooter',
     rating: 4.8,
     lastPlayed: 'N/A',
+    price: '$39.99'
   },
   {
     id: 103,
@@ -36,6 +41,7 @@ export const featuredGames: Game[] = [
     genre: 'Strategy',
     rating: 4.7,
     lastPlayed: 'N/A',
+    price: '$39.99'
   },
     {
     id: 104,
@@ -45,6 +51,7 @@ export const featuredGames: Game[] = [
     genre: 'Strategy',
     rating: 4.9,
     lastPlayed: 'N/A',
+    price: '$49.99'
   },
   {
     id: 105,
@@ -54,6 +61,7 @@ export const featuredGames: Game[] = [
     genre: 'Action RPG',
     rating: 5.0,
     lastPlayed: 'N/A',
+    price: '$59.99'
   },
 ];
 
@@ -66,6 +74,9 @@ export const games: Game[] = [
     genre: 'Racing',
     rating: 4.8,
     lastPlayed: '2 hours ago',
+    price: '$23.99',
+    originalPrice: '$59.99',
+    discount: '-60%'
   },
   {
     id: 2,
@@ -75,6 +86,7 @@ export const games: Game[] = [
     genre: 'Sci-Fi RPG',
     rating: 4.9,
     lastPlayed: 'Yesterday',
+    price: '$49.99',
   },
   {
     id: 3,
@@ -84,6 +96,7 @@ export const games: Game[] = [
     genre: 'Horror',
     rating: 4.7,
     lastPlayed: '3 days ago',
+    price: '$29.99',
   },
   {
     id: 4,
@@ -93,6 +106,7 @@ export const games: Game[] = [
     genre: 'Puzzle',
     rating: 4.6,
     lastPlayed: '1 week ago',
+    price: '$19.99',
   },
   {
     id: 5,
@@ -102,6 +116,9 @@ export const games: Game[] = [
     genre: 'Action',
     rating: 4.5,
     lastPlayed: '5 days ago',
+    price: '$9.99',
+    originalPrice: '$19.99',
+    discount: '-50%'
   },
   {
     id: 6,
@@ -111,6 +128,7 @@ export const games: Game[] = [
     genre: 'MMORPG',
     rating: 4.8,
     lastPlayed: '3 hours ago',
+    price: '$59.99',
   },
   {
     id: 7,
@@ -120,6 +138,7 @@ export const games: Game[] = [
     genre: 'Racing',
     rating: 4.7,
     lastPlayed: '2 weeks ago',
+    price: '$24.99',
   },
   {
     id: 8,
@@ -129,6 +148,9 @@ export const games: Game[] = [
     genre: 'Action-Adventure',
     rating: 4.9,
     lastPlayed: '6 hours ago',
+    price: '$38.00',
+    originalPrice: '$94.99',
+    discount: '-60%'
   },
   {
     id: 9,
@@ -138,6 +160,7 @@ export const games: Game[] = [
     genre: 'Narrative',
     rating: 4.6,
     lastPlayed: '1 month ago',
+    price: '$14.99',
   },
   {
     id: 10,
@@ -147,6 +170,7 @@ export const games: Game[] = [
     genre: 'Strategy',
     rating: 4.4,
     lastPlayed: 'Yesterday',
+    price: '$39.99',
   },
   {
     id: 11,
@@ -156,6 +180,7 @@ export const games: Game[] = [
     genre: 'Simulation',
     rating: 4.8,
     lastPlayed: '5 hours ago',
+    price: '$29.99',
   },
   {
     id: 12,
@@ -165,6 +190,7 @@ export const games: Game[] = [
     genre: 'Fighting',
     rating: 4.7,
     lastPlayed: '4 days ago',
+    price: '$19.99',
   },
 ];
 
