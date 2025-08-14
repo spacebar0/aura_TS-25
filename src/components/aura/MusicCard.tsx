@@ -4,8 +4,7 @@
 import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Music, ListMusic, CheckCircle2, Loader2 } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Music } from 'lucide-react';
 import { MusicLoginDialog } from './MusicLoginDialog';
 import { MusicSidebar } from './MusicSidebar';
 
@@ -58,35 +57,8 @@ export function MusicCard({ className }: { className?: string }) {
         <div className="relative z-10 flex flex-col items-center text-center p-4">
           <Music className="w-16 h-16 text-accent text-glow mb-4" />
           <h3 className="font-silkscreen text-lg font-medium text-white text-glow">
-            {connectedService ? `${connectedService}` : 'Music'}
+            Music
           </h3>
-
-          {isConnecting ? (
-            <div className="flex items-center gap-2 mt-4 text-white/80">
-                <Loader2 className="w-5 h-5 animate-spin" />
-                <span className="text-sm font-medium">Connecting...</span>
-            </div>
-          ) : connectedService ? (
-             <div className="flex items-center gap-2 mt-4 text-green-400">
-                <CheckCircle2 className="w-5 h-5" />
-                <span className="text-sm font-medium">Connected</span>
-            </div>
-          ) : (
-            <>
-              <Button
-                variant="outline"
-                size="sm"
-                className="bg-transparent border-accent text-accent hover:bg-accent hover:text-accent-foreground mt-4"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsDialogOpen(true);
-                }}
-              >
-                <ListMusic className="mr-2 h-4 w-4" />
-                Connect
-              </Button>
-            </>
-          )}
         </div>
       </Card>
       <MusicLoginDialog
