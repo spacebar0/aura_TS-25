@@ -57,7 +57,7 @@ export function MusicCard({ className }: { className?: string }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
         <div className="relative z-10 flex flex-col items-center text-center p-4">
           <Music className="w-16 h-16 text-accent text-glow mb-4" />
-          <h3 className="font-headline text-lg font-medium text-white text-glow">
+          <h3 className="font-silkscreen text-lg font-medium text-white text-glow">
             {connectedService ? `${connectedService}` : 'Music'}
           </h3>
 
