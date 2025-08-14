@@ -15,7 +15,7 @@ const AuraBeamLoader = () => {
           }}
         />
       </div>
-      <Image src="/images/logo.png" alt="Aura Logo" width={64} height={64} className="z-10 animate-pulse" />
+      <Image src="/images/logo.PNG" alt="Aura Logo" width={64} height={64} className="z-10 animate-pulse" />
       <p className="mt-4 text-sm text-primary z-10 font-medium">Curating Capsules...</p>
       <div
         className={cn(
