@@ -24,7 +24,7 @@ export function Dock() {
         <TooltipProvider delayDuration={0}>
           <div className="flex items-center justify-around">
             <Link href="/" className="p-2">
-              <Image src="/img/logo.png" alt="AURA Logo" width={28} height={28} className="text-white hover:text-primary transition-colors duration-300" />
+              <Image src="/images/logo.png" alt="AURA Logo" width={28} height={28} className="text-white hover:text-primary transition-colors duration-300" />
             </Link>
             <div className="h-8 w-px bg-white/20" />
             {navItems.map((item) => {
