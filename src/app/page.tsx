@@ -66,20 +66,28 @@ export default function HomePage() {
     api.on('select', onSelect);
     api.on('pointerDown', resetInactivityTimer)
 
-    window.addEventListener('mousemove', resetInactivityTimer);
-    window.addEventListener('keydown', resetInactivityTimer);
-    window.addEventListener('scroll', resetInactivityTimer);
-    window.addEventListener('click', resetInactivityTimer);
+    const genericReset = (e: Event) => {
+        // Prevent reset if the key is 's'
+        if (e instanceof KeyboardEvent && e.key.toLowerCase() === 's') {
+            return;
+        }
+        resetInactivityTimer();
+    }
+
+    window.addEventListener('mousemove', genericReset);
+    window.addEventListener('keydown', genericReset);
+    window.addEventListener('scroll', genericReset);
+    window.addEventListener('click', genericReset);
     
     return () => {
       if (inactivityTimer.current) {
         clearTimeout(inactivityTimer.current);
       }
       api?.off('select', onSelect);
-      window.removeEventListener('mousemove', resetInactivityTimer);
-      window.removeEventListener('keydown', resetInactivityTimer);
-      window.removeEventListener('scroll', resetInactivityTimer);
-      window.removeEventListener('click', resetInactivityTimer);
+      window.removeEventListener('mousemove', genericReset);
+      window.removeEventListener('keydown', genericReset);
+      window.removeEventListener('scroll', genericReset);
+      window.removeEventListener('click', genericReset);
     };
   }, [api, resetInactivityTimer, onSelect]);
 
