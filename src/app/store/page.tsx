@@ -16,12 +16,12 @@ export default function StorePage() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <section className="my-16">
-          <h2 className="text-3xl font-headline mb-6">AI Curator Weekly</h2>
+          <h2 className="text-3xl font-silkscreen mb-6">AI Curator Weekly</h2>
           <AiCurator />
         </section>
 
         <section className="mb-16">
-          <h2 className="text-3xl font-headline mb-6">Top Rated</h2>
+          <h2 className="text-3xl font-silkscreen mb-6">Top Rated</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-3 gap-4 sm:gap-6">
             {topRated.map((game, index) => (
               <div
@@ -42,7 +42,7 @@ export default function StorePage() {
         </section>
 
         <section>
-          <h2 className="text-3xl font-headline mb-6">New Releases</h2>
+          <h2 className="text-3xl font-silkscreen mb-6">New Releases</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-3 gap-4 sm:gap-6">
             {newReleases.map((game, index) => (
               <div

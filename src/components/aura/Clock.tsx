@@ -57,7 +57,7 @@ export function Clock() {
 
   return (
     <div className="text-center">
-       <h1 className="text-5xl font-headline font-normal mb-2 relative text-reflect">
+       <h1 className="text-5xl font-silkscreen font-normal mb-2 relative text-reflect">
           <span className="sparkle-text">{greeting}</span>
         </h1>
       <p className="text-muted-foreground">

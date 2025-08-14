@@ -13,7 +13,7 @@ export default function LibraryPage() {
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500">
       <header className="mb-8 flex justify-between items-center">
         <div>
-          <h1 className="text-5xl font-headline font-medium text-glow">
+          <h1 className="text-5xl font-silkscreen font-medium text-glow">
             Game Library
           </h1>
           <p className="text-muted-foreground mt-2">

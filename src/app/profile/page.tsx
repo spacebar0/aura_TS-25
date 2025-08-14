@@ -17,7 +17,7 @@ export default function ProfilePage() {
           data-ai-hint="futuristic avatar"
         />
         <div>
-          <h1 className="text-5xl font-headline font-medium text-glow">
+          <h1 className="text-5xl font-silkscreen font-medium text-glow">
             {userProfile.name}
           </h1>
           <p className="text-muted-foreground mt-2">
@@ -27,7 +27,7 @@ export default function ProfilePage() {
       </header>
 
       <section className="mb-12">
-        <h2 className="text-3xl font-headline mb-6">Pinned Games</h2>
+        <h2 className="text-3xl font-silkscreen mb-6">Pinned Games</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
           {userProfile.pinnedGames.map((game) => (
             <StoreGameCard key={game.id} game={game} />
@@ -36,7 +36,7 @@ export default function ProfilePage() {
       </section>
 
       <section>
-        <h2 className="text-3xl font-headline mb-6">Trophy Case</h2>
+        <h2 className="text-3xl font-silkscreen mb-6">Trophy Case</h2>
         <Card className="glass-pane border-primary/50">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
