@@ -51,10 +51,8 @@ export function Dock() {
               );
             })}
 
-            <Link href="/" className="p-2 -mt-7">
-                <div className="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center border-2 border-primary/50 hover:scale-110 transition-transform duration-300">
-                    <Image src="/images/logo.PNG" alt="AURA Logo" width={36} height={36} className="invert" />
-                </div>
+            <Link href="/" className="-mt-8 hover:scale-110 transition-transform duration-300">
+                <Image src="/images/logo.PNG" alt="AURA Logo" width={48} height={48} className="invert" />
             </Link>
 
             {navItemsRight.map((item) => {
