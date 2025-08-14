@@ -11,9 +11,12 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/
 const navItems = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/library', label: 'Library', icon: Library },
-  { href: '/store', label: 'Store', icon: Store },
-  { href: '/settings', label: 'Settings', icon: Settings2 },
 ];
+
+const navItemsRight = [
+    { href: '/store', label: 'Store', icon: Store },
+    { href: '/settings', label: 'Settings', icon: Settings2 },
+]
 
 export function Dock() {
   const pathname = usePathname();
@@ -23,11 +26,38 @@ export function Dock() {
       <nav className="mx-auto mb-4 w-full max-w-md rounded-full border-t glass-pane p-2 shadow-2xl shadow-black/50">
         <TooltipProvider delayDuration={0}>
           <div className="flex items-center justify-around">
-            <Link href="/" className="p-2">
-              <Image src="/images/logo.PNG" alt="AURA Logo" width={28} height={28} className="invert hover:text-primary transition-colors duration-300" />
-            </Link>
-            <div className="h-8 w-px bg-white/20" />
+            
             {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Tooltip key={item.href}>
+                  <TooltipTrigger asChild>
+                    <Link href={item.href} className="relative p-2">
+                      <item.icon
+                        className={cn(
+                          'h-7 w-7 transition-all duration-300',
+                          isActive
+                            ? 'text-primary text-glow'
+                            : 'text-muted-foreground hover:text-white'
+                        )}
+                      />
+                       {isActive && <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-primary text-glow"></span>}
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{item.label}</p>
+                  </TooltipContent>
+                </Tooltip>
+              );
+            })}
+
+            <Link href="/" className="p-2 -mt-7">
+                <div className="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center border-2 border-primary/50 hover:scale-110 transition-transform duration-300">
+                    <Image src="/images/logo.PNG" alt="AURA Logo" width={36} height={36} className="invert" />
+                </div>
+            </Link>
+
+            {navItemsRight.map((item) => {
               const isActive = pathname === item.href;
               return (
                 <Tooltip key={item.href}>
