@@ -1,7 +1,8 @@
+
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Logo } from '../icons/Logo';
+import Image from 'next/image';
 
 const AuraBeamLoader = () => {
   return (
@@ -14,7 +15,7 @@ const AuraBeamLoader = () => {
           }}
         />
       </div>
-      <Logo className="w-16 h-16 text-primary z-10 animate-pulse" />
+      <Image src="/img/logo.png" alt="Aura Logo" width={64} height={64} className="z-10 animate-pulse" />
       <p className="mt-4 text-sm text-primary z-10 font-medium">Curating Capsules...</p>
       <div
         className={cn(

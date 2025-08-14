@@ -1,17 +1,17 @@
+
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Home, Library, Store, User, Settings2 } from 'lucide-react';
+import { Home, Library, Store, Settings2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Logo } from '../icons/Logo';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 
 const navItems = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/library', label: 'Library', icon: Library },
   { href: '/store', label: 'Store', icon: Store },
-  { href: '/profile', label: 'Profile', icon: User },
   { href: '/settings', label: 'Settings', icon: Settings2 },
 ];
 
@@ -24,7 +24,7 @@ export function Dock() {
         <TooltipProvider delayDuration={0}>
           <div className="flex items-center justify-around">
             <Link href="/" className="p-2">
-              <Logo className="h-7 w-7 text-white hover:text-primary transition-colors duration-300" />
+              <Image src="/img/logo.png" alt="AURA Logo" width={28} height={28} className="text-white hover:text-primary transition-colors duration-300" />
             </Link>
             <div className="h-8 w-px bg-white/20" />
             {navItems.map((item) => {
