@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { StoreGameCard } from '@/components/aura/StoreGameCard';
 import { userProfile } from '@/lib/mock-data';
@@ -51,7 +52,7 @@ export default function ProfilePage() {
               </p>
             </div>
           </CardContent>
-        </card>
+        </Card>
       </section>
     </div>
   );
