@@ -11,7 +11,7 @@ export default {
     extend: {
       fontFamily: {
         body: ['Inter', 'sans-serif'],
-        headline: ['Poppins', 'sans-serif'],
+        headline: ['Silkscreen', 'sans-serif'],
         code: ['monospace'],
         silkscreen: ['Silkscreen', 'sans-serif'],
       },
