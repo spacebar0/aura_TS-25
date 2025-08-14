@@ -82,10 +82,10 @@
     width: 120%;
     height: 140%;
     background-image:
-      radial-gradient(circle at 15% 20%, hsl(var(--secondary) / 0.6), transparent 10px),
-      radial-gradient(circle at 85% 30%, hsl(var(--primary) / 0.5), transparent 10px),
-      radial-gradient(circle at 40% 80%, hsl(var(--secondary) / 0.6), transparent 10px),
-      radial-gradient(circle at 90% 90%, hsl(var(--primary) / 0.4), transparent 10px);
+      radial-gradient(circle at 15% 20%, hsl(var(--secondary) / 0.8), transparent 10px),
+      radial-gradient(circle at 85% 30%, hsl(var(--primary) / 0.7), transparent 10px),
+      radial-gradient(circle at 40% 80%, hsl(var(--secondary) / 0.8), transparent 10px),
+      radial-gradient(circle at 90% 90%, hsl(var(--primary) / 0.6), transparent 10px);
     background-size: 100% 100%;
     background-repeat: no-repeat;
     animation: sparkle 12s linear infinite;

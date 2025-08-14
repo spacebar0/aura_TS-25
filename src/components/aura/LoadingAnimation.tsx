@@ -63,7 +63,7 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
   const particleVariants = {
     initial: { opacity: 0, scale: 0 },
     animate: (i: number) => ({
-      opacity: Math.random() * 0.5 + 0.2,
+      opacity: Math.random() * 0.6 + 0.3,
       scale: Math.random() * 0.8 + 0.2,
       x: `${(Math.random() - 0.5) * 150}vw`,
       y: `${(Math.random() - 0.5) * 150}vh`,
