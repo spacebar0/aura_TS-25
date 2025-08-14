@@ -148,9 +148,9 @@ export default function HomePage() {
             {allItems.map((item, index) => (
               <CarouselItem
                 key={item.id}
-                className="pl-4 basis-[40%] sm:basis-[30%] md:basis-1/4 lg:basis-1/5"
+                className="pl-4 basis-auto"
               >
-                <div className="flex justify-center">
+                <div className="flex justify-center w-[18vw] h-[18vw] max-w-[220px] max-h-[220px]">
                   {item.type === 'game' && <HomeGameCard game={item} />}
                   {item.type === 'music' && <MusicCard />}
                   {item.type === 'library' && <LibraryCard />}

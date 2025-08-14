@@ -5,17 +5,14 @@ import { Card } from '@/components/ui/card';
 
 type GameCardProps = {
   game: Game;
-  className?: string;
 };
 
-export function HomeGameCard({ game, className }: GameCardProps) {
+export function HomeGameCard({ game }: GameCardProps) {
   return (
     <Card
       className={cn(
-        'group relative overflow-hidden rounded-lg transition-all duration-300 ease-in-out',
-        'hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 focus-within:scale-105 focus-within:shadow-2xl focus-within:shadow-primary/40',
-        'aspect-square',
-        className,
+        'group w-full h-full relative overflow-hidden rounded-lg transition-all duration-300 ease-in-out',
+        'hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 focus-within:scale-105 focus-within:shadow-2xl focus-within:shadow-primary/40'
       )}
     >
       <Image
