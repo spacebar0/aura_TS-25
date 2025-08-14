@@ -20,9 +20,6 @@ export function LibraryCard({ className }: { className?: string }) {
           <h3 className="font-headline text-lg font-medium text-white text-glow">
             Library
           </h3>
-          <p className="text-xs text-white/80 mt-1">
-            View all your games and apps.
-          </p>
         </div>
       </Card>
     </Link>
