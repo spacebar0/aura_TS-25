@@ -7,7 +7,7 @@ import { getCuratedCapsules } from '@/app/actions';
 import { AuraBeamLoader } from './AuraBeamLoader';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import type { CurateStoreCapsulesOutput } from '@/ai/flows/curate-store-capsules';
-import { GameCard } from './GameCard';
+import { StoreGameCard } from './StoreGameCard';
 import { Badge } from '../ui/badge';
 import { Separator } from '../ui/separator';
 
@@ -108,7 +108,7 @@ export function AiCurator() {
                 </p>
                 <div className="grid grid-cols-3 gap-4 mb-6">
                   {(curation.recommendedGames as any[]).map(game => (
-                    <GameCard key={game.id} game={game} variant="landscape" />
+                    <StoreGameCard key={game.id} game={game} />
                   ))}
                 </div>
 

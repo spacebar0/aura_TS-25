@@ -4,25 +4,21 @@ import { cn } from '@/lib/utils';
 import { Card } from '@/components/ui/card';
 import { Badge } from '../ui/badge';
 
-type GameCardProps = {
+type StoreGameCardProps = {
   game: Game;
   className?: string;
-  variant?: 'portrait' | 'landscape';
   showPrice?: boolean;
 };
 
-export function GameCard({ game, className, variant = 'portrait', showPrice = false }: GameCardProps) {
+export function StoreGameCard({ game, className, showPrice = false }: StoreGameCardProps) {
   return (
     <div className={cn('flex flex-col h-full', className)}>
       <Card
         className={cn(
           'group relative overflow-hidden rounded-lg transition-all duration-300 ease-in-out',
           'hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 focus-within:scale-105 focus-within:shadow-2xl focus-within:shadow-primary/40',
-           'flex-grow',
-          {
-            'aspect-square': variant === 'portrait',
-            'aspect-[4/3]': variant === 'landscape',
-          },
+          'flex-grow',
+          'aspect-[4/3]',
         )}
       >
         <Image

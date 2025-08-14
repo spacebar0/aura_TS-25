@@ -1,7 +1,8 @@
+// src/app/page.tsx
 'use client';
 
 import { useRef, useEffect, useCallback, useState, useMemo } from 'react';
-import { GameCard } from '@/components/aura/GameCard';
+import { HomeGameCard } from '@/components/aura/HomeGameCard';
 import {
   Carousel,
   CarouselContent,
@@ -150,7 +151,7 @@ export default function HomePage() {
                 className="pl-4 basis-[40%] sm:basis-[30%] md:basis-1/4 lg:basis-1/5"
               >
                 <div className="flex justify-center">
-                  {item.type === 'game' && <GameCard game={item} />}
+                  {item.type === 'game' && <HomeGameCard game={item} />}
                   {item.type === 'music' && <MusicCard />}
                   {item.type === 'library' && <LibraryCard />}
                 </div>

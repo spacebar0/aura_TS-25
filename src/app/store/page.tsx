@@ -1,5 +1,5 @@
 import { AiCurator } from '@/components/aura/AiCurator';
-import { GameCard } from '@/components/aura/GameCard';
+import { StoreGameCard } from '@/components/aura/StoreGameCard';
 import { StoreCarousel } from '@/components/aura/StoreCarousel';
 import { games } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
@@ -31,9 +31,8 @@ export default function StorePage() {
                   'md:col-span-1 md:row-span-1': index > 0,
                 })}
               >
-                <GameCard
+                <StoreGameCard
                   game={game}
-                  variant="landscape"
                   showPrice
                   className="h-full"
                 />
@@ -53,9 +52,8 @@ export default function StorePage() {
                   'md:col-span-1 md:row-span-1': index > 0,
                 })}
               >
-                <GameCard
+                <StoreGameCard
                   game={game}
-                  variant="landscape"
                   showPrice
                   className="h-full"
                 />
