@@ -14,6 +14,7 @@ export default {
         headline: ['Silkscreen', 'sans-serif'],
         code: ['monospace'],
         silkscreen: ['Silkscreen', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',
