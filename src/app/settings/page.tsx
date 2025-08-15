@@ -11,6 +11,7 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { ThemeSwitcher } from '@/components/aura/ThemeSwitcher';
+import { cn } from '@/lib/utils';
 
 export type SettingCategory = 'system' | 'audio' | 'display' | 'network' | 'privacy' | 'profiles' | 'accessibility' | 'theme';
 
@@ -47,7 +48,7 @@ const SettingsCard = ({ title, description, children }: { title: string, descrip
 
 const SettingRow = ({ label, description, children }: {label: string, description?: string, children: React.ReactNode}) => (
     <div className="flex items-center justify-between p-4 rounded-lg bg-background/20">
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
             <Label className="text-base">{label}</Label>
             {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
         </div>
@@ -135,9 +136,6 @@ export default function SettingsPage() {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500 h-full">
-      <div className="absolute top-8 right-8 z-20">
-          <AuraLevelBadge />
-      </div>
       <div className="flex h-full gap-8">
         <SettingsNav 
             categories={categories}
