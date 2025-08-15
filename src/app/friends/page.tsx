@@ -2,6 +2,7 @@
 'use client';
 
 import { FriendPresenceCard } from '@/components/aura/FriendPresenceCard';
+import { RecentSquadsCarousel } from '@/components/aura/RecentSquadsCarousel';
 import { useUserProfile } from '@/context/UserProfileContext';
 
 export default function FriendsPage() {
@@ -22,6 +23,11 @@ export default function FriendsPage() {
       </header>
 
       <div className="space-y-12">
+        <section>
+          <h2 className="text-2xl font-headline mb-4">Recent Squads</h2>
+          <RecentSquadsCarousel />
+        </section>
+
         <section>
           <h2 className="text-2xl font-headline mb-4">Online ({onlineFriends.length})</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-6 gap-y-10">

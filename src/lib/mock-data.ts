@@ -22,6 +22,14 @@ export type Friend = {
   gamePlaying?: string;
 };
 
+export type RecentPlayer = {
+  id: number;
+  name: string;
+  avatar: string;
+  game: string;
+  lastPlayed: string;
+}
+
 export type UserProfile = {
   name: string;
   avatar: string;
@@ -250,6 +258,17 @@ export const initialUserProfile: UserProfile = {
     { id: 9, name: 'NeonNinja', avatar: 'https://placehold.co/100x100.png', status: 'Idle' },
   ] as Friend[]
 };
+
+export const recentPlayers: RecentPlayer[] = [
+    { id: 1, name: 'Ghost', avatar: 'https://placehold.co/96x96.png', game: 'Cyber Runner 2099', lastPlayed: '2h ago' },
+    { id: 2, name: 'Ace', avatar: 'https://placehold.co/96x96.png', game: 'Starfall', lastPlayed: '5h ago' },
+    { id: 3, name: 'Reaper', avatar: 'https://placehold.co/96x96.png', game: 'Blade Symphony', lastPlayed: '1d ago' },
+    { id: 4, name: 'Nyx', avatar: 'https://placehold.co/96x96.png', game: 'Galaxy Raiders', lastPlayed: '1d ago' },
+    { id: 5, name: 'Wraith', avatar: 'https://placehold.co/96x96.png', game: 'Cyber Runner 2099', lastPlayed: '2d ago' },
+    { id: 6, name: 'Zero', avatar: 'https://placehold.co/96x96.png', game: 'Aethelgard Online', lastPlayed: '3d ago' },
+    { id: 7, name: 'Viper', avatar: 'https://placehold.co/96x96.png', game: 'Mech Warriors', lastPlayed: '3d ago' },
+    { id: 8, name: 'Blitz', avatar: 'https://placehold.co/96x96.png', game: 'Starfall', lastPlayed: '4d ago' },
+];
 
 export type Song = {
   id: string;
