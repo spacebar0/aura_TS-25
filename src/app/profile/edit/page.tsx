@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useRef, ChangeEvent, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Game } from '@/lib/mock-data';
 import { usePinnedGames } from '@/context/PinnedGamesContext';
@@ -26,6 +27,7 @@ const allAchievements = [
 
 
 export default function EditProfilePage() {
+  const router = useRouter();
   const { userProfile, setUserProfile } = useUserProfile();
   const { pinnedGames, togglePinGame } = usePinnedGames(); 
 
@@ -81,6 +83,8 @@ export default function EditProfilePage() {
         title: "Profile Saved!",
         description: "Your changes have been successfully saved.",
     });
+
+    router.push('/profile');
   };
 
   const handleUnpinGame = (game: Game) => {
