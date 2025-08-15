@@ -64,6 +64,16 @@ export default function HomePage() {
       return
     }
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        api.scrollNext();
+      } else if (event.key === 'ArrowLeft') {
+        api.scrollPrev();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
     resetInactivityTimer();
     onSelect(api);
 
@@ -84,6 +94,7 @@ export default function HomePage() {
     window.addEventListener('click', genericReset);
     
     return () => {
+      window.removeEventListener('keydown', handleKeyDown);
       if (inactivityTimer.current) {
         clearTimeout(inactivityTimer.current);
       }
