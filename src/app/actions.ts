@@ -2,6 +2,7 @@
 
 import { curateStoreCapsules, CurateStoreCapsulesOutput } from '@/ai/flows/curate-store-capsules';
 import { generateChatMessages, GenerateChatMessagesOutput } from '@/ai/flows/generate-chat-messages';
+import { generateWifiNames, GenerateWifiNamesOutput } from '@/ai/flows/generate-wifi-names';
 import { games, initialUserProfile, Friend } from '@/lib/mock-data';
 
 export async function getCuratedCapsules(): Promise<CurateStoreCapsulesOutput | { error: string }> {
@@ -43,5 +44,15 @@ export async function getChatMessages(friend: Friend): Promise<GenerateChatMessa
   } catch (error) {
     console.error('Error generating chat messages:', error);
     return { error: 'Could not load chat history. Please try again.' };
+  }
+}
+
+export async function getWifiNetworks(): Promise<GenerateWifiNamesOutput | { error: string }> {
+  try {
+    const result = await generateWifiNames({ count: 5 });
+    return result;
+  } catch (error) {
+    console.error('Error generating wifi networks:', error);
+    return { error: 'Could not load Wi-Fi networks. Please try again.' };
   }
 }

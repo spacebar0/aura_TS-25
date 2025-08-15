@@ -1,15 +1,18 @@
 // src/app/settings/page.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Cog, Volume2, Monitor, Wifi, Shield, Users, Accessibility, Palette } from 'lucide-react';
+import { Cog, Volume2, Monitor, Wifi, Shield, Users, Accessibility, Palette, WifiLow, WifiOff } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SettingsNav } from '@/components/aura/SettingsNav';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { ThemeSwitcher } from '@/components/aura/ThemeSwitcher';
+import { getWifiNetworks } from '@/app/actions';
+import { AuraBeamLoader } from '@/components/aura/AuraBeamLoader';
+import { Button } from '@/components/ui/button';
 
 export type SettingCategory = 'system' | 'audio' | 'display' | 'network' | 'privacy' | 'profiles' | 'accessibility' | 'theme';
 
@@ -60,6 +63,28 @@ export default function SettingsPage() {
   const [activeCategory, setActiveCategory] = useState<SettingCategory>('system');
   const [audioLevels, setAudioLevels] = useState({ master: 75, chat: 50 });
   const [brightness, setBrightness] = useState(80);
+
+  const [networkList, setNetworkList] = useState<string[]>([]);
+  const [isNetworkLoading, setIsNetworkLoading] = useState(false);
+  const [networkError, setNetworkError] = useState<string | null>(null);
+
+  const handleFetchNetworks = useCallback(async () => {
+    setIsNetworkLoading(true);
+    setNetworkError(null);
+    const result = await getWifiNetworks();
+    if ('error' in result) {
+      setNetworkError(result.error);
+    } else {
+      setNetworkList(result.networks);
+    }
+    setIsNetworkLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (activeCategory === 'network') {
+      handleFetchNetworks();
+    }
+  }, [activeCategory, handleFetchNetworks]);
 
   const renderContent = () => {
     switch (activeCategory) {
@@ -114,6 +139,38 @@ export default function SettingsPage() {
              </SettingRow>
           </SettingsCard>
         );
+       case 'network':
+        return (
+            <SettingsCard title="Network Settings" description="Connect to a Wi-Fi network.">
+                {isNetworkLoading && (
+                    <div className="h-64">
+                        <AuraBeamLoader />
+                    </div>
+                )}
+                {networkError && (
+                    <div className="text-center text-destructive">
+                        <p>{networkError}</p>
+                        <Button onClick={handleFetchNetworks} variant="outline" className="mt-4">
+                            Try Again
+                        </Button>
+                    </div>
+                )}
+                {!isNetworkLoading && !networkError && (
+                    <div className="space-y-2">
+                        {networkList.map((network, index) => {
+                            const strength = Math.random();
+                            const Icon = strength > 0.66 ? Wifi : strength > 0.33 ? WifiLow : WifiOff;
+                            return (
+                                <div key={index} className="flex items-center justify-between p-4 rounded-lg bg-background/20 hover:bg-background/40 transition-colors cursor-pointer">
+                                    <span className="font-medium">{network}</span>
+                                    <Icon className="w-5 h-5 text-muted-foreground" />
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+            </SettingsCard>
+        );
       case 'theme':
         return (
             <SettingsCard title="Themes" description="Customize the look and feel of your AURA console.">
@@ -141,7 +198,7 @@ export default function SettingsPage() {
         />
         <main className="flex-1 relative">
             <AnimatePresence mode="wait">
-                <div key={activeCategory} className="h-full">
+                <div key={activeCategory}>
                     {renderContent()}
                 </div>
             </AnimatePresence>
