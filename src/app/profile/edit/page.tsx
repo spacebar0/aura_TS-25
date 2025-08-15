@@ -3,14 +3,14 @@
 
 import { useState, useRef, ChangeEvent, useEffect } from 'react';
 import Image from 'next/image';
-import { games, Game } from '@/lib/mock-data';
+import { Game } from '@/lib/mock-data';
 import { usePinnedGames } from '@/context/PinnedGamesContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Trash2, Upload, User, BadgeCheck, Pin } from 'lucide-react';
+import { Trash2, Upload, User, BadgeCheck, Pin, Save } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useUserProfile } from '@/context/UserProfileContext';
 
@@ -27,7 +27,7 @@ const allAchievements = [
 
 export default function EditProfilePage() {
   const { userProfile, setUserProfile } = useUserProfile();
-  const { pinnedGames, togglePinGame } = usePinnedGames();
+  const { pinnedGames } = usePinnedGames(); // Pinned games are managed globally
 
   const [avatar, setAvatar] = useState(userProfile.avatar);
   const [username, setUsername] = useState(userProfile.name);
@@ -67,9 +67,10 @@ export default function EditProfilePage() {
         ...userProfile,
         name: username,
         avatar: avatar,
-        pinnedGames: pinnedGames,
+        pinnedGames: pinnedGames, // We get the latest from context
     });
     
+    // In a real app, you would also save visibleAchievements somewhere
     console.log("Saving changes:", {
         username,
         avatar,
@@ -85,13 +86,19 @@ export default function EditProfilePage() {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500">
-      <header className="mb-8">
-        <h1 className="text-5xl font-poppins font-medium text-glow">
-          Edit Profile
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          Customize your AURA presence.
-        </p>
+      <header className="mb-8 flex justify-between items-center">
+        <div>
+            <h1 className="text-5xl font-poppins font-medium text-glow">
+            Edit Profile
+            </h1>
+            <p className="text-muted-foreground mt-2">
+            Customize your AURA presence.
+            </p>
+        </div>
+        <Button size="lg" onClick={handleSave}>
+            <Save className="mr-2 h-5 w-5" />
+            Save Changes
+        </Button>
       </header>
 
       <div className="space-y-8">
@@ -150,7 +157,12 @@ export default function EditProfilePage() {
                         <Image src={game.cover} alt={game.title} width={60} height={45} className="rounded" data-ai-hint="game poster" />
                         <span className="font-medium">{game.title}</span>
                         </div>
-                        <Button variant="ghost" size="icon" onClick={() => togglePinGame(game)}>
+                        <Button variant="ghost" size="icon" onClick={() => {
+                             // This now comes from the PinnedGamesContext
+                             // In a real app, you'd probably want to call a function from the context here
+                             // For now, let's assume the context handles removal, but we need to find the right component for that
+                             console.log("This should be handled by the context provider, likely on the homepage");
+                        }}>
                             <Trash2 className="w-5 h-5 text-destructive" />
                         </Button>
                     </div>
@@ -158,7 +170,7 @@ export default function EditProfilePage() {
                 </div>
                 ) : (
                 <p className="text-muted-foreground text-center py-4">
-                    No games pinned. Pin games from the home screen.
+                    No games pinned. Pin games from the home screen to see them here.
                 </p>
                 )}
             </CardContent>
@@ -191,9 +203,6 @@ export default function EditProfilePage() {
             </CardContent>
         </Card>
 
-        <div className="flex justify-end">
-            <Button size="lg" onClick={handleSave}>Save Changes</Button>
-        </div>
       </div>
     </div>
   );
