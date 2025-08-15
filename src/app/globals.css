@@ -31,6 +31,15 @@
     --glow-ingame: 217 91% 60%; /* Blue */
     --glow-idle: 39 100% 50%; /* Amber */
     --glow-dnd: 0 100% 50%; /* Red */
+
+    /* Settings Glow Colors */
+    --glow-system: 210 80% 60%;
+    --glow-audio: 39 100% 50%;
+    --glow-display: 180 80% 60%;
+    --glow-network: 120 80% 60%;
+    --glow-privacy: 260 80% 60%;
+    --glow-profiles: 320 80% 60%;
+    --glow-accessibility: 0 80% 60%;
   }
 
   .dark {
@@ -75,6 +84,10 @@
     text-shadow: 0 0 8px hsl(var(--primary) / 0.8), 0 0 32px hsl(var(--primary) / 0.5);
   }
 
+  .logo-glow {
+    filter: drop-shadow(0 0 5px hsl(var(--glow-ingame) / 0.7)) drop-shadow(0 0 15px hsl(var(--glow-ingame) / 0.4));
+  }
+  
   .glass-pane {
     @apply bg-black/20 backdrop-blur-lg border-white/10;
   }
@@ -136,6 +149,15 @@
     transition-all duration-300 ease-in-out
     hover:bg-primary hover:text-white hover:scale-110 hover:shadow-lg hover:shadow-primary/50;
   }
+  
+  .settings-glow {
+    box-shadow: 0 0 8px hsl(var(--glow-color) / 0.7), 0 0 24px hsl(var(--glow-color) / 0.4);
+    color: hsl(var(--glow-color));
+  }
+
+  .aura-level-pulse {
+    animation: aura-level-pulse 3s infinite ease-in-out;
+  }
 }
 
 @keyframes sparkle {
@@ -157,6 +179,19 @@
     box-shadow: 0 0 0 0 hsl(var(--primary) / 0);
   }
 }
+
+@keyframes aura-level-pulse {
+  0% {
+    filter: drop-shadow(0 0 2px hsl(var(--primary) / 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px hsl(var(--primary) / 0.8));
+  }
+  100% {
+    filter: drop-shadow(0 0 2px hsl(var(--primary) / 0.5));
+  }
+}
+
 
 @keyframes breathing-glow-online {
   0% { box-shadow: 0 0 2px hsl(var(--glow-online) / 0.2), 0 0 3px hsl(var(--glow-online) / 0.2), inset 0 0 1px hsl(var(--glow-online) / 0.1); }
