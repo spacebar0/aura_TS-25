@@ -3,16 +3,15 @@
 
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Cog, Volume2, Monitor, Wifi, Shield, Users, Accessibility, Gamepad2, Moon, Sun } from 'lucide-react';
+import { Cog, Volume2, Monitor, Wifi, Shield, Users, Accessibility, Palette } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SettingsNav } from '@/components/aura/SettingsNav';
 import { AuraLevelBadge } from '@/components/aura/AuraLevelBadge';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
-import { Button } from '@/components/ui/button';
 
-export type SettingCategory = 'system' | 'audio' | 'display' | 'network' | 'privacy' | 'profiles' | 'accessibility';
+export type SettingCategory = 'system' | 'audio' | 'display' | 'network' | 'privacy' | 'profiles' | 'accessibility' | 'theme';
 
 const categories = [
   { id: 'system', label: 'System', icon: Cog, color: 'hsl(210, 80%, 60%)' },
@@ -22,6 +21,7 @@ const categories = [
   { id: 'privacy', label: 'Privacy', icon: Shield, color: 'hsl(260, 80%, 60%)' },
   { id: 'profiles', label: 'Profiles', icon: Users, color: 'hsl(320, 80%, 60%)' },
   { id: 'accessibility', label: 'Accessibility', icon: Accessibility, color: 'hsl(0, 80%, 60%)' },
+  { id: 'theme', label: 'Themes', icon: Palette, color: 'hsl(300, 80%, 60%)' },
 ];
 
 const SettingsCard = ({ title, children }: { title: string, children: React.ReactNode }) => (
@@ -59,13 +59,6 @@ export default function SettingsPage() {
               <Label htmlFor="dnd-mode">Do Not Disturb</Label>
               <Switch id="dnd-mode" />
             </div>
-            <div className="flex items-center justify-between">
-                <Label>Theme</Label>
-                <div className="flex items-center gap-2">
-                    <Button variant="outline" size="icon"><Sun /></Button>
-                    <Button variant="secondary" size="icon"><Moon /></Button>
-                </div>
-            </div>
           </SettingsCard>
         );
       case 'audio':
@@ -93,6 +86,14 @@ export default function SettingsPage() {
               <Slider id="brightness" defaultValue={[80]} max={100} step={1} />
             </div>
           </SettingsCard>
+        );
+      case 'theme':
+        return (
+            <SettingsCard title="Themes">
+                <p className="text-muted-foreground">
+                    Customize the look and feel of your AURA console. More themes coming soon!
+                </p>
+            </SettingsCard>
         );
       default:
         return (
