@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import Image from 'next/image';
@@ -96,13 +97,14 @@ export default function ProfilePage() {
           <h2 className="text-3xl font-poppins mb-6">Achievements</h2>
           <Card className="glass-pane border-primary/50">
               <CardContent className="p-6">
-                  <div className="space-y-6">
+                  <div className="space-y-8">
                       {achievements.map((ach) => {
                           const rank = ranks.find(r => r.name === ach.rankName);
                           const progress = rank ? (rank.level / ranks.length) * 100 : 0;
                           return (
-                              <div key={ach.game} className="flex items-center gap-4">
-                                  <div className="flex-1">
+                              <div key={ach.game} className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1">
+                                  {/* Game and Rank Name */}
+                                  <div className="col-start-1">
                                       <p className="font-medium text-lg">{ach.game}</p>
                                       <div className="flex items-center gap-2 mt-1">
                                           <Star className={cn("w-5 h-5", rank?.color)} />
@@ -111,12 +113,17 @@ export default function ProfilePage() {
                                           </span>
                                       </div>
                                   </div>
-                                  <div className="w-1/2">
-                                      <Progress value={progress} className="h-2 bg-muted/30" />
-                                      <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                                          <span>Level {rank?.level}</span>
-                                          <span>Next: {ranks.find(r => r.level === (rank?.level ?? 0) + 1)?.name || 'Max'}</span>
-                                      </div>
+                                  
+                                  {/* Progress bar and text */}
+                                  <div className="col-start-2 flex items-center gap-4">
+                                    <div className="w-40">
+                                        <Progress value={progress} className="h-2 bg-muted/30" />
+                                    </div>
+                                    <div className="text-right text-xs text-muted-foreground w-28">
+                                        <span>Aura L{rank?.level}</span>
+                                        <br />
+                                        <span>Next: {ranks.find(r => r.level === (rank?.level ?? 0) + 1)?.name || 'Max'}</span>
+                                    </div>
                                   </div>
                               </div>
                           )
@@ -127,7 +134,7 @@ export default function ProfilePage() {
         </section>
 
         <section className="lg:col-span-1">
-          <h2 className="text-3xl font-poppins mb-6">Friends</h2>
+          {/* This section is intentionally left empty for the friends list */}
           <FriendsList />
         </section>
       </div>
