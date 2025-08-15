@@ -14,6 +14,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Trash2, Upload, User, BadgeCheck, Pin, Save } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useUserProfile } from '@/context/UserProfileContext';
+import { cn } from '@/lib/utils';
 
 const allAchievements = [
     { game: 'Cyber Runner 2099', rankName: 'Nova' },
@@ -25,6 +26,14 @@ const allAchievements = [
     { game: 'Mech Warriors', rankName: 'Prism' },
 ];
 
+const presetAvatars = [
+    'https://placehold.co/100x100.png',
+    'https://placehold.co/100x100.png',
+    'https://placehold.co/100x100.png',
+    'https://placehold.co/100x100.png',
+    'https://placehold.co/100x100.png',
+    'https://placehold.co/100x100.png',
+]
 
 export default function EditProfilePage() {
   const router = useRouter();
@@ -119,8 +128,9 @@ export default function EditProfilePage() {
             <CardTitle className="flex items-center gap-2"><User /> Profile Information</CardTitle>
             <CardDescription>Update your avatar and username.</CardDescription>
           </CardHeader>
-          <CardContent className="grid md:grid-cols-[150px_1fr] gap-6 items-start">
+          <CardContent className="grid md:grid-cols-[150px_1fr_1fr] gap-8 items-start">
             <div className="flex flex-col items-center gap-4">
+              <p className="font-medium text-sm text-center mb-2">Current Avatar</p>
               <Image
                 src={avatar}
                 alt="Your Avatar"
@@ -138,17 +148,39 @@ export default function EditProfilePage() {
               />
               <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
                 <Upload className="mr-2 h-4 w-4" />
-                Upload
+                Upload New
               </Button>
             </div>
-            <div className="space-y-4">
-              <Label htmlFor="username">Username</Label>
+            
+            <div>
+              <Label htmlFor="username" className="mb-4 block">Username</Label>
               <Input
                 id="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="text-lg"
               />
+            </div>
+            
+            <div>
+              <p className="font-medium text-sm mb-4">Or choose a preset</p>
+              <div className="grid grid-cols-3 gap-2">
+                {presetAvatars.map((preset, index) => (
+                  <button key={index} onClick={() => setAvatar(preset)} className="rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background transition-all">
+                    <Image
+                      src={preset}
+                      alt={`Preset avatar ${index + 1}`}
+                      width={60}
+                      height={60}
+                      className={cn(
+                        "rounded-full border-2",
+                        avatar === preset ? 'border-primary' : 'border-transparent hover:border-primary/50'
+                      )}
+                      data-ai-hint="futuristic avatar"
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
           </CardContent>
         </Card>

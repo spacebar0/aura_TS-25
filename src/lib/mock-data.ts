@@ -239,7 +239,7 @@ export const initialUserProfile: UserProfile = {
   totalPlaytime: '1,240 hours',
   gamesOwned: games.length,
   friends: [
-    { id: 1, name: 'Spacebar', avatar: '/images/profile1.jpg', status: 'In Game', gamePlaying: 'Cyber Runner 2099' },
+    { id: 1, name: 'Spacebar', avatar: '/images/profile4.jpg', status: 'In Game', gamePlaying: 'Cyber Runner 2099' },
     { id: 2, name: 'PixelPrincess', avatar: '/images/profile2.jpg', status: 'Online' },
     { id: 3, name: 'HorizonRed', avatar: '/images/profile3.jpg', status: 'Online' },
     { id: 4, name: 'SolarFlex', avatar: '/images/profile4.jpg', status: 'Offline' },
