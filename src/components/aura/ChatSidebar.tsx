@@ -16,8 +16,17 @@ import { cn } from '@/lib/utils';
 import { Input } from '../ui/input';
 import { SendHorizonal, Loader } from 'lucide-react';
 import { getChatMessages } from '@/app/actions';
-import type { ChatMessage } from '@/ai/flows/generate-chat-messages';
+import type { GenerateChatMessagesOutput } from '@/ai/flows/generate-chat-messages';
 import { Skeleton } from '../ui/skeleton';
+import { z } from 'zod';
+
+// Define the schema for a single chat message
+export const ChatMessageSchema = z.object({
+  sender: z.enum(['me', 'other']).describe("Who sent the message. 'me' is the main user, 'other' is the friend."),
+  text: z.string().describe("The content of the chat message."),
+});
+export type ChatMessage = z.infer<typeof ChatMessageSchema>;
+
 
 interface ChatSidebarProps {
   isOpen: boolean;

@@ -7,8 +7,6 @@
  * informal chat history between two friends discussing a video game.
  *
  * @function generateChatMessages - The main function to generate chat messages.
- * @typedef {GenerateChatMessagesInput} GenerateChatMessagesInput - Input type for the function.
- * @typedef {GenerateChatMessagesOutput} GenerateChatMessagesOutput - Output type for the function.
  */
 
 import {ai} from '@/ai/genkit';
@@ -20,14 +18,13 @@ const GenerateChatMessagesInputSchema = z.object({
   friendName: z.string().describe("The name of the friend."),
   game: z.string().describe("The game they are talking about."),
 });
-export type GenerateChatMessagesInput = z.infer<typeof GenerateChatMessagesInputSchema>;
+type GenerateChatMessagesInput = z.infer<typeof GenerateChatMessagesInputSchema>;
 
 // Define the schema for a single chat message
-export const ChatMessageSchema = z.object({
+const ChatMessageSchema = z.object({
   sender: z.enum(['me', 'other']).describe("Who sent the message. 'me' is the main user, 'other' is the friend."),
   text: z.string().describe("The content of the chat message."),
 });
-export type ChatMessage = z.infer<typeof ChatMessageSchema>;
 
 // Define the output schema
 const GenerateChatMessagesOutputSchema = z.object({
