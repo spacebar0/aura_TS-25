@@ -7,6 +7,7 @@ import { userProfile } from '@/lib/mock-data';
 import { Button } from '../ui/button';
 import { Users } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
 
 export function Header() {
   const [activeFriends, setActiveFriends] = useState(0);
@@ -28,9 +29,9 @@ export function Header() {
       <div className="container mx-auto flex justify-end items-center">
         <div className="flex items-center gap-4">
           {isClient ? (
-            <Button variant="ghost" className="relative">
-              <Users className="h-6 w-6 text-white" />
-              <span className="ml-2 text-white font-bold">{activeFriends}</span>
+            <Button variant="ghost" className="relative text-white/80 hover:text-primary hover:bg-transparent transition-colors duration-300 group">
+              <Users className="h-6 w-6 transition-colors duration-300 group-hover:text-glow" />
+              <span className="ml-2 font-bold transition-colors duration-300 group-hover:text-glow">{activeFriends}</span>
               <div className="absolute top-1 right-1 h-2 w-2 rounded-full bg-green-500 ring-2 ring-background" />
             </Button>
           ) : (
