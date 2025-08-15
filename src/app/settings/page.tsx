@@ -6,12 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Cog, Volume2, Monitor, Wifi, Shield, Users, Accessibility, Palette } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SettingsNav } from '@/components/aura/SettingsNav';
-import { AuraLevelBadge } from '@/components/aura/AuraLevelBadge';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { ThemeSwitcher } from '@/components/aura/ThemeSwitcher';
-import { cn } from '@/lib/utils';
 
 export type SettingCategory = 'system' | 'audio' | 'display' | 'network' | 'privacy' | 'profiles' | 'accessibility' | 'theme';
 
