@@ -22,8 +22,8 @@ export function Dock() {
   const pathname = usePathname();
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-50">
-      <nav className="mx-auto mb-4 w-full max-w-lg rounded-full border-t glass-pane p-2 shadow-2xl shadow-black/50">
+    <footer className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none">
+      <nav className="mx-auto mb-4 w-full max-w-lg rounded-full border-t glass-pane p-2 shadow-2xl shadow-black/50 pointer-events-auto">
         <TooltipProvider delayDuration={0}>
           <div className="flex items-center justify-around">
             
@@ -52,7 +52,7 @@ export function Dock() {
             })}
 
             <Link href="/" className="-mt-2 hover:scale-110 transition-transform duration-300">
-                <Image src="/images/logo.PNG" alt="AURA Logo" width={48} height={48} className="invert" />
+                <Image src="/images/logo.PNG" alt="AURA Logo" width={48} height={48} className="invert logo-glow" />
             </Link>
 
             {navItemsRight.map((item) => {
