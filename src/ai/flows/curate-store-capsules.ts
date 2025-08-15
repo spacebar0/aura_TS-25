@@ -76,6 +76,7 @@ const curateStoreCapsulesPrompt = ai.definePrompt({
   output: {schema: CurateStoreCapsulesOutputSchema},
   prompt: `You are an AI curator for a high-end digital game store called AURA.
   Your task is to create a personalized "AI Curator Weekly" section for a user.
+  Be creative and generate a different, unique, and surprising collection each time.
 
   Based on the user's preferences, trending games, and the list of available store games, you will:
   1.  Select EXACTLY 3 games from the store list that would be a perfect fit for the user.
