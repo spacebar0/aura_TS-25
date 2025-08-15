@@ -55,9 +55,15 @@ export default function EditProfilePage() {
   
   const handleSave = () => {
     // In a real app, you'd send this data to your backend.
-    console.log({
+    // Here, we're updating the mock data object directly.
+    userProfile.name = username;
+    userProfile.avatar = avatar;
+    userProfile.pinnedGames = pinnedGames;
+    // You could also store visibleAchievements if the profile page was set up to use it.
+    
+    console.log("Saving changes:", {
         username,
-        avatar: 'new avatar data',
+        avatar,
         pinnedGames: pinnedGames.map(g => g.id),
         visibleAchievements,
     });
