@@ -1,9 +1,9 @@
 // src/app/profile/edit/page.tsx
 'use client';
 
-import { useState, useRef, ChangeEvent } from 'react';
+import { useState, useRef, ChangeEvent, useEffect } from 'react';
 import Image from 'next/image';
-import { userProfile, games, Game } from '@/lib/mock-data';
+import { games, Game } from '@/lib/mock-data';
 import { usePinnedGames } from '@/context/PinnedGamesContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Checkbox } from '@/components/ui/checkbox';
 import { Trash2, Upload, User, BadgeCheck, Pin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useUserProfile } from '@/context/UserProfileContext';
 
 const allAchievements = [
     { game: 'Cyber Runner 2099', rankName: 'Nova' },
@@ -25,7 +26,9 @@ const allAchievements = [
 
 
 export default function EditProfilePage() {
+  const { userProfile, setUserProfile } = useUserProfile();
   const { pinnedGames, togglePinGame } = usePinnedGames();
+
   const [avatar, setAvatar] = useState(userProfile.avatar);
   const [username, setUsername] = useState(userProfile.name);
   const [visibleAchievements, setVisibleAchievements] = useState(
@@ -33,6 +36,12 @@ export default function EditProfilePage() {
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    // When profile from context changes, update local state
+    setAvatar(userProfile.avatar);
+    setUsername(userProfile.name);
+  }, [userProfile]);
 
   const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -54,12 +63,12 @@ export default function EditProfilePage() {
   };
   
   const handleSave = () => {
-    // In a real app, you'd send this data to your backend.
-    // Here, we're updating the mock data object directly.
-    userProfile.name = username;
-    userProfile.avatar = avatar;
-    userProfile.pinnedGames = pinnedGames;
-    // You could also store visibleAchievements if the profile page was set up to use it.
+    setUserProfile({
+        ...userProfile,
+        name: username,
+        avatar: avatar,
+        pinnedGames: pinnedGames,
+    });
     
     console.log("Saving changes:", {
         username,

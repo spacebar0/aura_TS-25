@@ -3,7 +3,7 @@
 
 import Image from 'next/image';
 import { StoreGameCard } from '@/components/aura/StoreGameCard';
-import { userProfile, games } from '@/lib/mock-data';
+import { games } from '@/lib/mock-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Star, Hourglass, Gamepad2, Trophy, Pencil } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
@@ -12,6 +12,7 @@ import { usePinnedGames } from '@/context/PinnedGamesContext';
 import { FriendsList } from '@/components/aura/FriendsList';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { useUserProfile } from '@/context/UserProfileContext';
 
 const ranks = [
     { name: 'Lumen', level: 1, color: 'text-gray-400' },
@@ -35,6 +36,7 @@ const achievements = [
 ]
 
 export default function ProfilePage() {
+  const { userProfile } = useUserProfile();
   const { pinnedGames } = usePinnedGames();
 
   return (

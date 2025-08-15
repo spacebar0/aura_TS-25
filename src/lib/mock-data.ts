@@ -22,6 +22,17 @@ export type Friend = {
   gamePlaying?: string;
 };
 
+export type UserProfile = {
+  name: string;
+  avatar: string;
+  auraColor: string;
+  pinnedGames: Game[];
+  preferences: string;
+  totalPlaytime: string;
+  gamesOwned: number;
+  friends: Friend[];
+}
+
 export const featuredGames: Game[] = [
   {
     id: 101,
@@ -219,7 +230,7 @@ export const games: Game[] = [
   },
 ];
 
-export const userProfile = {
+export const initialUserProfile: UserProfile = {
   name: 'Vapor',
   avatar: 'https://placehold.co/100x100.png',
   auraColor: 'magenta',

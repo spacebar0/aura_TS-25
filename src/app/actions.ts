@@ -1,7 +1,7 @@
 'use server';
 
 import { curateStoreCapsules, CurateStoreCapsulesOutput } from '@/ai/flows/curate-store-capsules';
-import { games, userProfile } from '@/lib/mock-data';
+import { games, initialUserProfile } from '@/lib/mock-data';
 
 export async function getCuratedCapsules(): Promise<CurateStoreCapsulesOutput | { error: string }> {
   try {
@@ -9,7 +9,7 @@ export async function getCuratedCapsules(): Promise<CurateStoreCapsulesOutput | 
     const storeGamesList = games.map(g => `${g.title} (${g.price}, ${g.genre})`).join(', ');
 
     const result = await curateStoreCapsules({
-      userPreferences: userProfile.preferences,
+      userPreferences: initialUserProfile.preferences,
       trendingGames: trendingGamesList,
       storeGames: storeGamesList,
     });

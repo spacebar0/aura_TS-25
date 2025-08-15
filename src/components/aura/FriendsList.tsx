@@ -2,11 +2,12 @@
 'use client';
 
 import Image from 'next/image';
-import { userProfile, type Friend } from '@/lib/mock-data';
+import { type Friend } from '@/lib/mock-data';
 import { Card, CardContent, CardHeader } from '../ui/card';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import Link from 'next/link';
+import { useUserProfile } from '@/context/UserProfileContext';
 
 function FriendItem({ friend }: { friend: Friend }) {
   return (
@@ -48,6 +49,7 @@ function FriendItem({ friend }: { friend: Friend }) {
 }
 
 export function FriendsList() {
+  const { userProfile } = useUserProfile();
   const friends = userProfile.friends;
 
   return (

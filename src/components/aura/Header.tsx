@@ -3,13 +3,13 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { userProfile } from '@/lib/mock-data';
 import { Button } from '../ui/button';
 import { Users } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
+import { useUserProfile } from '@/context/UserProfileContext';
 
 export function Header() {
+  const { userProfile } = useUserProfile();
   const [activeFriends, setActiveFriends] = useState(0);
   const [isClient, setIsClient] = useState(false);
 

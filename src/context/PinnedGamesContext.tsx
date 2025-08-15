@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Game, userProfile } from '@/lib/mock-data';
+import { Game, initialUserProfile } from '@/lib/mock-data';
 
 interface PinnedGamesContextType {
   pinnedGames: Game[];
@@ -11,7 +11,7 @@ interface PinnedGamesContextType {
 const PinnedGamesContext = createContext<PinnedGamesContextType | undefined>(undefined);
 
 export const PinnedGamesProvider = ({ children }: { children: ReactNode }) => {
-  const [pinnedGames, setPinnedGames] = useState<Game[]>(userProfile.pinnedGames);
+  const [pinnedGames, setPinnedGames] = useState<Game[]>(initialUserProfile.pinnedGames);
 
   const togglePinGame = (game: Game) => {
     setPinnedGames((prevPinnedGames) => {
