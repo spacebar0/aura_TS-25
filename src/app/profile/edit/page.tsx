@@ -27,7 +27,7 @@ const allAchievements = [
 
 export default function EditProfilePage() {
   const { userProfile, setUserProfile } = useUserProfile();
-  const { pinnedGames } = usePinnedGames(); // Pinned games are managed globally
+  const { pinnedGames, togglePinGame } = usePinnedGames(); 
 
   const [avatar, setAvatar] = useState(userProfile.avatar);
   const [username, setUsername] = useState(userProfile.name);
@@ -67,10 +67,9 @@ export default function EditProfilePage() {
         ...userProfile,
         name: username,
         avatar: avatar,
-        pinnedGames: pinnedGames, // We get the latest from context
     });
     
-    // In a real app, you would also save visibleAchievements somewhere
+    // In a real app, you would also save visibleAchievements and pinnedGames somewhere
     console.log("Saving changes:", {
         username,
         avatar,
@@ -81,6 +80,14 @@ export default function EditProfilePage() {
     toast({
         title: "Profile Saved!",
         description: "Your changes have been successfully saved.",
+    });
+  };
+
+  const handleUnpinGame = (game: Game) => {
+    togglePinGame(game);
+    toast({
+        title: "Game Unpinned",
+        description: `${game.title} has been removed from your pinned games.`,
     });
   };
 
@@ -157,12 +164,7 @@ export default function EditProfilePage() {
                         <Image src={game.cover} alt={game.title} width={60} height={45} className="rounded" data-ai-hint="game poster" />
                         <span className="font-medium">{game.title}</span>
                         </div>
-                        <Button variant="ghost" size="icon" onClick={() => {
-                             // This now comes from the PinnedGamesContext
-                             // In a real app, you'd probably want to call a function from the context here
-                             // For now, let's assume the context handles removal, but we need to find the right component for that
-                             console.log("This should be handled by the context provider, likely on the homepage");
-                        }}>
+                        <Button variant="ghost" size="icon" onClick={() => handleUnpinGame(game)}>
                             <Trash2 className="w-5 h-5 text-destructive" />
                         </Button>
                     </div>
