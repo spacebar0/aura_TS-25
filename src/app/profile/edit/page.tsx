@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Trash2, Upload, User, BadgeCheck } from 'lucide-react';
+import { Trash2, Upload, User, BadgeCheck, Pin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const allAchievements = [
@@ -123,7 +123,7 @@ export default function EditProfilePage() {
         {/* Pinned Games Card */}
         <Card className="glass-pane">
             <CardHeader>
-                <CardTitle className="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pin"><path d="M12 17v5"/><path d="M9 10.76A5 5 0 0 1 8 14h8a5 5 0 0 1-1-3.24V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v.43"/><path d="M12 2v4"/><path d="M9 14v1"/><path d="M15 14v1"/></svg> Pinned Games</CardTitle>
+                <CardTitle className="flex items-center gap-2"><Pin /> Pinned Games</CardTitle>
                 <CardDescription>Manage the games showcased on your profile.</CardDescription>
             </CardHeader>
             <CardContent>
