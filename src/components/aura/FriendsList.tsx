@@ -18,7 +18,7 @@ function FriendItem({ friend }: { friend: Friend }) {
             src={friend.avatar}
             alt={friend.name}
             fill
-            className="object-cover"
+            className="object-cover rounded-full"
             data-ai-hint="avatar"
             />
         </div>
