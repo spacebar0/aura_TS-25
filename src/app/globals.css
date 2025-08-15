@@ -130,6 +130,12 @@
     animation: breathing-glow-dnd 1.5s infinite ease-in-out;
   }
 
+  /* Radial Menu Styles */
+  .radial-menu-item {
+    @apply absolute w-12 h-12 rounded-full bg-background/50 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/80
+    transition-all duration-300 ease-in-out
+    hover:bg-primary hover:text-white hover:scale-110 hover:shadow-lg hover:shadow-primary/50;
+  }
 }
 
 @keyframes sparkle {
@@ -153,22 +159,22 @@
 }
 
 @keyframes breathing-glow-online {
-  0% { box-shadow: 0 0 3px hsl(var(--glow-online) / 0.2), 0 0 5px hsl(var(--glow-online) / 0.2), inset 0 0 2px hsl(var(--glow-online) / 0.1); }
-  50% { box-shadow: 0 0 10px hsl(var(--glow-online) / 0.5), 0 0 15px hsl(var(--glow-online) / 0.5), inset 0 0 5px hsl(var(--glow-online) / 0.3); }
-  100% { box-shadow: 0 0 3px hsl(var(--glow-online) / 0.2), 0 0 5px hsl(var(--glow-online) / 0.2), inset 0 0 2px hsl(var(--glow-online) / 0.1); }
+  0% { box-shadow: 0 0 2px hsl(var(--glow-online) / 0.2), 0 0 3px hsl(var(--glow-online) / 0.2), inset 0 0 1px hsl(var(--glow-online) / 0.1); }
+  50% { box-shadow: 0 0 6px hsl(var(--glow-online) / 0.4), 0 0 8px hsl(var(--glow-online) / 0.4), inset 0 0 3px hsl(var(--glow-online) / 0.2); }
+  100% { box-shadow: 0 0 2px hsl(var(--glow-online) / 0.2), 0 0 3px hsl(var(--glow-online) / 0.2), inset 0 0 1px hsl(var(--glow-online) / 0.1); }
 }
 @keyframes breathing-glow-ingame {
-  0% { box-shadow: 0 0 3px hsl(var(--glow-ingame) / 0.2), 0 0 5px hsl(var(--glow-ingame) / 0.2), inset 0 0 2px hsl(var(--glow-ingame) / 0.1); }
-  50% { box-shadow: 0 0 10px hsl(var(--glow-ingame) / 0.5), 0 0 15px hsl(var(--glow-ingame) / 0.5), inset 0 0 5px hsl(var(--glow-ingame) / 0.3); }
-  100% { box-shadow: 0 0 3px hsl(var(--glow-ingame) / 0.2), 0 0 5px hsl(var(--glow-ingame) / 0.2), inset 0 0 2px hsl(var(--glow-ingame) / 0.1); }
+  0% { box-shadow: 0 0 2px hsl(var(--glow-ingame) / 0.2), 0 0 3px hsl(var(--glow-ingame) / 0.2), inset 0 0 1px hsl(var(--glow-ingame) / 0.1); }
+  50% { box-shadow: 0 0 6px hsl(var(--glow-ingame) / 0.4), 0 0 8px hsl(var(--glow-ingame) / 0.4), inset 0 0 3px hsl(var(--glow-ingame) / 0.2); }
+  100% { box-shadow: 0 0 2px hsl(var(--glow-ingame) / 0.2), 0 0 3px hsl(var(--glow-ingame) / 0.2), inset 0 0 1px hsl(var(--glow-ingame) / 0.1); }
 }
 @keyframes breathing-glow-idle {
-  0% { box-shadow: 0 0 2px hsl(var(--glow-idle) / 0.1), 0 0 4px hsl(var(--glow-idle) / 0.1), inset 0 0 2px hsl(var(--glow-idle) / 0.1); }
-  50% { box-shadow: 0 0 8px hsl(var(--glow-idle) / 0.3), 0 0 12px hsl(var(--glow-idle) / 0.3), inset 0 0 4px hsl(var(--glow-idle) / 0.2); }
-  100% { box-shadow: 0 0 2px hsl(var(--glow-idle) / 0.1), 0 0 4px hsl(var(--glow-idle) / 0.1), inset 0 0 2px hsl(var(--glow-idle) / 0.1); }
+  0% { box-shadow: 0 0 1px hsl(var(--glow-idle) / 0.1), 0 0 2px hsl(var(--glow-idle) / 0.1), inset 0 0 1px hsl(var(--glow-idle) / 0.1); }
+  50% { box-shadow: 0 0 4px hsl(var(--glow-idle) / 0.3), 0 0 6px hsl(var(--glow-idle) / 0.3), inset 0 0 2px hsl(var(--glow-idle) / 0.2); }
+  100% { box-shadow: 0 0 1px hsl(var(--glow-idle) / 0.1), 0 0 2px hsl(var(--glow-idle) / 0.1), inset 0 0 1px hsl(var(--glow-idle) / 0.1); }
 }
 @keyframes breathing-glow-dnd {
-  0% { box-shadow: 0 0 4px hsl(var(--glow-dnd) / 0.3), 0 0 8px hsl(var(--glow-dnd) / 0.3), inset 0 0 3px hsl(var(--glow-dnd) / 0.2); }
-  50% { box-shadow: 0 0 12px hsl(var(--glow-dnd) / 0.6), 0 0 20px hsl(var(--glow-dnd) / 0.6), inset 0 0 7px hsl(var(--glow-dnd) / 0.4); }
-  100% { box-shadow: 0 0 4px hsl(var(--glow-dnd) / 0.3), 0 0 8px hsl(var(--glow-dnd) / 0.3), inset 0 0 3px hsl(var(--glow-dnd) / 0.2); }
+  0% { box-shadow: 0 0 3px hsl(var(--glow-dnd) / 0.3), 0 0 5px hsl(var(--glow-dnd) / 0.3), inset 0 0 2px hsl(var(--glow-dnd) / 0.2); }
+  50% { box-shadow: 0 0 8px hsl(var(--glow-dnd) / 0.5), 0 0 12px hsl(var(--glow-dnd) / 0.5), inset 0 0 5px hsl(var(--glow-dnd) / 0.3); }
+  100% { box-shadow: 0 0 3px hsl(var(--glow-dnd) / 0.3), 0 0 5px hsl(var(--glow-dnd) / 0.3), inset 0 0 2px hsl(var(--glow-dnd) / 0.2); }
 }
