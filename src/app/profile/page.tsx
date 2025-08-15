@@ -61,17 +61,17 @@ export default function ProfilePage() {
                 <div className="flex flex-col items-center">
                     <Hourglass className="w-8 h-8 text-primary mb-2" />
                     <p className="text-2xl font-bold">{userProfile.totalPlaytime}</p>
-                    <p className="text-muted-foreground">Total Playtime</p>
+                    <p className="text-muted-foreground font-silkscreen">Total Playtime</p>
                 </div>
                  <div className="flex flex-col items-center">
                     <Gamepad2 className="w-8 h-8 text-primary mb-2" />
                     <p className="text-2xl font-bold">{userProfile.gamesOwned}</p>
-                    <p className="text-muted-foreground">Games in Library</p>
+                    <p className="text-muted-foreground font-silkscreen">Games Played</p>
                 </div>
                  <div className="flex flex-col items-center">
                     <Trophy className="w-8 h-8 text-primary mb-2" />
                     <p className="text-2xl font-bold truncate">{achievements.length}</p>
-                    <p className="text-muted-foreground">Achievements Won</p>
+                    <p className="text-muted-foreground font-silkscreen">Achievements Won</p>
                 </div>
             </CardContent>
         </Card>
