@@ -30,9 +30,8 @@ const SettingsCard = ({ title, description, children }: { title: string, descrip
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -20 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="h-full"
     >
-        <Card className="glass-pane h-full">
+        <Card className="glass-pane">
             <CardHeader>
                 <CardTitle className="text-2xl font-poppins text-glow">{title}</CardTitle>
                 {description && <CardDescription>{description}</CardDescription>}
