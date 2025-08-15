@@ -15,8 +15,10 @@ import { MusicCard } from '@/components/aura/MusicCard';
 import { LibraryCard } from '@/components/aura/LibraryCard';
 import { Clock } from '@/components/aura/Clock';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Users, History } from 'lucide-react';
+import { Users, History, Pin, PinOff } from 'lucide-react';
 import ParallaxBackground from '@/components/aura/ParallaxBackground';
+import { usePinnedGames } from '@/context/PinnedGamesContext';
+import { Button } from '@/components/ui/button';
 
 type CarouselItemType = (Game & { type: 'game' }) | { type: 'music', id: string } | { type: 'library', id: string };
 
@@ -34,6 +36,7 @@ export default function HomePage() {
   const [backgroundUrl, setBackgroundUrl] = useState<string | null>(null);
   const [friendsPlaying, setFriendsPlaying] = useState(0);
   const [isClient, setIsClient] = useState(false);
+  const { pinnedGames, togglePinGame } = usePinnedGames();
 
   useEffect(() => {
     setIsClient(true);
@@ -117,6 +120,7 @@ export default function HomePage() {
   }, [selectedIndex, allItems, isClient]);
 
   const selectedGame = allItems[selectedIndex]?.type === 'game' ? allItems[selectedIndex] as Game : null;
+  const isPinned = selectedGame ? pinnedGames.some(p => p.id === selectedGame.id) : false;
   
   return (
     <>
@@ -168,21 +172,32 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
-              className="fixed bottom-24 left-8 z-20 p-4 rounded-lg glass-pane"
+              className="fixed bottom-24 left-8 z-20 p-4 rounded-lg glass-pane flex items-start gap-4"
             >
-              <h3 className="font-headline text-2xl font-medium text-white text-glow">
-                {selectedGame.title}
-              </h3>
-              <div className="mt-2 space-y-2 text-sm text-white/80">
-                <div className="flex items-center gap-2">
-                  <History className="w-4 h-4" />
-                  <span>Last played: {selectedGame.lastPlayed}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4" />
-                  <span>{friendsPlaying} friends playing</span>
+              <div>
+                <h3 className="font-poppins text-2xl font-medium text-white text-glow">
+                  {selectedGame.title}
+                </h3>
+                <div className="mt-2 space-y-2 text-sm text-white/80">
+                  <div className="flex items-center gap-2">
+                    <History className="w-4 h-4" />
+                    <span>Last played: {selectedGame.lastPlayed}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Users className="w-4 h-4" />
+                    <span>{friendsPlaying} friends playing</span>
+                  </div>
                 </div>
               </div>
+               <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => togglePinGame(selectedGame)}
+                className="text-white/70 hover:text-white hover:bg-white/20"
+                aria-label={isPinned ? 'Unpin game' : 'Pin game'}
+              >
+                {isPinned ? <PinOff className="w-5 h-5 text-primary" /> : <Pin className="w-5 h-5" />}
+              </Button>
             </motion.div>
           )}
         </AnimatePresence>

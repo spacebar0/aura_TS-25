@@ -3,6 +3,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { AppLifecycle } from './app-lifecycle';
+import { PinnedGamesProvider } from '@/context/PinnedGamesContext';
 
 export const metadata: Metadata = {
   title: 'AURA Console UI',
@@ -26,7 +27,9 @@ export default function RootLayout({
           'h-full font-body antialiased bg-background text-foreground overflow-hidden'
         )}
       >
-        <AppLifecycle>{children}</AppLifecycle>
+        <PinnedGamesProvider>
+          <AppLifecycle>{children}</AppLifecycle>
+        </PinnedGamesProvider>
         <Toaster />
       </body>
     </html>

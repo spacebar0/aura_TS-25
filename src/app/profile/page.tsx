@@ -1,11 +1,13 @@
+'use client';
 
 import Image from 'next/image';
 import { StoreGameCard } from '@/components/aura/StoreGameCard';
 import { userProfile } from '@/lib/mock-data';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Award, Star, TrendingUp } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Star } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
+import { usePinnedGames } from '@/context/PinnedGamesContext';
 
 const ranks = [
     { name: 'Lumen', level: 1, color: 'text-gray-400' },
@@ -29,6 +31,8 @@ const achievements = [
 ]
 
 export default function ProfilePage() {
+  const { pinnedGames } = usePinnedGames();
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500">
       <header className="flex items-center gap-6 mb-12">
@@ -52,11 +56,15 @@ export default function ProfilePage() {
 
       <section className="mb-12">
         <h2 className="text-3xl font-poppins mb-6">Pinned Games</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
-          {userProfile.pinnedGames.map((game) => (
-            <StoreGameCard key={game.id} game={game} />
-          ))}
-        </div>
+        {pinnedGames.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
+            {pinnedGames.map((game) => (
+              <StoreGameCard key={game.id} game={game} />
+            ))}
+          </div>
+        ) : (
+            <p className="text-muted-foreground">No games pinned yet. Pin a game from the home screen!</p>
+        )}
       </section>
 
       <section>
