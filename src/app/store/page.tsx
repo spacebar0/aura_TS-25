@@ -16,7 +16,7 @@ export default function StorePage() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <section className="my-16">
-          <h2 className="text-3xl font-silkscreen mb-6">AI Curator Weekly</h2>
+          <h2 className="text-3xl font-poppins mb-6">AI Curator Weekly</h2>
           <AiCurator />
         </section>
 
