@@ -1,16 +1,17 @@
-
-
+// src/app/profile/page.tsx
 'use client';
 
 import Image from 'next/image';
 import { StoreGameCard } from '@/components/aura/StoreGameCard';
 import { userProfile, games } from '@/lib/mock-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Star, Hourglass, Gamepad2, Trophy } from 'lucide-react';
+import { Star, Hourglass, Gamepad2, Trophy, Pencil } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 import { usePinnedGames } from '@/context/PinnedGamesContext';
 import { FriendsList } from '@/components/aura/FriendsList';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 const ranks = [
     { name: 'Lumen', level: 1, color: 'text-gray-400' },
@@ -47,7 +48,7 @@ export default function ProfilePage() {
           className="rounded-full border-4 border-primary"
           data-ai-hint="futuristic avatar"
         />
-        <div>
+        <div className="flex-1">
           <h1 className="text-5xl font-poppins font-medium text-glow">
             {userProfile.name}
           </h1>
@@ -55,6 +56,12 @@ export default function ProfilePage() {
             AURA Founder | Level 99
           </p>
         </div>
+        <Link href="/profile/edit" passHref>
+            <Button variant="outline" size="icon">
+                <Pencil className="h-5 w-5" />
+                <span className="sr-only">Edit Profile</span>
+            </Button>
+        </Link>
       </header>
 
       <section className="mb-12">

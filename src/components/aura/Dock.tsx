@@ -1,10 +1,10 @@
-
+// src/components/aura/Dock.tsx
 'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Home, Library, Store, Settings2 } from 'lucide-react';
+import { Home, Library, Store, Settings2, Pencil } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 
@@ -15,6 +15,7 @@ const navItems = [
 
 const navItemsRight = [
     { href: '/store', label: 'Store', icon: Store },
+    { href: '/profile/edit', label: 'Edit Profile', icon: Pencil },
     { href: '/settings', label: 'Settings', icon: Settings2 },
 ]
 
@@ -23,7 +24,7 @@ export function Dock() {
 
   return (
     <footer className="fixed bottom-0 left-0 right-0 z-50">
-      <nav className="mx-auto mb-4 w-full max-w-md rounded-full border-t glass-pane p-2 shadow-2xl shadow-black/50">
+      <nav className="mx-auto mb-4 w-full max-w-lg rounded-full border-t glass-pane p-2 shadow-2xl shadow-black/50">
         <TooltipProvider delayDuration={0}>
           <div className="flex items-center justify-around">
             
