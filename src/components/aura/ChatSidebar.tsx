@@ -11,10 +11,13 @@ import { type Friend } from '@/lib/mock-data';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 import { ScrollArea } from '../ui/scroll-area';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Input } from '../ui/input';
-import { SendHorizonal } from 'lucide-react';
+import { SendHorizonal, Loader } from 'lucide-react';
+import { getChatMessages } from '@/app/actions';
+import type { ChatMessage } from '@/ai/flows/generate-chat-messages';
+import { Skeleton } from '../ui/skeleton';
 
 interface ChatSidebarProps {
   isOpen: boolean;
@@ -22,18 +25,39 @@ interface ChatSidebarProps {
   friend: Friend | null;
 }
 
-const mockMessages = [
-    { sender: 'other', text: 'Yo, you up for a match in Cyber Runner?' },
-    { sender: 'me', text: 'Yeah, absolutely! Let me just finish this quest.' },
-    { sender: 'other', text: 'No worries, hit me up when you\'re ready.' },
-    { sender: 'other', text: 'We need one more for the squad.' },
-    { sender: 'me', text: 'Almost done. 5 more minutes.' },
-];
-
 export function ChatSidebar({ isOpen, onOpenChange, friend }: ChatSidebarProps) {
-  const [messages, setMessages] = useState(mockMessages);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const isFetching = useRef(false);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      if (friend && !isFetching.current) {
+        isFetching.current = true;
+        setIsLoading(true);
+        setError(null);
+        setMessages([]); // Clear old messages
+
+        const result = await getChatMessages(friend);
+        if ('error' in result) {
+          setError(result.error);
+        } else {
+          setMessages(result.messages);
+        }
+        setIsLoading(false);
+        isFetching.current = false;
+      }
+    };
+
+    if (isOpen) {
+      fetchMessages();
+    }
+  }, [isOpen, friend]);
+  
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (newMessage.trim()) {
@@ -43,6 +67,28 @@ export function ChatSidebar({ isOpen, onOpenChange, friend }: ChatSidebarProps) 
   }
 
   if (!friend) return null;
+
+  const ChatLoader = () => (
+    <div className="space-y-4 p-4">
+        <div className="flex items-center gap-2 justify-start">
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <Skeleton className="h-8 w-48 rounded-md" />
+        </div>
+        <div className="flex items-center gap-2 justify-end">
+            <Skeleton className="h-8 w-40 rounded-md" />
+            <Skeleton className="h-8 w-8 rounded-full" />
+        </div>
+        <div className="flex items-center gap-2 justify-start">
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <Skeleton className="h-8 w-32 rounded-md" />
+        </div>
+        <div className="flex items-center gap-2 justify-end">
+            <Skeleton className="h-8 w-52 rounded-md" />
+            <Skeleton className="h-8 w-8 rounded-full" />
+        </div>
+    </div>
+  );
+
 
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
@@ -58,25 +104,33 @@ export function ChatSidebar({ isOpen, onOpenChange, friend }: ChatSidebarProps) 
             />
           <SheetTitle className="text-lg font-medium text-white">{friend.name}</SheetTitle>
         </SheetHeader>
-        <ScrollArea className="flex-1 p-4">
-          <div className="space-y-4">
-            {messages.map((msg, index) => (
-                <div 
-                    key={index}
-                    className={cn('flex', {
-                        'justify-end': msg.sender === 'me',
-                        'justify-start': msg.sender === 'other'
-                    })}
-                >
-                    <div className={cn('max-w-[75%] rounded-lg px-3 py-2 text-sm', {
-                        'bg-primary text-primary-foreground': msg.sender === 'me',
-                        'bg-muted': msg.sender === 'other'
-                    })}>
-                        {msg.text}
-                    </div>
+        <ScrollArea className="flex-1" ref={scrollAreaRef}>
+           {isLoading ? (
+                <ChatLoader />
+            ) : error ? (
+                <div className="flex items-center justify-center h-full text-destructive p-4 text-center">
+                    {error}
                 </div>
-            ))}
-          </div>
+            ) : (
+                <div className="space-y-4 p-4">
+                    {messages.map((msg, index) => (
+                        <div 
+                            key={index}
+                            className={cn('flex', {
+                                'justify-end': msg.sender === 'me',
+                                'justify-start': msg.sender === 'other'
+                            })}
+                        >
+                            <div className={cn('max-w-[75%] rounded-lg px-3 py-2 text-sm', {
+                                'bg-primary text-primary-foreground': msg.sender === 'me',
+                                'bg-muted': msg.sender === 'other'
+                            })}>
+                                {msg.text}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </ScrollArea>
         <div className="p-4 border-t border-white/10 bg-black/20">
             <form onSubmit={handleSendMessage} className="flex items-center gap-2">
@@ -85,8 +139,9 @@ export function ChatSidebar({ isOpen, onOpenChange, friend }: ChatSidebarProps) 
                     onChange={(e) => setNewMessage(e.target.value)}
                     placeholder="Type a message..."
                     className="flex-1 bg-background/50 border-white/20 focus-visible:ring-primary"
+                    disabled={isLoading}
                 />
-                <Button type="submit" size="icon">
+                <Button type="submit" size="icon" disabled={isLoading}>
                     <SendHorizonal className="w-5 h-5" />
                 </Button>
             </form>

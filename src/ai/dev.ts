@@ -2,3 +2,4 @@ import { config } from 'dotenv';
 config();
 
 import '@/ai/flows/curate-store-capsules.ts';
+import '@/ai/flows/generate-chat-messages.ts';

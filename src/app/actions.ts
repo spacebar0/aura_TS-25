@@ -1,7 +1,8 @@
 'use server';
 
 import { curateStoreCapsules, CurateStoreCapsulesOutput } from '@/ai/flows/curate-store-capsules';
-import { games, initialUserProfile } from '@/lib/mock-data';
+import { generateChatMessages, GenerateChatMessagesOutput } from '@/ai/flows/generate-chat-messages';
+import { games, initialUserProfile, Friend } from '@/lib/mock-data';
 
 export async function getCuratedCapsules(): Promise<CurateStoreCapsulesOutput | { error: string }> {
   try {
@@ -28,5 +29,19 @@ export async function getCuratedCapsules(): Promise<CurateStoreCapsulesOutput | 
     console.error('Error curating store capsules:', error);
     // Return a more structured error
     return { error: 'Could not generate AI recommendations at this time. Please try again later.' };
+  }
+}
+
+export async function getChatMessages(friend: Friend): Promise<GenerateChatMessagesOutput | { error: string }> {
+  try {
+    const result = await generateChatMessages({
+      userName: initialUserProfile.name,
+      friendName: friend.name,
+      game: friend.gamePlaying || 'some game',
+    });
+    return result;
+  } catch (error) {
+    console.error('Error generating chat messages:', error);
+    return { error: 'Could not load chat history. Please try again.' };
   }
 }
