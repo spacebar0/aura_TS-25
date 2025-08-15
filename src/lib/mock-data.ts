@@ -14,6 +14,14 @@ export type Game = {
   discount?: string;
 };
 
+export type Friend = {
+  id: number;
+  name: string;
+  avatar: string;
+  status: 'Online' | 'Offline' | 'In Game';
+  gamePlaying?: string;
+};
+
 export const featuredGames: Game[] = [
   {
     id: 101,
@@ -219,6 +227,13 @@ export const userProfile = {
   preferences: 'Likes fast-paced action, sci-fi themes, and competitive multiplayer games. Enjoys vibrant, neon aesthetics and synthwave music.',
   totalPlaytime: '1,240 hours',
   gamesOwned: games.length,
+  friends: [
+    { id: 1, name: 'CyberKnight', avatar: 'https://placehold.co/40x40.png', status: 'In Game', gamePlaying: 'Cyber Runner 2099' },
+    { id: 2, name: 'PixelPrincess', avatar: 'https://placehold.co/40x40.png', status: 'Online' },
+    { id: 3, name: 'GhostRider', avatar: 'https://placehold.co/40x40.png', status: 'Online' },
+    { id: 4, name: 'SolarFlare', avatar: 'https://placehold.co/40x40.png', status: 'Offline' },
+    { id: 5, name: 'VoidWalker', avatar: 'https://placehold.co/40x40.png', status: 'Offline' },
+  ] as Friend[]
 };
 
 export type Song = {

@@ -4,11 +4,12 @@
 import Image from 'next/image';
 import { StoreGameCard } from '@/components/aura/StoreGameCard';
 import { userProfile, games } from '@/lib/mock-data';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Star, Hourglass, Gamepad2, Trophy } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 import { usePinnedGames } from '@/context/PinnedGamesContext';
+import { FriendsList } from '@/components/aura/FriendsList';
 
 const ranks = [
     { name: 'Lumen', level: 1, color: 'text-gray-400' },
@@ -90,39 +91,46 @@ export default function ProfilePage() {
         )}
       </section>
 
-      <section>
-        <h2 className="text-3xl font-poppins mb-6">Achievements</h2>
-        <Card className="glass-pane border-primary/50">
-            <CardContent className="p-6">
-                <div className="space-y-6">
-                    {achievements.map((ach) => {
-                        const rank = ranks.find(r => r.name === ach.rankName);
-                        const progress = rank ? (rank.level / ranks.length) * 100 : 0;
-                        return (
-                            <div key={ach.game} className="flex items-center gap-4">
-                                <div className="flex-1">
-                                    <p className="font-medium text-lg">{ach.game}</p>
-                                    <div className="flex items-center gap-2 mt-1">
-                                        <Star className={cn("w-5 h-5", rank?.color)} />
-                                        <span className={cn("font-bold text-lg", rank?.color)}>
-                                            {ach.rankName}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="w-1/2">
-                                     <Progress value={progress} className="h-2 bg-muted/30" />
-                                     <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                                         <span>Level {rank?.level}</span>
-                                         <span>Next: {ranks.find(r => r.level === (rank?.level ?? 0) + 1)?.name || 'Max'}</span>
-                                     </div>
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
-            </CardContent>
-        </Card>
-      </section>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <section className="lg:col-span-2">
+          <h2 className="text-3xl font-poppins mb-6">Achievements</h2>
+          <Card className="glass-pane border-primary/50">
+              <CardContent className="p-6">
+                  <div className="space-y-6">
+                      {achievements.map((ach) => {
+                          const rank = ranks.find(r => r.name === ach.rankName);
+                          const progress = rank ? (rank.level / ranks.length) * 100 : 0;
+                          return (
+                              <div key={ach.game} className="flex items-center gap-4">
+                                  <div className="flex-1">
+                                      <p className="font-medium text-lg">{ach.game}</p>
+                                      <div className="flex items-center gap-2 mt-1">
+                                          <Star className={cn("w-5 h-5", rank?.color)} />
+                                          <span className={cn("font-bold text-lg", rank?.color)}>
+                                              {ach.rankName}
+                                          </span>
+                                      </div>
+                                  </div>
+                                  <div className="w-1/2">
+                                      <Progress value={progress} className="h-2 bg-muted/30" />
+                                      <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                                          <span>Level {rank?.level}</span>
+                                          <span>Next: {ranks.find(r => r.level === (rank?.level ?? 0) + 1)?.name || 'Max'}</span>
+                                      </div>
+                                  </div>
+                              </div>
+                          )
+                      })}
+                  </div>
+              </CardContent>
+          </Card>
+        </section>
+
+        <section className="lg:col-span-1">
+          <h2 className="text-3xl font-poppins mb-6">Friends</h2>
+          <FriendsList />
+        </section>
+      </div>
     </div>
   );
 }
