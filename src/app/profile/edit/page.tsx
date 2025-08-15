@@ -66,7 +66,7 @@ export default function EditProfilePage() {
         title: "Profile Saved!",
         description: "Your changes have been successfully saved.",
     });
-  }
+  };
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500">
@@ -154,7 +154,7 @@ export default function EditProfilePage() {
             <CardHeader>
                 <CardTitle className="flex items-center gap-2"><BadgeCheck /> Visible Achievements</CardTitle>
                 <CardDescription>Choose which achievements to display on your profile.</CardDescription>
-            </Header>
+            </CardHeader>
             <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {allAchievements.map((ach) => (
