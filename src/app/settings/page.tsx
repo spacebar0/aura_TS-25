@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Cog, Volume2, Monitor, Wifi, Shield, Users, Accessibility, Palette } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SettingsNav } from '@/components/aura/SettingsNav';
@@ -10,6 +10,7 @@ import { AuraLevelBadge } from '@/components/aura/AuraLevelBadge';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
+import { ThemeSwitcher } from '@/components/aura/ThemeSwitcher';
 
 export type SettingCategory = 'system' | 'audio' | 'display' | 'network' | 'privacy' | 'profiles' | 'accessibility' | 'theme';
 
@@ -24,7 +25,7 @@ const categories = [
   { id: 'theme', label: 'Themes', icon: Palette, color: 'hsl(300, 80%, 60%)' },
 ];
 
-const SettingsCard = ({ title, children }: { title: string, children: React.ReactNode }) => (
+const SettingsCard = ({ title, description, children }: { title: string, description?: string, children: React.ReactNode }) => (
     <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -35,70 +36,96 @@ const SettingsCard = ({ title, children }: { title: string, children: React.Reac
         <Card className="glass-pane h-full">
             <CardHeader>
                 <CardTitle className="text-2xl font-poppins text-glow">{title}</CardTitle>
+                {description && <CardDescription>{description}</CardDescription>}
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-8">
                 {children}
             </CardContent>
         </Card>
     </motion.div>
 );
 
+const SettingRow = ({ label, description, children }: {label: string, description?: string, children: React.ReactNode}) => (
+    <div className="flex items-center justify-between p-4 rounded-lg bg-background/20">
+        <div className="flex-1">
+            <Label className="text-base">{label}</Label>
+            {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+        </div>
+        <div className="flex-shrink-0">
+            {children}
+        </div>
+    </div>
+);
+
+
 export default function SettingsPage() {
   const [activeCategory, setActiveCategory] = useState<SettingCategory>('system');
+  const [audioLevels, setAudioLevels] = useState({ master: 75, chat: 50 });
+  const [brightness, setBrightness] = useState(80);
 
   const renderContent = () => {
     switch (activeCategory) {
       case 'system':
         return (
-          <SettingsCard title="System Settings">
-             <div className="flex items-center justify-between">
-              <Label htmlFor="game-mode">Game Mode</Label>
-              <Switch id="game-mode" defaultChecked />
-            </div>
-             <div className="flex items-center justify-between">
-              <Label htmlFor="dnd-mode">Do Not Disturb</Label>
-              <Switch id="dnd-mode" />
-            </div>
+          <SettingsCard title="System Settings" description="Manage core console behavior and notifications.">
+             <SettingRow label="Performance Mode" description="Optimizes system resources for gaming.">
+                <Switch id="game-mode" defaultChecked />
+             </SettingRow>
+             <SettingRow label="Do Not Disturb" description="Silence all notifications and alerts.">
+                <Switch id="dnd-mode" />
+             </SettingRow>
+             <SettingRow label="Auto Updates" description="Keep your games and system up-to-date automatically.">
+                <Switch id="auto-updates-mode" defaultChecked />
+            </SettingRow>
           </SettingsCard>
         );
       case 'audio':
         return (
-          <SettingsCard title="Audio Settings">
-            <div className="space-y-2">
-              <Label htmlFor="master-volume">Master Volume</Label>
-              <Slider id="master-volume" defaultValue={[75]} max={100} step={1} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="chat-volume">Voice Chat Volume</Label>
-              <Slider id="chat-volume" defaultValue={[50]} max={100} step={1} />
-            </div>
+          <SettingsCard title="Audio Settings" description="Fine-tune your audio experience.">
+            <SettingRow label="Master Volume">
+                <div className="flex items-center gap-4 w-64">
+                    <Slider value={[audioLevels.master]} onValueChange={(value) => setAudioLevels(prev => ({...prev, master: value[0]}))} max={100} step={1} />
+                    <span className="w-10 text-center font-mono text-muted-foreground">{audioLevels.master}</span>
+                </div>
+            </SettingRow>
+            <SettingRow label="Voice Chat Volume">
+                <div className="flex items-center gap-4 w-64">
+                    <Slider value={[audioLevels.chat]} onValueChange={(value) => setAudioLevels(prev => ({...prev, chat: value[0]}))} max={100} step={1} />
+                    <span className="w-10 text-center font-mono text-muted-foreground">{audioLevels.chat}</span>
+                </div>
+            </SettingRow>
+             <SettingRow label="3D Audio" description="Enable immersive spatial audio.">
+                <Switch id="3d-audio-mode" />
+             </SettingRow>
           </SettingsCard>
         );
       case 'display':
         return (
-          <SettingsCard title="Display Settings">
-            <div className="flex items-center justify-between">
-                <Label htmlFor="hdr-mode">HDR Mode</Label>
+          <SettingsCard title="Display Settings" description="Adjust visuals and screen output.">
+            <SettingRow label="HDR (High Dynamic Range)" description="Enable for more vibrant colors.">
                 <Switch id="hdr-mode" defaultChecked/>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="brightness">Brightness</Label>
-              <Slider id="brightness" defaultValue={[80]} max={100} step={1} />
-            </div>
+            </SettingRow>
+            <SettingRow label="Brightness">
+                <div className="flex items-center gap-4 w-64">
+                    <Slider value={[brightness]} onValueChange={(value) => setBrightness(value[0])} max={100} step={1} />
+                    <span className="w-10 text-center font-mono text-muted-foreground">{brightness}</span>
+                </div>
+            </SettingRow>
+             <SettingRow label="120Hz Mode" description="Allows for higher frame rates on supported displays.">
+                <Switch id="120hz-mode" />
+             </SettingRow>
           </SettingsCard>
         );
       case 'theme':
         return (
-            <SettingsCard title="Themes">
-                <p className="text-muted-foreground">
-                    Customize the look and feel of your AURA console. More themes coming soon!
-                </p>
+            <SettingsCard title="Themes" description="Customize the look and feel of your AURA console.">
+                <ThemeSwitcher />
             </SettingsCard>
         );
       default:
         return (
             <SettingsCard title={categories.find(c => c.id === activeCategory)?.label || 'Settings'}>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground text-center py-16">
                     Settings for this category are under development.
                 </p>
             </SettingsCard>
