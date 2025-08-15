@@ -144,7 +144,7 @@ export default function SettingsPage() {
             <SettingsCard title="Network Settings" description="Connect to a Wi-Fi network.">
                 {isNetworkLoading && (
                     <div className="h-64">
-                        <AuraBeamLoader />
+                        <AuraBeamLoader text="Searching for networks..." />
                     </div>
                 )}
                 {networkError && (

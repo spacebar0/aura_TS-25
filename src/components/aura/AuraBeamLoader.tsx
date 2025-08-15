@@ -4,7 +4,7 @@
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
-const AuraBeamLoader = () => {
+const AuraBeamLoader = ({ text = "Curating Capsules..." }: { text?: string }) => {
   return (
     <div className="relative flex flex-col items-center justify-center w-full h-full overflow-hidden rounded-lg bg-background/30">
       <div className="absolute inset-0 z-0 animate-pulse">
@@ -16,7 +16,7 @@ const AuraBeamLoader = () => {
         />
       </div>
       <Image src="/images/logo.PNG" alt="Aura Logo" width={64} height={64} className="z-10 animate-pulse" />
-      <p className="mt-4 text-sm text-primary z-10 font-medium">Curating Capsules...</p>
+      <p className="mt-4 text-sm text-primary z-10 font-medium">{text}</p>
       <div
         className={cn(
           'absolute top-0 left-0 h-full w-1/2 bg-gradient-to-r from-transparent via-primary/50 to-transparent z-20',
