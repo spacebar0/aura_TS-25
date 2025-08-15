@@ -7,10 +7,12 @@ import { RecentSquadsCarousel } from '@/components/aura/RecentSquadsCarousel';
 import { useUserProfile } from '@/context/UserProfileContext';
 import { type Friend } from '@/lib/mock-data';
 import { ChatSidebar } from '@/components/aura/ChatSidebar';
+import { useToast } from '@/hooks/use-toast';
 
 export default function FriendsPage() {
-  const { userProfile } = useUserProfile();
+  const { userProfile, toggleFriendInvite } = useUserProfile();
   const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
+  const { toast } = useToast();
 
   const onlineFriends = userProfile.friends.filter(f => f.status !== 'Offline');
   const offlineFriends = userProfile.friends.filter(f => f.status === 'Offline');
@@ -18,6 +20,17 @@ export default function FriendsPage() {
   const handleMessage = (friend: Friend) => {
     setSelectedFriend(friend);
   };
+
+  const handleInvite = (friend: Friend) => {
+    if (friend.invited) return;
+
+    toggleFriendInvite(friend.id);
+    toast({
+      title: "Invite Sent!",
+      description: `Your invite has been sent to ${friend.name}.`,
+    });
+  };
+
 
   return (
     <>
@@ -41,7 +54,7 @@ export default function FriendsPage() {
             <h2 className="text-2xl font-headline mb-4">Online ({onlineFriends.length})</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-6 gap-y-10">
               {onlineFriends.map((friend) => (
-                <FriendPresenceCard key={friend.id} friend={friend} onMessage={handleMessage} />
+                <FriendPresenceCard key={friend.id} friend={friend} onMessage={handleMessage} onInvite={handleInvite} />
               ))}
             </div>
           </section>
@@ -50,7 +63,7 @@ export default function FriendsPage() {
             <h2 className="text-2xl font-headline mb-4">Offline ({offlineFriends.length})</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-6 gap-y-10">
               {offlineFriends.map((friend) => (
-                <FriendPresenceCard key={friend.id} friend={friend} onMessage={handleMessage} />
+                <FriendPresenceCard key={friend.id} friend={friend} onMessage={handleMessage} onInvite={handleInvite} />
               ))}
             </div>
           </section>

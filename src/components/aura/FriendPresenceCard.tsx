@@ -6,8 +6,6 @@ import { type Friend } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
 import { Gamepad2, MessageSquare, User, Plus, Check } from 'lucide-react';
 import { RadialMenu, RadialMenuItem } from './RadialMenu';
-import { useState } from 'react';
-import { useToast } from '@/hooks/use-toast';
 
 const statusGlowClasses: Record<Friend['status'], string> = {
   Online: 'presence-glow-online',
@@ -20,25 +18,15 @@ const statusGlowClasses: Record<Friend['status'], string> = {
 interface FriendPresenceCardProps {
   friend: Friend;
   onMessage: (friend: Friend) => void;
+  onInvite: (friend: Friend) => void;
 }
 
-export function FriendPresenceCard({ friend, onMessage }: FriendPresenceCardProps) {
-  const [isInvited, setIsInvited] = useState(false);
-  const { toast } = useToast();
+export function FriendPresenceCard({ friend, onMessage, onInvite }: FriendPresenceCardProps) {
   const glowClass = statusGlowClasses[friend.status] || '';
+  const isInvited = friend.invited;
 
   const handleInvite = () => {
-    if (isInvited) return;
-
-    setIsInvited(true);
-    toast({
-      title: "Invite Sent!",
-      description: `Your invite has been sent to ${friend.name}.`,
-    });
-
-    setTimeout(() => {
-      setIsInvited(false);
-    }, 3000); // Reset after 3 seconds
+    onInvite(friend);
   };
 
   const menuItems: RadialMenuItem[] = [

@@ -20,6 +20,7 @@ export type Friend = {
   avatar: string;
   status: 'Online' | 'Offline' | 'In-Game' | 'Idle' | 'Do Not Disturb';
   gamePlaying?: string;
+  invited?: boolean;
 };
 
 export type RecentPlayer = {
