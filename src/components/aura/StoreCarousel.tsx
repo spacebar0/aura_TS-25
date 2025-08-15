@@ -11,7 +11,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from '@/components/ui/carousel';
-import { featuredGames } from '@/lib/mock-data';
+import { storeCarouselImages } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
 
 export function StoreCarousel() {
@@ -53,12 +53,12 @@ export function StoreCarousel() {
         }}
       >
         <CarouselContent>
-          {featuredGames.map((game) => (
-            <CarouselItem key={game.id}>
+          {storeCarouselImages.map((imageUrl, index) => (
+            <CarouselItem key={index}>
               <div className="relative w-full h-[50vh] md:h-[60vh] overflow-hidden rounded-2xl">
                 <Image
-                  src={game.cover}
-                  alt={game.title}
+                  src={imageUrl}
+                  alt={`Store promotion image ${index + 1}`}
                   fill
                   className="object-cover object-center"
                   data-ai-hint="gameplay screenshot"
@@ -69,7 +69,7 @@ export function StoreCarousel() {
         </CarouselContent>
       </Carousel>
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-        {featuredGames.map((_, index) => (
+        {storeCarouselImages.map((_, index) => (
           <button
             key={index}
             onClick={() => api?.scrollTo(index)}

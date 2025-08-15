@@ -42,6 +42,13 @@ export type UserProfile = {
   friends: Friend[];
 }
 
+export const storeCarouselImages: string[] = [
+  'https://placehold.co/1920x1080.png',
+  'https://placehold.co/1920x1080.png',
+  'https://placehold.co/1920x1080.png',
+  'https://placehold.co/1920x1080.png',
+];
+
 export const featuredGames: Game[] = [
   {
     id: 101,
