@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark h-full" suppressHydrationWarning>
+    <html lang="en" className="dark h-full">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -27,6 +27,7 @@ export default function RootLayout({
         className={cn(
           'h-full font-body antialiased bg-background text-foreground overflow-hidden'
         )}
+        suppressHydrationWarning
       >
         <UserProfileProvider>
           <PinnedGamesProvider>
