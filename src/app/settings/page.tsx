@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Cog, Volume2, Monitor, Wifi, Shield, Users, Accessibility, Gamepad2, Moon, Sun } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SettingsNav } from '@/components/aura/SettingsNav';
-import { QuickActionsBar } from '@/components/aura/QuickActionsBar';
 import { AuraLevelBadge } from '@/components/aura/AuraLevelBadge';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
@@ -125,7 +124,6 @@ export default function SettingsPage() {
             </AnimatePresence>
         </main>
       </div>
-       <QuickActionsBar />
     </div>
   );
 }
