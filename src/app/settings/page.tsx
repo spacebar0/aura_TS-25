@@ -21,10 +21,10 @@ const categories = [
   { id: 'audio', label: 'Audio', icon: Volume2, color: 'hsl(39, 100%, 50%)' },
   { id: 'display', label: 'Display', icon: Monitor, color: 'hsl(180, 80%, 60%)' },
   { id: 'network', label: 'Network', icon: Wifi, color: 'hsl(120, 80%, 60%)' },
+  { id: 'theme', label: 'Themes', icon: Palette, color: 'hsl(300, 80%, 60%)' },
   { id: 'privacy', label: 'Privacy', icon: Shield, color: 'hsl(260, 80%, 60%)' },
   { id: 'profiles', label: 'Profiles', icon: Users, color: 'hsl(320, 80%, 60%)' },
   { id: 'accessibility', label: 'Accessibility', icon: Accessibility, color: 'hsl(0, 80%, 60%)' },
-  { id: 'theme', label: 'Themes', icon: Palette, color: 'hsl(300, 80%, 60%)' },
 ];
 
 const SettingsCard = ({ title, description, children }: { title: string, description?: string, children: React.ReactNode }) => (
