@@ -52,7 +52,7 @@ export function Dock() {
             })}
 
             <Link href="/" className="-mt-2 hover:scale-110 transition-transform duration-300">
-                <Image src="/images/logo.PNG" alt="AURA Logo" width={48} height={48} className="invert logo-glow" />
+                <Image src="/images/logo.PNG" alt="AURA Logo" width={48} height={48} className="invert" />
             </Link>
 
             {navItemsRight.map((item) => {
