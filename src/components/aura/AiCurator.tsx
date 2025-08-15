@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -40,7 +41,7 @@ export function AiCurator() {
     <Card className="glass-pane border-accent/50 overflow-hidden">
       <CardHeader>
         <CardTitle>Your Personalized Capsules</CardTitle>
-        <CardDescription>
+        <CardDescription className="font-silkscreen">
           Let our AI curator craft weekly game collections just for you.
         </CardDescription>
       </CardHeader>
