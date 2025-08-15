@@ -1,3 +1,4 @@
+
 export type Game = {
   id: number;
   title: string;
@@ -7,6 +8,7 @@ export type Game = {
   genre: string;
   rating: number;
   lastPlayed: string;
+  lastPlayedDate: string; // ISO 8601 date string
   price: string;
   originalPrice?: string;
   discount?: string;
@@ -21,6 +23,7 @@ export const featuredGames: Game[] = [
     genre: 'Strategy',
     rating: 4.9,
     lastPlayed: 'N/A',
+    lastPlayedDate: new Date(Date.now() - 10 * 30 * 24 * 60 * 60 * 1000).toISOString(),
     price: '$59.99'
   },
   {
@@ -31,6 +34,7 @@ export const featuredGames: Game[] = [
     genre: 'Shooter',
     rating: 4.8,
     lastPlayed: 'N/A',
+    lastPlayedDate: new Date(Date.now() - 11 * 30 * 24 * 60 * 60 * 1000).toISOString(),
     price: '$39.99'
   },
   {
@@ -41,6 +45,7 @@ export const featuredGames: Game[] = [
     genre: 'Strategy',
     rating: 4.7,
     lastPlayed: 'N/A',
+    lastPlayedDate: new Date(Date.now() - 12 * 30 * 24 * 60 * 60 * 1000).toISOString(),
     price: '$39.99'
   },
     {
@@ -51,6 +56,7 @@ export const featuredGames: Game[] = [
     genre: 'Strategy',
     rating: 4.9,
     lastPlayed: 'N/A',
+    lastPlayedDate: new Date(Date.now() - 13 * 30 * 24 * 60 * 60 * 1000).toISOString(),
     price: '$49.99'
   },
   {
@@ -61,6 +67,7 @@ export const featuredGames: Game[] = [
     genre: 'Action RPG',
     rating: 5.0,
     lastPlayed: 'N/A',
+    lastPlayedDate: new Date(Date.now() - 14 * 30 * 24 * 60 * 60 * 1000).toISOString(),
     price: '$59.99'
   },
 ];
@@ -74,6 +81,7 @@ export const games: Game[] = [
     genre: 'Sports',
     rating: 4.8,
     lastPlayed: '2 hours ago',
+    lastPlayedDate: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
     price: '$23.99',
     originalPrice: '$59.99',
     discount: '-60%'
@@ -86,6 +94,7 @@ export const games: Game[] = [
       genre: 'Action-Adventure',
       rating: 4.9,
       lastPlayed: 'Yesterday',
+      lastPlayedDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
       price: '$49.99',
     },
     {
@@ -96,6 +105,7 @@ export const games: Game[] = [
       genre: 'Action-Adventure',
       rating: 4.7,
       lastPlayed: '3 days ago',
+      lastPlayedDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
       price: '$29.99',
     },
     {
@@ -106,6 +116,7 @@ export const games: Game[] = [
       genre: 'Racing',
       rating: 4.6,
       lastPlayed: '1 week ago',
+      lastPlayedDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
       price: '$19.99',
     },
     {
@@ -116,6 +127,7 @@ export const games: Game[] = [
       genre: 'Sports',
       rating: 4.5,
       lastPlayed: '5 days ago',
+      lastPlayedDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
       price: '$9.99',
     },
     {
@@ -126,6 +138,7 @@ export const games: Game[] = [
       genre: 'Action-Adventure',
       rating: 4.8,
       lastPlayed: '3 hours ago',
+      lastPlayedDate: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
       price: '$59.99',
     },
     {
@@ -136,6 +149,7 @@ export const games: Game[] = [
       genre: 'Action RPG',
       rating: 4.7,
       lastPlayed: '2 weeks ago',
+      lastPlayedDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
       price: '$24.99',
     },
     {
@@ -146,6 +160,7 @@ export const games: Game[] = [
       genre: 'Shooter',
       rating: 4.9,
       lastPlayed: '6 hours ago',
+      lastPlayedDate: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
       price: '$38.00',
       originalPrice: '$94.99',
       discount: '-60%'
@@ -158,6 +173,7 @@ export const games: Game[] = [
     genre: 'Narrative',
     rating: 4.6,
     lastPlayed: '1 month ago',
+    lastPlayedDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
     price: '$14.99',
   },
   {
@@ -168,6 +184,7 @@ export const games: Game[] = [
     genre: 'Strategy',
     rating: 4.4,
     lastPlayed: 'Yesterday',
+    lastPlayedDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
     price: '$39.99',
   },
   {
@@ -178,6 +195,7 @@ export const games: Game[] = [
     genre: 'Simulation',
     rating: 4.8,
     lastPlayed: '5 hours ago',
+    lastPlayedDate: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
     price: '$29.99',
   },
   {
@@ -188,6 +206,7 @@ export const games: Game[] = [
     genre: 'Fighting',
     rating: 4.7,
     lastPlayed: '4 days ago',
+    lastPlayedDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
     price: '$19.99',
   },
 ];
@@ -197,7 +216,9 @@ export const userProfile = {
   avatar: 'https://placehold.co/100x100.png',
   auraColor: 'magenta',
   pinnedGames: [games[0], games[4], games[7]],
-  preferences: 'Likes fast-paced action, sci-fi themes, and competitive multiplayer games. Enjoys vibrant, neon aesthetics and synthwave music.'
+  preferences: 'Likes fast-paced action, sci-fi themes, and competitive multiplayer games. Enjoys vibrant, neon aesthetics and synthwave music.',
+  totalPlaytime: '1,240 hours',
+  gamesOwned: games.length,
 };
 
 export type Song = {

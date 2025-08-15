@@ -1,13 +1,15 @@
+
 'use client';
 
 import Image from 'next/image';
 import { StoreGameCard } from '@/components/aura/StoreGameCard';
-import { userProfile } from '@/lib/mock-data';
+import { userProfile, games } from '@/lib/mock-data';
 import { Card, CardContent } from '@/components/ui/card';
-import { Star } from 'lucide-react';
+import { Star, Hourglass, Gamepad2, History } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 import { usePinnedGames } from '@/context/PinnedGamesContext';
+import { useMemo } from 'react';
 
 const ranks = [
     { name: 'Lumen', level: 1, color: 'text-gray-400' },
@@ -32,6 +34,10 @@ const achievements = [
 
 export default function ProfilePage() {
   const { pinnedGames } = usePinnedGames();
+  
+  const mostRecentGame = useMemo(() => {
+    return [...games].sort((a, b) => new Date(b.lastPlayedDate).getTime() - new Date(a.lastPlayedDate).getTime())[0];
+  }, []);
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500">
@@ -53,6 +59,28 @@ export default function ProfilePage() {
           </p>
         </div>
       </header>
+
+      <section className="mb-12">
+        <Card className="glass-pane border-primary/20">
+            <CardContent className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div className="flex flex-col items-center">
+                    <Hourglass className="w-8 h-8 text-primary mb-2" />
+                    <p className="text-2xl font-bold">{userProfile.totalPlaytime}</p>
+                    <p className="text-muted-foreground">Total Playtime</p>
+                </div>
+                 <div className="flex flex-col items-center">
+                    <Gamepad2 className="w-8 h-8 text-primary mb-2" />
+                    <p className="text-2xl font-bold">{userProfile.gamesOwned}</p>
+                    <p className="text-muted-foreground">Games in Library</p>
+                </div>
+                 <div className="flex flex-col items-center">
+                    <History className="w-8 h-8 text-primary mb-2" />
+                    <p className="text-2xl font-bold truncate">{mostRecentGame.title}</p>
+                    <p className="text-muted-foreground">Last Played</p>
+                </div>
+            </CardContent>
+        </Card>
+      </section>
 
       <section className="mb-12">
         <h2 className="text-3xl font-poppins mb-6">Pinned Games</h2>
