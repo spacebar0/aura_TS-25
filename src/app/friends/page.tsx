@@ -9,7 +9,7 @@ export default function FriendsPage() {
   const { userProfile } = useUserProfile();
 
   const onlineFriends = userProfile.friends.filter(f => f.status !== 'Offline');
-  const offlineFriends = userProfile.friends.filter(f => f.status === 'Offline');
+  const offlineFriends = user-profile.friends.filter(f => f.status === 'Offline');
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500 w-full">

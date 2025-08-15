@@ -2,6 +2,7 @@
 'use client';
 
 import * as React from 'react';
+import Autoplay from 'embla-carousel-autoplay';
 import {
   Carousel,
   CarouselContent,
@@ -13,11 +14,17 @@ import { recentPlayers } from '@/lib/mock-data';
 import { RecentPlayerCard } from './RecentPlayerCard';
 
 export function RecentSquadsCarousel() {
+  const plugin = React.useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })
+  );
+
   return (
     <Carousel
+      plugins={[plugin.current]}
       opts={{
         align: 'start',
         slidesToScroll: 2,
+        loop: true,
       }}
       className="w-full"
     >
