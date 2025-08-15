@@ -12,15 +12,16 @@ import { useUserProfile } from '@/context/UserProfileContext';
 function FriendItem({ friend }: { friend: Friend }) {
   return (
     <div className="flex items-center gap-4 py-2">
-      <div className="relative">
-        <Image
-          src={friend.avatar}
-          alt={friend.name}
-          width={40}
-          height={40}
-          className="rounded-full object-cover flex-shrink-0"
-          data-ai-hint="avatar"
-        />
+      <div className="relative flex-shrink-0">
+        <div className="w-10 h-10 rounded-full overflow-hidden">
+            <Image
+            src={friend.avatar}
+            alt={friend.name}
+            fill
+            className="object-cover"
+            data-ai-hint="avatar"
+            />
+        </div>
         <span
           className={cn(
             'absolute bottom-0 right-0 block h-2 w-2.5 rounded-full ring-2 ring-background',
