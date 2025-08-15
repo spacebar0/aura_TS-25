@@ -103,7 +103,6 @@ export default function ProfilePage() {
                           const progress = rank ? (rank.level / ranks.length) * 100 : 0;
                           return (
                               <div key={ach.game} className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1">
-                                  {/* Game and Rank Name */}
                                   <div className="col-start-1">
                                       <p className="font-medium text-lg">{ach.game}</p>
                                       <div className="flex items-center gap-2 mt-1">
@@ -114,7 +113,6 @@ export default function ProfilePage() {
                                       </div>
                                   </div>
                                   
-                                  {/* Progress bar and text */}
                                   <div className="col-start-2 flex items-center gap-4">
                                     <div className="w-40">
                                         <Progress value={progress} className="h-2 bg-muted/30" />
@@ -134,7 +132,6 @@ export default function ProfilePage() {
         </section>
 
         <section className="lg:col-span-1">
-          {/* This section is intentionally left empty for the friends list */}
           <FriendsList />
         </section>
       </div>
