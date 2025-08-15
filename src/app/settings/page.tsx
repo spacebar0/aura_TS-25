@@ -45,12 +45,12 @@ const SettingsCard = ({ title, description, children }: { title: string, descrip
 );
 
 const SettingRow = ({ label, description, children }: {label: string, description?: string, children: React.ReactNode}) => (
-    <div className="flex items-center justify-between p-4 rounded-lg bg-background/20">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-lg bg-background/20 gap-4">
         <div className="flex-1 min-w-0">
             <Label className="text-base">{label}</Label>
             {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
         </div>
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 w-full sm:w-auto">
             {children}
         </div>
     </div>
@@ -82,13 +82,13 @@ export default function SettingsPage() {
         return (
           <SettingsCard title="Audio Settings" description="Fine-tune your audio experience.">
             <SettingRow label="Master Volume">
-                <div className="flex items-center gap-4 w-64">
+                <div className="flex items-center gap-4 w-full sm:w-64">
                     <Slider value={[audioLevels.master]} onValueChange={(value) => setAudioLevels(prev => ({...prev, master: value[0]}))} max={100} step={1} />
                     <span className="w-10 text-center font-mono text-muted-foreground">{audioLevels.master}</span>
                 </div>
             </SettingRow>
             <SettingRow label="Voice Chat Volume">
-                <div className="flex items-center gap-4 w-64">
+                <div className="flex items-center gap-4 w-full sm:w-64">
                     <Slider value={[audioLevels.chat]} onValueChange={(value) => setAudioLevels(prev => ({...prev, chat: value[0]}))} max={100} step={1} />
                     <span className="w-10 text-center font-mono text-muted-foreground">{audioLevels.chat}</span>
                 </div>
@@ -105,7 +105,7 @@ export default function SettingsPage() {
                 <Switch id="hdr-mode" defaultChecked/>
             </SettingRow>
             <SettingRow label="Brightness">
-                <div className="flex items-center gap-4 w-64">
+                <div className="flex items-center gap-4 w-full sm:w-64">
                     <Slider value={[brightness]} onValueChange={(value) => setBrightness(value[0])} max={100} step={1} />
                     <span className="w-10 text-center font-mono text-muted-foreground">{brightness}</span>
                 </div>
