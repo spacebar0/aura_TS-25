@@ -19,9 +19,10 @@ export function Header() {
   
   useEffect(() => {
     if (isClient) {
-      setActiveFriends(Math.floor(Math.random() * 20));
+       const onlineCount = userProfile.friends.filter(f => f.status !== 'Offline').length;
+      setActiveFriends(onlineCount);
     }
-  }, [isClient]);
+  }, [isClient, userProfile.friends]);
 
 
   return (
@@ -29,10 +30,12 @@ export function Header() {
       <div className="container mx-auto flex justify-end items-center">
         <div className="flex items-center gap-4">
           {isClient ? (
-            <Button variant="ghost" className="relative text-white/80 hover:text-primary hover:bg-transparent transition-colors duration-300 group">
-              <Users className="h-6 w-6 transition-colors duration-300 group-hover:text-glow" />
-              <span className="ml-2 font-bold transition-colors duration-300 group-hover:text-glow">{activeFriends}</span>
-              <div className="absolute top-1 right-1 h-2 w-2 rounded-full bg-green-500 ring-2 ring-background" />
+            <Button asChild variant="ghost" className="relative text-white/80 hover:text-primary hover:bg-transparent transition-colors duration-300 group">
+              <Link href="/friends">
+                <Users className="h-6 w-6 transition-colors duration-300 group-hover:text-glow" />
+                <span className="ml-2 font-bold transition-colors duration-300 group-hover:text-glow">{activeFriends}</span>
+                <div className="absolute top-1 right-1 h-2 w-2 rounded-full bg-green-500 ring-2 ring-background" />
+              </Link>
             </Button>
           ) : (
              <div className="h-10 w-20 bg-muted/20 rounded-md animate-pulse" />

@@ -26,6 +26,11 @@
     --chart-1: 240 59% 34%;
     --chart-2: 240 65% 27%;
     --radius: 0.5rem;
+
+    --glow-online: 120 61% 50%; /* Green */
+    --glow-ingame: 217 91% 60%; /* Blue */
+    --glow-idle: 39 100% 50%; /* Amber */
+    --glow-dnd: 0 100% 50%; /* Red */
   }
 
   .dark {
@@ -111,6 +116,20 @@
   .aura-pulse-border {
     animation: aura-pulse 4s infinite ease-in-out;
   }
+
+  .presence-glow-online {
+    animation: breathing-glow-online 4s infinite ease-in-out;
+  }
+  .presence-glow-ingame {
+    animation: breathing-glow-ingame 4s infinite ease-in-out;
+  }
+  .presence-glow-idle {
+    animation: breathing-glow-idle 3s infinite ease-in-out;
+  }
+  .presence-glow-dnd {
+    animation: breathing-glow-dnd 1.5s infinite ease-in-out;
+  }
+
 }
 
 @keyframes sparkle {
@@ -131,4 +150,25 @@
   100% {
     box-shadow: 0 0 0 0 hsl(var(--primary) / 0);
   }
+}
+
+@keyframes breathing-glow-online {
+  0% { box-shadow: 0 0 5px hsl(var(--glow-online) / 0.3), 0 0 10px hsl(var(--glow-online) / 0.3), inset 0 0 5px hsl(var(--glow-online) / 0.2); }
+  50% { box-shadow: 0 0 20px hsl(var(--glow-online) / 0.7), 0 0 30px hsl(var(--glow-online) / 0.7), inset 0 0 10px hsl(var(--glow-online) / 0.5); }
+  100% { box-shadow: 0 0 5px hsl(var(--glow-online) / 0.3), 0 0 10px hsl(var(--glow-online) / 0.3), inset 0 0 5px hsl(var(--glow-online) / 0.2); }
+}
+@keyframes breathing-glow-ingame {
+  0% { box-shadow: 0 0 5px hsl(var(--glow-ingame) / 0.3), 0 0 10px hsl(var(--glow-ingame) / 0.3), inset 0 0 5px hsl(var(--glow-ingame) / 0.2); }
+  50% { box-shadow: 0 0 20px hsl(var(--glow-ingame) / 0.7), 0 0 30px hsl(var(--glow-ingame) / 0.7), inset 0 0 10px hsl(var(--glow-ingame) / 0.5); }
+  100% { box-shadow: 0 0 5px hsl(var(--glow-ingame) / 0.3), 0 0 10px hsl(var(--glow-ingame) / 0.3), inset 0 0 5px hsl(var(--glow-ingame) / 0.2); }
+}
+@keyframes breathing-glow-idle {
+  0% { box-shadow: 0 0 4px hsl(var(--glow-idle) / 0.2), 0 0 8px hsl(var(--glow-idle) / 0.2), inset 0 0 4px hsl(var(--glow-idle) / 0.1); }
+  50% { box-shadow: 0 0 15px hsl(var(--glow-idle) / 0.5), 0 0 25px hsl(var(--glow-idle) / 0.5), inset 0 0 8px hsl(var(--glow-idle) / 0.3); }
+  100% { box-shadow: 0 0 4px hsl(var(--glow-idle) / 0.2), 0 0 8px hsl(var(--glow-idle) / 0.2), inset 0 0 4px hsl(var(--glow-idle) / 0.1); }
+}
+@keyframes breathing-glow-dnd {
+  0% { box-shadow: 0 0 8px hsl(var(--glow-dnd) / 0.5), 0 0 12px hsl(var(--glow-dnd) / 0.5), inset 0 0 6px hsl(var(--glow-dnd) / 0.4); }
+  50% { box-shadow: 0 0 25px hsl(var(--glow-dnd) / 0.9), 0 0 40px hsl(var(--glow-dnd) / 0.9), inset 0 0 14px hsl(var(--glow-dnd) / 0.7); }
+  100% { box-shadow: 0 0 8px hsl(var(--glow-dnd) / 0.5), 0 0 12px hsl(var(--glow-dnd) / 0.5), inset 0 0 6px hsl(var(--glow-dnd) / 0.4); }
 }

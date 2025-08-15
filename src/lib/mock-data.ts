@@ -18,7 +18,7 @@ export type Friend = {
   id: number;
   name: string;
   avatar: string;
-  status: 'Online' | 'Offline' | 'In Game';
+  status: 'Online' | 'Offline' | 'In-Game' | 'Idle' | 'Do Not Disturb';
   gamePlaying?: string;
 };
 
@@ -239,11 +239,15 @@ export const initialUserProfile: UserProfile = {
   totalPlaytime: '1,240 hours',
   gamesOwned: games.length,
   friends: [
-    { id: 1, name: 'Spacebar', avatar: '/images/profile1.png', status: 'In Game', gamePlaying: 'Cyber Runner 2099' },
+    { id: 1, name: 'Spacebar', avatar: '/images/profile1.png', status: 'In-Game', gamePlaying: 'Cyber Runner 2099' },
     { id: 2, name: 'PixelPrincess', avatar: '/images/profile2.jpg', status: 'Online' },
-    { id: 3, name: 'HorizonRed', avatar: '/images/profile3.jpg', status: 'Online' },
+    { id: 3, name: 'HorizonRed', avatar: '/images/profile3.jpg', status: 'Idle' },
     { id: 4, name: 'SolarFlex', avatar: '/images/profile4.jpg', status: 'Offline' },
-    { id: 5, name: 'VoidWalker', avatar: '/images/profile5.png', status: 'Offline' },
+    { id: 5, name: 'VoidWalker', avatar: '/images/profile5.png', status: 'Do Not Disturb' },
+    { id: 6, name: 'Glitch', avatar: 'https://placehold.co/100x100.png', status: 'Online' },
+    { id: 7, name: 'RogueWave', avatar: 'https://placehold.co/100x100.png', status: 'In-Game', gamePlaying: 'Starfall' },
+    { id: 8, name: 'SynthShadow', avatar: 'https://placehold.co/100x100.png', status: 'Offline' },
+    { id: 9, name: 'NeonNinja', avatar: 'https://placehold.co/100x100.png', status: 'Idle' },
   ] as Friend[]
 };
 
