@@ -15,12 +15,17 @@ const statusGlowClasses: Record<Friend['status'], string> = {
   Offline: 'opacity-60',
 };
 
-export function FriendPresenceCard({ friend }: { friend: Friend }) {
+interface FriendPresenceCardProps {
+  friend: Friend;
+  onMessage: (friend: Friend) => void;
+}
+
+export function FriendPresenceCard({ friend, onMessage }: FriendPresenceCardProps) {
   const glowClass = statusGlowClasses[friend.status] || '';
 
   const menuItems: RadialMenuItem[] = [
     { icon: <Plus />, label: 'Invite to Party', action: () => console.log('Invite') },
-    { icon: <MessageSquare />, label: 'Message', action: () => console.log('Message') },
+    { icon: <MessageSquare />, label: 'Message', action: () => onMessage(friend) },
     { icon: <User />, label: 'View Profile', action: () => console.log('Profile') },
   ];
    if (friend.status === 'In-Game') {
