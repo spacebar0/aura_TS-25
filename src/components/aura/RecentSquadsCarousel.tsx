@@ -10,10 +10,16 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { recentPlayers } from '@/lib/mock-data';
+import { recentPlayers, RecentPlayer } from '@/lib/mock-data';
 import { RecentPlayerCard } from './RecentPlayerCard';
 
-export function RecentSquadsCarousel() {
+interface RecentSquadsCarouselProps {
+  onAdd: (player: RecentPlayer) => void;
+  onInvite: (player: RecentPlayer) => void;
+  onMessage: (player: RecentPlayer) => void;
+}
+
+export function RecentSquadsCarousel({ onAdd, onInvite, onMessage }: RecentSquadsCarouselProps) {
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })
   );
@@ -32,7 +38,12 @@ export function RecentSquadsCarousel() {
         {recentPlayers.map((player) => (
           <CarouselItem key={player.id} className="pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6">
             <div className="h-full">
-              <RecentPlayerCard player={player} />
+              <RecentPlayerCard 
+                player={player}
+                onAdd={onAdd}
+                onInvite={onInvite}
+                onMessage={onMessage}
+              />
             </div>
           </CarouselItem>
         ))}

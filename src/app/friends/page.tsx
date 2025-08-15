@@ -5,9 +5,19 @@ import { useState } from 'react';
 import { FriendPresenceCard } from '@/components/aura/FriendPresenceCard';
 import { RecentSquadsCarousel } from '@/components/aura/RecentSquadsCarousel';
 import { useUserProfile } from '@/context/UserProfileContext';
-import { type Friend } from '@/lib/mock-data';
+import { type Friend, type RecentPlayer } from '@/lib/mock-data';
 import { ChatSidebar } from '@/components/aura/ChatSidebar';
 import { useToast } from '@/hooks/use-toast';
+
+// Helper to convert a RecentPlayer to a Friend for the chat sidebar
+const recentPlayerToFriend = (player: RecentPlayer): Friend => ({
+  id: player.id,
+  name: player.name,
+  avatar: player.avatar,
+  status: 'Online', // Assume they are online for chat purposes
+  gamePlaying: player.game,
+  invited: false,
+});
 
 export default function FriendsPage() {
   const { userProfile, toggleFriendInvite } = useUserProfile();
@@ -20,6 +30,11 @@ export default function FriendsPage() {
   const handleMessage = (friend: Friend) => {
     setSelectedFriend(friend);
   };
+  
+  const handleMessageRecentPlayer = (player: RecentPlayer) => {
+    const friend = recentPlayerToFriend(player);
+    setSelectedFriend(friend);
+  };
 
   const handleInvite = (friend: Friend) => {
     if (friend.invited) return;
@@ -28,6 +43,20 @@ export default function FriendsPage() {
     toast({
       title: "Invite Sent!",
       description: `Your invite has been sent to ${friend.name}.`,
+    });
+  };
+
+  const handleInviteRecentPlayer = (player: RecentPlayer) => {
+    toast({
+      title: "Invite Sent!",
+      description: `Your invite has been sent to ${player.name}.`,
+    });
+  };
+
+  const handleAddFriend = (player: RecentPlayer) => {
+    toast({
+      title: "Friend Request Sent!",
+      description: `You sent a friend request to ${player.name}.`,
     });
   };
 
@@ -47,7 +76,11 @@ export default function FriendsPage() {
         <div className="space-y-12">
           <section>
             <h2 className="text-2xl font-headline mb-4">Recent Squads</h2>
-            <RecentSquadsCarousel />
+            <RecentSquadsCarousel 
+              onAdd={handleAddFriend}
+              onInvite={handleInviteRecentPlayer}
+              onMessage={handleMessageRecentPlayer}
+            />
           </section>
 
           <section>

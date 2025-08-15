@@ -10,9 +10,12 @@ import { cn } from '@/lib/utils';
 
 interface RecentPlayerCardProps {
   player: RecentPlayer;
+  onAdd: (player: RecentPlayer) => void;
+  onInvite: (player: RecentPlayer) => void;
+  onMessage: (player: RecentPlayer) => void;
 }
 
-export function RecentPlayerCard({ player }: RecentPlayerCardProps) {
+export function RecentPlayerCard({ player, onAdd, onInvite, onMessage }: RecentPlayerCardProps) {
   return (
     <Card className="group relative overflow-hidden rounded-lg bg-card border-none flex flex-col items-center p-4 transition-all duration-300 h-full">
       <div className="relative w-24 h-24 mb-3">
@@ -37,13 +40,13 @@ export function RecentPlayerCard({ player }: RecentPlayerCardProps) {
 
       {/* Hover actions */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <Button variant="outline" size="sm" className="w-3/4">
+        <Button variant="outline" size="sm" className="w-3/4" onClick={() => onAdd(player)}>
           <UserPlus className="mr-2 h-4 w-4" /> Add Friend
         </Button>
-        <Button variant="outline" size="sm" className="w-3/4">
+        <Button variant="outline" size="sm" className="w-3/4" onClick={() => onInvite(player)}>
           <Gamepad2 className="mr-2 h-4 w-4" /> Invite
         </Button>
-         <Button variant="outline" size="sm" className="w-3/4">
+         <Button variant="outline" size="sm" className="w-3/4" onClick={() => onMessage(player)}>
           <MessageSquare className="mr-2 h-4 w-4" /> Message
         </Button>
       </div>
