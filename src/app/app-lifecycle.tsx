@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from "@/components/aura/Header";
@@ -30,7 +31,6 @@ export function AppLifecycle({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Setup audio element once on mount
     audioRef.current = new Audio('/audio/startup2.mp3');
-    audioRef.current.loop = true;
   }, []);
 
   return (
