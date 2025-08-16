@@ -60,7 +60,7 @@ export function StoreCarousel() {
                   src={imageUrl}
                   alt={`Store promotion image ${index + 1}`}
                   fill
-                  className="object-center"
+                  className="object-cover"
                   data-ai-hint="gameplay screenshot"
                 />
               </div>
