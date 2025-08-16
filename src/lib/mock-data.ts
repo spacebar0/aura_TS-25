@@ -44,9 +44,9 @@ export type UserProfile = {
 
 export const storeCarouselImages: string[] = [
   '/images/banner1.png',
-  '',
-  'https://placehold.co/1920x1080.png',
-  'https://placehold.co/1920x1080.png',
+  '/images/banner2.jpg',
+  '/images/banner3.jpg',
+  '/images/banner4.jpg',
 ];
 
 export const featuredGames: Game[] = [

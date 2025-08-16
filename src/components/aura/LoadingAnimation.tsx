@@ -94,7 +94,7 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
       exit="exit"
       className="w-full h-full flex items-center justify-center bg-background overflow-hidden fixed inset-0 z-50"
     >
-      <audio ref={audioRef} src="/audio/loading-sound.mp3" loop />
+      <audio ref={audioRef} src="/audio/startup2.mp3" loop />
       <AnimatePresence>
         {isAnimating && (
           <>
