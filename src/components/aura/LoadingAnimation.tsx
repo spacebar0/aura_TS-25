@@ -6,23 +6,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete: () => void }) {
   const [isAnimating, setIsAnimating] = useState(true);
   const [showParticles, setShowParticles] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     setShowParticles(true);
-    
-    // Create and play the audio inside the effect to better handle browser policies
-    audioRef.current = new Audio('/audio/startup2.mp3');
-    audioRef.current.loop = true;
-    
-    const playPromise = audioRef.current.play();
-
-    if (playPromise !== undefined) {
-      playPromise.catch(error => {
-        // Autoplay was prevented.
-        console.error("Audio autoplay failed:", error);
-      });
-    }
 
     const completeTimer = setTimeout(() => {
       setIsAnimating(false);
@@ -33,10 +19,6 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     return () => {
       clearTimeout(completeTimer);
       clearTimeout(unmountTimer);
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
     };
   }, [onAnimationComplete]);
 

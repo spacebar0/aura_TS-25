@@ -4,10 +4,11 @@ import { Header } from "@/components/aura/Header";
 import { Dock } from "@/components/aura/Dock";
 import { LoadingAnimation } from "@/components/aura/LoadingAnimation";
 import { AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export function AppLifecycle({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     // Simulate loading time
@@ -18,10 +19,24 @@ export function AppLifecycle({ children }: { children: React.ReactNode }) {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleAnimationComplete = () => {
+    setIsLoading(false);
+    // Play audio after the app is 'interactive'
+    if (audioRef.current) {
+        audioRef.current.play().catch(e => console.error("Audio play failed:", e));
+    }
+  }
+
+  useEffect(() => {
+    // Setup audio element once on mount
+    audioRef.current = new Audio('/audio/startup2.mp3');
+    audioRef.current.loop = true;
+  }, []);
+
   return (
     <>
       <AnimatePresence>
-        {isLoading && <LoadingAnimation onAnimationComplete={() => setIsLoading(false)} />}
+        {isLoading && <LoadingAnimation onAnimationComplete={handleAnimationComplete} />}
       </AnimatePresence>
 
       {!isLoading && (
