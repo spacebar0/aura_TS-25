@@ -6,9 +6,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete: () => void }) {
   const [isAnimating, setIsAnimating] = useState(true);
   const [showParticles, setShowParticles] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     setShowParticles(true);
+
+    // Create and play audio
+    audioRef.current = new Audio('/audio/startup2.mp3');
+    audioRef.current.loop = true;
+    audioRef.current.play().catch(error => {
+      // Autoplay was prevented. This is expected in most modern browsers.
+      // You can log this for debugging, but it's not a critical error.
+      console.warn("Loading animation audio was blocked by the browser's autoplay policy.", error);
+    });
 
     const completeTimer = setTimeout(() => {
       setIsAnimating(false);
@@ -19,6 +29,11 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     return () => {
       clearTimeout(completeTimer);
       clearTimeout(unmountTimer);
+      // Stop and clean up audio
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
     };
   }, [onAnimationComplete]);
 
