@@ -27,12 +27,12 @@ const allAchievements = [
 ];
 
 const presetAvatars = [
-    'https://placehold.co/100x100.png',
-    'https://placehold.co/100x100.png',
-    'https://placehold.co/100x100.png',
-    'https://placehold.co/100x100.png',
-    'https://placehold.co/100x100.png',
-    'https://placehold.co/100x100.png',
+    '/images/preset1.png',
+    '/images/preset2.png',
+    '/images/preset3.png',
+    '/images/preset4.png',
+    '/images/preset5.png',
+    '/images/preset6.png',
 ]
 
 export default function EditProfilePage() {

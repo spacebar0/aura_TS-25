@@ -248,7 +248,7 @@ export const games: Game[] = [
 
 export const initialUserProfile: UserProfile = {
   name: 'Vapor',
-  avatar: 'https://placehold.co/100x100.png',
+  avatar: '/images/set.png',
   auraColor: 'magenta',
   pinnedGames: [games[0], games[4], games[7]],
   preferences: 'Likes fast-paced action, sci-fi themes, and competitive multiplayer games. Enjoys vibrant, neon aesthetics and synthwave music.',
@@ -260,22 +260,22 @@ export const initialUserProfile: UserProfile = {
     { id: 3, name: 'HorizonRed', avatar: '/images/profile3.jpg', status: 'Idle' },
     { id: 4, name: 'SolarFlex', avatar: '/images/profile4.jpg', status: 'Offline' },
     { id: 5, name: 'VoidWalker', avatar: '/images/profile5.png', status: 'Do Not Disturb' },
-    { id: 6, name: 'Glitch', avatar: 'https://placehold.co/100x100.png', status: 'Online' },
-    { id: 7, name: 'RogueWave', avatar: 'https://placehold.co/100x100.png', status: 'In-Game', gamePlaying: 'Starfall' },
-    { id: 8, name: 'SynthShadow', avatar: 'https://placehold.co/100x100.png', status: 'Offline' },
-    { id: 9, name: 'NeonNinja', avatar: 'https://placehold.co/100x100.png', status: 'Idle' },
+    { id: 6, name: 'Glitch', avatar: '/images/profile6.webp', status: 'Online' },
+    { id: 7, name: 'RogueWave', avatar: '/images/profile7.jpeg', status: 'In-Game', gamePlaying: 'Starfall' },
+    { id: 8, name: 'SynthShadow', avatar: '/images/profile8.avif', status: 'Offline' },
+    { id: 9, name: 'NeonNinja', avatar: '/images/profile9.png', status: 'Idle' },
   ] as Friend[]
 };
 
 export const recentPlayers: RecentPlayer[] = [
-    { id: 1, name: 'Ghost', avatar: 'https://placehold.co/96x96.png', game: 'Cyber Runner 2099', lastPlayed: '2h ago' },
-    { id: 2, name: 'Ace', avatar: 'https://placehold.co/96x96.png', game: 'Starfall', lastPlayed: '5h ago' },
-    { id: 3, name: 'Reaper', avatar: 'https://placehold.co/96x96.png', game: 'Blade Symphony', lastPlayed: '1d ago' },
-    { id: 4, name: 'Nyx', avatar: 'https://placehold.co/96x96.png', game: 'Galaxy Raiders', lastPlayed: '1d ago' },
-    { id: 5, name: 'Wraith', avatar: 'https://placehold.co/96x96.png', game: 'Cyber Runner 2099', lastPlayed: '2d ago' },
-    { id: 6, name: 'Zero', avatar: 'https://placehold.co/96x96.png', game: 'Aethelgard Online', lastPlayed: '3d ago' },
-    { id: 7, name: 'Viper', avatar: 'https://placehold.co/96x96.png', game: 'Mech Warriors', lastPlayed: '3d ago' },
-    { id: 8, name: 'Blitz', avatar: 'https://placehold.co/96x96.png', game: 'Starfall', lastPlayed: '4d ago' },
+    { id: 1, name: 'Ghost', avatar: '/images/profile10.png', game: 'Cyber Runner 2099', lastPlayed: '2h ago' },
+    { id: 2, name: 'Ace', avatar: '/images/profile11.png', game: 'Starfall', lastPlayed: '5h ago' },
+    { id: 3, name: 'Reaper', avatar: '/images/profile12.png', game: 'Blade Symphony', lastPlayed: '1d ago' },
+    { id: 4, name: 'Nyx', avatar: '/images/profile13.png', game: 'Galaxy Raiders', lastPlayed: '1d ago' },
+    { id: 5, name: 'Wraith', avatar: '/images/profile14.png', game: 'Cyber Runner 2099', lastPlayed: '2d ago' },
+    { id: 6, name: 'Zero', avatar: '/images/profile15.png', game: 'Aethelgard Online', lastPlayed: '3d ago' },
+    { id: 7, name: 'Viper', avatar: '/images/profile16.png', game: 'Mech Warriors', lastPlayed: '3d ago' },
+    { id: 8, name: 'Blitz', avatar: '/images/profile17.png', game: 'Starfall', lastPlayed: '4d ago' },
 ];
 
 export type Song = {
