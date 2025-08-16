@@ -13,7 +13,6 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
 
     // Create and play audio
     audioRef.current = new Audio('/audio/startup2.mp3');
-    audioRef.current.loop = true;
     audioRef.current.play().catch(error => {
       // Autoplay was prevented. This is expected in most modern browsers.
       // You can log this for debugging, but it's not a critical error.
