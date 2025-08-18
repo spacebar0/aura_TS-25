@@ -1,3 +1,4 @@
+
 // src/app/home/page.tsx
 'use client';
 
@@ -20,6 +21,7 @@ import ParallaxBackground from '@/components/aura/ParallaxBackground';
 import { usePinnedGames } from '@/context/PinnedGamesContext';
 import { Button } from '@/components/ui/button';
 import { AppLifecycle } from '../app-lifecycle';
+import { useGamepad } from '@/hooks/use-gamepad';
 
 type CarouselItemType = (Game & { type: 'game' }) | { type: 'music', id: string } | { type: 'library', id: string };
 
@@ -38,6 +40,12 @@ function HomePageContent() {
   const [friendsPlaying, setFriendsPlaying] = useState(0);
   const [isClient, setIsClient] = useState(false);
   const { pinnedGames, togglePinGame } = usePinnedGames();
+
+  // Gamepad controls for carousel
+  useGamepad({
+    onLeft: () => api?.scrollPrev(),
+    onRight: () => api?.scrollNext(),
+  });
 
   useEffect(() => {
     setIsClient(true);

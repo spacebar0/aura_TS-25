@@ -6,10 +6,18 @@ import { Dock } from "@/components/aura/Dock";
 import { useEffect } from "react";
 import { useActiveProfile } from "@/context/ActiveProfileContext";
 import { useRouter } from "next/navigation";
+import { useGamepad } from "@/hooks/use-gamepad";
 
 export function AppLifecycle({ children }: { children: React.ReactNode }) {
   const { activeProfile } = useActiveProfile();
   const router = useRouter();
+
+  // Global gamepad listener for the 'back' button
+  useGamepad({
+    onButtonB: () => {
+      router.back();
+    }
+  });
 
   useEffect(() => {
     // If no profile is selected, redirect to the selection screen
