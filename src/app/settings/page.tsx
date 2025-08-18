@@ -15,6 +15,7 @@ import { AuraBeamLoader } from '@/components/aura/AuraBeamLoader';
 import { Button } from '@/components/ui/button';
 import { AppLifecycle } from '../app-lifecycle';
 import { useGamepad } from '@/hooks/use-gamepad';
+import { useFocus } from '@/context/FocusContext';
 
 export type SettingCategory = 'system' | 'audio' | 'display' | 'network' | 'privacy' | 'profiles' | 'accessibility' | 'theme';
 
@@ -29,7 +30,7 @@ const categories = [
   { id: 'accessibility', label: 'Accessibility', icon: Accessibility, color: 'hsl(0, 80%, 60%)' },
 ];
 
-const categoryIds = categories.map(c => c.id);
+const categoryIds: SettingCategory[] = categories.map(c => c.id as SettingCategory);
 
 const SettingsCard = ({ title, description, children }: { title: string, description?: string, children: React.ReactNode }) => (
     <motion.div
@@ -71,14 +72,17 @@ function SettingsPageContent() {
   const [networkList, setNetworkList] = useState<string[]>([]);
   const [isNetworkLoading, setIsNetworkLoading] = useState(false);
   const [networkError, setNetworkError] = useState<string | null>(null);
+  const { focusArea } = useFocus();
 
   useGamepad({
     onUp: () => {
+      if (focusArea !== 'MAIN') return;
       const currentIndex = categoryIds.indexOf(activeCategory);
       const nextIndex = (currentIndex - 1 + categoryIds.length) % categoryIds.length;
       setActiveCategory(categoryIds[nextIndex]);
     },
     onDown: () => {
+      if (focusArea !== 'MAIN') return;
       const currentIndex = categoryIds.indexOf(activeCategory);
       const nextIndex = (currentIndex + 1) % categoryIds.length;
       setActiveCategory(categoryIds[nextIndex]);

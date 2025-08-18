@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { PinnedGamesProvider } from '@/context/PinnedGamesContext';
 import { UserProfileProvider } from '@/context/UserProfileContext';
 import { ActiveProfileProvider } from '@/context/ActiveProfileContext';
+import { FocusProvider } from '@/context/FocusContext';
 
 export const metadata: Metadata = {
   title: 'AURA Console UI',
@@ -29,13 +30,15 @@ export default function RootLayout({
         )}
         suppressHydrationWarning
       >
-        <ActiveProfileProvider>
-          <UserProfileProvider>
-            <PinnedGamesProvider>
-              {children}
-            </PinnedGamesProvider>
-          </UserProfileProvider>
-        </ActiveProfileProvider>
+        <FocusProvider>
+          <ActiveProfileProvider>
+            <UserProfileProvider>
+              <PinnedGamesProvider>
+                {children}
+              </PinnedGamesProvider>
+            </UserProfileProvider>
+          </ActiveProfileProvider>
+        </FocusProvider>
         <Toaster />
       </body>
     </html>

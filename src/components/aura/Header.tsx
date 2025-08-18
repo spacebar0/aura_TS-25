@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 import { Users, LogOut, User } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useUserProfile } from '@/context/UserProfileContext';
 import { useActiveProfile } from '@/context/ActiveProfileContext';
 import { useRouter } from 'next/navigation';
@@ -23,17 +23,55 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import { useFocus } from '@/context/FocusContext';
+import { useGamepad } from '@/hooks/use-gamepad';
+import { cn } from '@/lib/utils';
+
+const headerNavItems = [
+  { id: 'friends', href: '/friends', icon: Users, label: 'Friends' },
+  { id: 'profile', href: '#', icon: User, label: 'Profile' }, // Placeholder href
+];
+
 
 export function Header() {
   const { userProfile } = useUserProfile();
   const { setActiveProfile } = useActiveProfile();
   const router = useRouter();
+  const { focusArea, headerIndex, setHeaderIndex } = useFocus();
+
   const [activeFriends, setActiveFriends] = useState(0);
   const [isClient, setIsClient] = useState(false);
+  
+  const profileButtonRef = useRef<HTMLButtonElement>(null);
+  const friendsButtonRef = useRef<HTMLButtonElement>(null);
+
 
   useEffect(() => {
     setIsClient(true);
   }, []);
+  
+  useGamepad({
+    onLeft: () => {
+        if (focusArea === 'HEADER') {
+            setHeaderIndex(prev => Math.max(0, prev - 1));
+        }
+    },
+    onRight: () => {
+        if (focusArea === 'HEADER') {
+            setHeaderIndex(prev => Math.min(headerNavItems.length -1, prev + 1));
+        }
+    },
+    onButtonA: () => {
+        if (focusArea === 'HEADER') {
+            if (headerIndex === 0 && friendsButtonRef.current) {
+                friendsButtonRef.current.click();
+            }
+            if (headerIndex === 1 && profileButtonRef.current) {
+                profileButtonRef.current.click();
+            }
+        }
+    }
+  });
 
   useEffect(() => {
     if (isClient) {
@@ -49,6 +87,9 @@ export function Header() {
     router.push('/select-profile');
   };
 
+  const isFriendsFocused = focusArea === 'HEADER' && headerIndex === 0;
+  const isProfileFocused = focusArea === 'HEADER' && headerIndex === 1;
+
   return (
     <header className="fixed top-4 right-4 z-40">
       <TooltipProvider>
@@ -57,10 +98,14 @@ export function Header() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
+                  ref={friendsButtonRef}
                   asChild
                   variant="ghost"
                   size="icon"
-                  className="relative rounded-full text-white/80 hover:text-primary hover:bg-primary/20"
+                  className={cn(
+                      "relative rounded-full text-white/80 hover:text-primary hover:bg-primary/20",
+                      isFriendsFocused && "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                  )}
                 >
                   <Link href="/friends">
                     <Users className="h-5 w-5" />
@@ -78,7 +123,10 @@ export function Header() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background transition-all">
+              <button ref={profileButtonRef} className={cn(
+                  "rounded-full focus:outline-none transition-all",
+                  isProfileFocused && "ring-2 ring-primary ring-offset-2 ring-offset-background"
+              )}>
                 <Image
                   src={userProfile.avatar}
                   alt="User Avatar"

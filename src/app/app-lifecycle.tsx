@@ -7,15 +7,38 @@ import { useEffect } from "react";
 import { useActiveProfile } from "@/context/ActiveProfileContext";
 import { useRouter } from "next/navigation";
 import { useGamepad } from "@/hooks/use-gamepad";
+import { useFocus } from "@/context/FocusContext";
 
 export function AppLifecycle({ children }: { children: React.ReactNode }) {
   const { activeProfile } = useActiveProfile();
+  const { focusArea, setFocusArea, setHeaderIndex, setDockIndex } = useFocus();
   const router = useRouter();
 
-  // Global gamepad listener for the 'back' button
+  // Global gamepad listener for the 'back' button and focus switching
   useGamepad({
     onButtonB: () => {
-      router.back();
+      // If focus is on header/dock, return to main. Otherwise, go back.
+      if (focusArea !== 'MAIN') {
+        setFocusArea('MAIN');
+      } else {
+        router.back();
+      }
+    },
+    onUp: () => {
+      if (focusArea === 'MAIN') {
+        setHeaderIndex(0); // Focus on the first item in the header
+        setFocusArea('HEADER');
+      } else if (focusArea === 'DOCK') {
+        setFocusArea('MAIN');
+      }
+    },
+    onDown: () => {
+      if (focusArea === 'MAIN') {
+        setDockIndex(0); // Focus on the first item in the dock
+        setFocusArea('DOCK');
+      } else if (focusArea === 'HEADER') {
+        setFocusArea('MAIN');
+      }
     }
   });
 

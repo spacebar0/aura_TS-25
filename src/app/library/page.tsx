@@ -8,6 +8,7 @@ import { games } from '@/lib/mock-data';
 import { Pin } from 'lucide-react';
 import { AppLifecycle } from '../app-lifecycle';
 import { useGamepad } from '@/hooks/use-gamepad';
+import { useFocus } from '@/context/FocusContext';
 
 const tabValues = ['all', 'pinned', 'recent', 'action', 'rpg'];
 
@@ -19,14 +20,17 @@ const rpgGames = games.filter(g => g.genre.toLowerCase().includes('rpg'));
 function LibraryPageContent() {
   const { pinnedGames } = usePinnedGames();
   const [activeTab, setActiveTab] = useState(tabValues[0]);
+  const { focusArea } = useFocus();
 
   useGamepad({
     onLeft: () => {
+      if (focusArea !== 'MAIN') return;
       const currentIndex = tabValues.indexOf(activeTab);
       const nextIndex = (currentIndex - 1 + tabValues.length) % tabValues.length;
       setActiveTab(tabValues[nextIndex]);
     },
     onRight: () => {
+      if (focusArea !== 'MAIN') return;
       const currentIndex = tabValues.indexOf(activeTab);
       const nextIndex = (currentIndex + 1) % tabValues.length;
       setActiveTab(tabValues[nextIndex]);

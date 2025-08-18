@@ -1,18 +1,23 @@
+// src/app/store/page.tsx
+'use client'
+
 import { AiCurator } from '@/components/aura/AiCurator';
 import { StoreGameCard } from '@/components/aura/StoreGameCard';
 import { StoreCarousel } from '@/components/aura/StoreCarousel';
 import { games } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
 import { AppLifecycle } from '../app-lifecycle';
+import { useFocus } from '@/context/FocusContext';
 
 function StorePageContent() {
   const newReleases = [...games].sort(() => 0.5 - Math.random()).slice(0, 7);
   const topRated = [...games].sort((a, b) => b.rating - a.rating).slice(0, 7);
+  const { focusArea } = useFocus();
 
   return (
     <div className="w-full animate-in fade-in duration-500">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <StoreCarousel />
+        <StoreCarousel isFocused={focusArea === 'MAIN'} />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">

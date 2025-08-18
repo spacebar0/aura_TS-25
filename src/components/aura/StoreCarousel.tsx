@@ -15,7 +15,7 @@ import { storeCarouselImages } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
 import { useGamepad } from '@/hooks/use-gamepad';
 
-export function StoreCarousel() {
+export function StoreCarousel({ isFocused }: { isFocused: boolean }) {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
 
@@ -24,8 +24,8 @@ export function StoreCarousel() {
   );
 
   useGamepad({
-    onLeft: () => api?.scrollPrev(),
-    onRight: () => api?.scrollNext(),
+    onLeft: () => { if (isFocused) api?.scrollPrev() },
+    onRight: () => { if (isFocused) api?.scrollNext() },
   });
 
   React.useEffect(() => {
