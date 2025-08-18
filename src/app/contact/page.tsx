@@ -23,7 +23,7 @@ function ContactPageContent() {
           className="lg:pt-16 space-y-8"
         >
           <header className="mb-12">
-            <h1 className="text-6xl font-poppins font-medium text-glow leading-tight">
+            <h1 className="text-5xl font-poppins font-medium text-glow leading-tight">
               We're here to help
             </h1>
             <p className="text-muted-foreground mt-4 font-silkscreen">
