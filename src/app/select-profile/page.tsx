@@ -36,15 +36,17 @@ export default function SelectProfilePage() {
 
   const handleAddProfile = (name: string, avatar: string) => {
     const newProfile: UserProfile = {
-      ...initialUserProfile, // Use as a template for defaults like friends list for now
+      // Use a few defaults from initialUserProfile, but override specifics for a new user
+      ...initialUserProfile,
       id: profiles.length + 1, // Simple ID generation for demo
       name,
       avatar,
-      // Reset stats for the new profile
+      // Reset stats and personalization for the new profile
       pinnedGames: [],
-      totalPlaytime: '0 hours',
+      totalPlaytime: '0h',
       gamesOwned: 0,
       preferences: 'New AURA user. Ready to play!',
+      friends: initialUserProfile.friends, // New users can still have a default friends list for demo
     };
     setProfiles([...profiles, newProfile]);
     setIsAddDialogOpen(false);
