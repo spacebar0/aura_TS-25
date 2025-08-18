@@ -12,7 +12,7 @@ function ContactPageContent() {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500 w-full relative overflow-hidden">
       {/* Background Glow */}
-      <div className="absolute top-1/2 right-0 w-1/2 h-full bg-primary/20 -translate-y-1/2 rounded-full blur-[150px] opacity-30 pointer-events-none -z-10" />
+      <div className="absolute top-1/2 right-0 w-1/2 h-full bg-blue-500/20 -translate-y-1/2 rounded-full blur-[150px] opacity-30 pointer-events-none -z-10" />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         {/* Left column for contact info */}
@@ -79,7 +79,7 @@ function ContactPageContent() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="lg:col-span-1 h-[80vh]"
+            className="lg:col-span-1 h-[calc(100vh-12rem)]"
         >
           <Card className="glass-pane h-full flex flex-col border-white/5 shadow-2xl shadow-black/50">
             <CardHeader className="flex flex-row justify-between items-center">
