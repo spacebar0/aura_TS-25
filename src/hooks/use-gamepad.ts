@@ -34,31 +34,29 @@ export function useGamepad() {
         setSettingsCategory, settingsCategory,
     } = context;
 
-    // --- Vertical Navigation (Focus Area Switching & Page Specific) ---
-    if (direction === 'up' || direction === 'down') {
-        if (direction === 'up') {
-            if (focusArea === 'MAIN') setFocusArea('HEADER');
-            else if (focusArea === 'DOCK') setFocusArea('MAIN');
-            else if (focusArea === 'MAIN' && pathname === '/settings') {
-                setSettingsCategory(prev => {
-                    const currentIndex = settingsCategoryIds.indexOf(prev as SettingCategory);
-                    const nextIndex = (currentIndex - 1 + settingsCategoryIds.length) % settingsCategoryIds.length;
-                    return settingsCategoryIds[nextIndex];
-                })
-            }
-        } else if (direction === 'down') {
-            if (focusArea === 'HEADER') setFocusArea('MAIN');
-            else if (focusArea === 'MAIN') setFocusArea('DOCK');
-            else if (focusArea === 'MAIN' && pathname === '/settings') {
-                setSettingsCategory(prev => {
-                    const currentIndex = settingsCategoryIds.indexOf(prev as SettingCategory);
-                    const nextIndex = (currentIndex + 1) % settingsCategoryIds.length;
-                    return settingsCategoryIds[nextIndex];
-                })
-            }
+    // --- Vertical Navigation ---
+    if (direction === 'up') {
+        if (focusArea === 'MAIN') setFocusArea('HEADER');
+        else if (focusArea === 'DOCK') setFocusArea('MAIN');
+        else if (focusArea === 'MAIN' && pathname === '/settings') {
+            setSettingsCategory(prev => {
+                const currentIndex = settingsCategoryIds.indexOf(prev as SettingCategory);
+                const nextIndex = (currentIndex - 1 + settingsCategoryIds.length) % settingsCategoryIds.length;
+                return settingsCategoryIds[nextIndex];
+            })
+        }
+    } else if (direction === 'down') {
+        if (focusArea === 'HEADER') setFocusArea('MAIN');
+        else if (focusArea === 'MAIN') setFocusArea('DOCK');
+        else if (focusArea === 'MAIN' && pathname === '/settings') {
+            setSettingsCategory(prev => {
+                const currentIndex = settingsCategoryIds.indexOf(prev as SettingCategory);
+                const nextIndex = (currentIndex + 1) % settingsCategoryIds.length;
+                return settingsCategoryIds[nextIndex];
+            })
         }
     }
-    // --- Horizontal Navigation (Context-Dependent) ---
+    // --- Horizontal Navigation ---
     else if (direction === 'left' || direction === 'right') {
         const move = direction === 'left' ? -1 : 1;
         

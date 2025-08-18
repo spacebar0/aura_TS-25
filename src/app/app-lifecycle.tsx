@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { useActiveProfile } from "@/context/ActiveProfileContext";
 import { useRouter } from "next/navigation";
 import { useGamepad } from "@/hooks/use-gamepad";
-import { useFocus } from "@/context/FocusContext";
 
 export function AppLifecycle({ children }: { children: React.ReactNode }) {
   const { activeProfile } = useActiveProfile();

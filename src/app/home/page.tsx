@@ -40,7 +40,7 @@ function HomePageContent() {
   const [friendsPlaying, setFriendsPlaying] = useState(0);
   const [isClient, setIsClient] = useState(false);
   const { pinnedGames, togglePinGame } = usePinnedGames();
-  const { focusArea, setHomeCarouselApi } = useFocus();
+  const { setHomeCarouselApi } = useFocus();
 
   // Expose the carousel API to the global context for gamepad control
   useEffect(() => {
@@ -76,17 +76,6 @@ function HomePageContent() {
       return
     }
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (focusArea !== 'MAIN') return;
-      if (event.key === 'ArrowRight') {
-        api.scrollNext();
-      } else if (event.key === 'ArrowLeft') {
-        api.scrollPrev();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-
     resetInactivityTimer();
     onSelect(api);
 
@@ -107,7 +96,6 @@ function HomePageContent() {
     window.addEventListener('click', genericReset);
     
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
       if (inactivityTimer.current) {
         clearTimeout(inactivityTimer.current);
       }
@@ -117,7 +105,7 @@ function HomePageContent() {
       window.removeEventListener('scroll', genericReset);
       window.removeEventListener('click', genericReset);
     };
-  }, [api, resetInactivityTimer, onSelect, focusArea]);
+  }, [api, resetInactivityTimer, onSelect]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
