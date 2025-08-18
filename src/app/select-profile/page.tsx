@@ -1,7 +1,7 @@
 // src/app/select-profile/page.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -12,23 +12,54 @@ import { useActiveProfile } from '@/context/ActiveProfileContext';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { initialUserProfile, UserProfile } from '@/lib/mock-data'; // Using this as a template
 import { AddProfileDialog } from '@/components/aura/AddProfileDialog';
+import { useGamepad } from '@/hooks/use-gamepad';
 
 export default function SelectProfilePage() {
   const router = useRouter();
   const { setActiveProfile } = useActiveProfile();
-  const { userProfile, setUserProfile } = useUserProfile(); // In a real app, this would be a list of profiles
+  const { setUserProfile } = useUserProfile();
   
-  // For demonstration, we'll use the single userProfile to create a list of profiles
-  const initialProfiles = [
-    userProfile,
-    { ...initialUserProfile, id: 2, name: 'Nova', avatar: '/images/preset1.png' },
-    { ...initialUserProfile, id: 3, name: 'Glitch', avatar: '/images/preset2.png' },
-  ];
-
-  const [profiles, setProfiles] = useState(initialProfiles);
+  const [profiles, setProfiles] = useState<UserProfile[]>([]);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [focusedIndex, setFocusedIndex] = useState(0);
 
-  const handleProfileSelect = (profile: any) => {
+  useEffect(() => {
+    // This effect runs on the client, where localStorage is available.
+    const storedProfiles = localStorage.getItem('aura-profiles');
+    if (storedProfiles) {
+      setProfiles(JSON.parse(storedProfiles));
+    } else {
+      // If no profiles are stored, initialize with some defaults.
+      const initialProfiles = [
+        { ...initialUserProfile, id: 1 },
+        { ...initialUserProfile, id: 2, name: 'Nova', avatar: '/images/preset1.png', pinnedGames: [], totalPlaytime: '0h', gamesOwned: 0 },
+        { ...initialUserProfile, id: 3, name: 'Glitch', avatar: '/images/preset2.png', pinnedGames: [], totalPlaytime: '0h', gamesOwned: 0 },
+      ];
+      setProfiles(initialProfiles);
+      localStorage.setItem('aura-profiles', JSON.stringify(initialProfiles));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Whenever profiles change, save them to localStorage.
+    if (profiles.length > 0) {
+      localStorage.setItem('aura-profiles', JSON.stringify(profiles));
+    }
+  }, [profiles]);
+
+  useGamepad({
+    onLeft: () => setFocusedIndex(prev => Math.max(0, prev - 1)),
+    onRight: () => setFocusedIndex(prev => Math.min(profiles.length, prev + 1)), // +1 to include Add button
+    onButtonA: () => {
+      if (focusedIndex < profiles.length) {
+        handleProfileSelect(profiles[focusedIndex]);
+      } else {
+        setIsAddDialogOpen(true);
+      }
+    },
+  });
+
+  const handleProfileSelect = (profile: UserProfile) => {
     setActiveProfile(profile);
     setUserProfile(profile); // Update the main user profile context
     router.push('/home'); // Redirect to the main home page
@@ -36,19 +67,17 @@ export default function SelectProfilePage() {
 
   const handleAddProfile = (name: string, avatar: string) => {
     const newProfile: UserProfile = {
-      // Use a few defaults from initialUserProfile, but override specifics for a new user
       ...initialUserProfile,
-      id: profiles.length + 1, // Simple ID generation for demo
+      id: Date.now(), // Use timestamp for a simple unique ID
       name,
       avatar,
-      // Reset stats and personalization for the new profile
       pinnedGames: [],
       totalPlaytime: '0h',
       gamesOwned: 0,
       preferences: 'New AURA user. Ready to play!',
-      friends: initialUserProfile.friends, // New users can still have a default friends list for demo
+      friends: initialUserProfile.friends,
     };
-    setProfiles([...profiles, newProfile]);
+    setProfiles(prevProfiles => [...prevProfiles, newProfile]);
     setIsAddDialogOpen(false);
   };
 
@@ -107,11 +136,12 @@ export default function SelectProfilePage() {
           animate="visible"
           className="flex items-center justify-center gap-8 flex-wrap"
         >
-          {profiles.map((profile) => (
-            <motion.div key={profile.id || 1} variants={itemVariants}>
+          {profiles.map((profile, index) => (
+            <motion.div key={profile.id} variants={itemVariants}>
               <ProfileCard
                 profile={profile}
                 onSelect={() => handleProfileSelect(profile)}
+                isFocused={focusedIndex === index}
               >
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -125,11 +155,11 @@ export default function SelectProfilePage() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="top" align="end" className="glass-pane">
-                    <DropdownMenuItem onClick={() => handleEdit(profile.id || 1)}>
+                    <DropdownMenuItem onClick={() => handleEdit(profile.id)}>
                       <Pencil className="mr-2 h-4 w-4" />
                       <span>Edit</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(profile.id || 1)}>
+                    <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(profile.id)}>
                       <Trash2 className="mr-2 h-4 w-4" />
                       <span>Delete</span>
                     </DropdownMenuItem>
@@ -140,9 +170,10 @@ export default function SelectProfilePage() {
           ))}
 
           <motion.div variants={itemVariants}>
-            <button 
+            <button
               onClick={() => setIsAddDialogOpen(true)}
-              className="group w-48 h-64 rounded-2xl border-2 border-dashed border-muted-foreground/50 flex flex-col items-center justify-center text-muted-foreground/80 hover:border-primary hover:text-primary transition-all duration-300 aura-pulse-border focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+              className="group w-48 h-64 rounded-2xl border-2 border-dashed border-muted-foreground/50 flex flex-col items-center justify-center text-muted-foreground/80 hover:border-primary hover:text-primary transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background"
+              data-focused={focusedIndex === profiles.length}
             >
               <Plus className="w-16 h-16 mb-2 transition-transform duration-300 group-hover:scale-110" />
               <span className="font-medium text-lg">Add Profile</span>

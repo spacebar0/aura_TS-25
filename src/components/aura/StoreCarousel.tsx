@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/carousel';
 import { storeCarouselImages } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
+import { useGamepad } from '@/hooks/use-gamepad';
 
 export function StoreCarousel() {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -21,6 +22,11 @@ export function StoreCarousel() {
   const plugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
   );
+
+  useGamepad({
+    onLeft: () => api?.scrollPrev(),
+    onRight: () => api?.scrollNext(),
+  });
 
   React.useEffect(() => {
     if (!api) {

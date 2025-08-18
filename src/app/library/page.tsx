@@ -1,19 +1,37 @@
 'use client';
 
+import { useState } from 'react';
 import { LibraryGameCard } from '@/components/aura/LibraryGameCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { usePinnedGames } from '@/context/PinnedGamesContext';
 import { games } from '@/lib/mock-data';
 import { Pin } from 'lucide-react';
 import { AppLifecycle } from '../app-lifecycle';
+import { useGamepad } from '@/hooks/use-gamepad';
+
+const tabValues = ['all', 'pinned', 'recent', 'action', 'rpg'];
 
 const allGames = [...games].sort((a, b) => a.title.localeCompare(b.title));
-const recentGames = [...games].sort((a, b) => new Date(b.lastPlayed).getTime() - new Date(a.lastPlayed).getTime());
+const recentGames = [...games].sort((a, b) => new Date(b.lastPlayedDate).getTime() - new Date(a.lastPlayedDate).getTime());
 const actionGames = games.filter(g => g.genre.toLowerCase().includes('action'));
 const rpgGames = games.filter(g => g.genre.toLowerCase().includes('rpg'));
 
 function LibraryPageContent() {
   const { pinnedGames } = usePinnedGames();
+  const [activeTab, setActiveTab] = useState(tabValues[0]);
+
+  useGamepad({
+    onLeft: () => {
+      const currentIndex = tabValues.indexOf(activeTab);
+      const nextIndex = (currentIndex - 1 + tabValues.length) % tabValues.length;
+      setActiveTab(tabValues[nextIndex]);
+    },
+    onRight: () => {
+      const currentIndex = tabValues.indexOf(activeTab);
+      const nextIndex = (currentIndex + 1) % tabValues.length;
+      setActiveTab(tabValues[nextIndex]);
+    },
+  });
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500">
@@ -27,7 +45,7 @@ function LibraryPageContent() {
           </p>
         </div>
       </header>
-      <Tabs defaultValue="all" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="mb-8">
           <TabsTrigger value="all">All</TabsTrigger>
           <TabsTrigger value="pinned">Pinned</TabsTrigger>

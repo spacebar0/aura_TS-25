@@ -9,16 +9,18 @@ interface ProfileCardProps {
   profile: Partial<UserProfile>; // Use partial as we might not have all data
   onSelect: () => void;
   children?: React.ReactNode;
+  isFocused?: boolean;
 }
 
-export function ProfileCard({ profile, onSelect, children }: ProfileCardProps) {
+export function ProfileCard({ profile, onSelect, children, isFocused = false }: ProfileCardProps) {
   return (
     <div className="relative group">
       <button
         onClick={onSelect}
         className={cn(
           "w-48 h-64 rounded-2xl p-4 flex flex-col items-center justify-end text-center transition-all duration-300 ease-in-out",
-          "bg-card border-2 border-transparent",
+          "bg-card border-2",
+          isFocused ? "border-primary shadow-2xl shadow-primary/30 scale-105" : "border-transparent",
           "hover:border-primary hover:shadow-2xl hover:shadow-primary/30 hover:scale-105",
           "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
         )}
