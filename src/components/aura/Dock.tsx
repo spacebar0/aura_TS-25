@@ -1,14 +1,14 @@
+
 // src/components/aura/Dock.tsx
 'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { Home, Library, Store, Settings2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 import { useFocus } from '@/context/FocusContext';
-import { useGamepad } from '@/hooks/use-gamepad';
 import { useEffect, useRef } from 'react';
 
 const navItems = [
@@ -21,32 +21,16 @@ const navItems = [
 
 export function Dock() {
   const pathname = usePathname();
-  const router = useRouter();
-  const { focusArea, dockIndex, setDockIndex } = useFocus();
+  const { focusArea, dockIndex, setDockItems } = useFocus();
   
   const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useEffect(() => {
     itemRefs.current = itemRefs.current.slice(0, navItems.length);
-  }, []);
+    // Pass the refs to the context so the global gamepad hook can use them
+    setDockItems(itemRefs.current);
+  }, [setDockItems]);
 
-  useGamepad({
-    onLeft: () => {
-      if (focusArea === 'DOCK') {
-        setDockIndex((prev) => Math.max(0, prev - 1));
-      }
-    },
-    onRight: () => {
-      if (focusArea === 'DOCK') {
-        setDockIndex((prev) => Math.min(navItems.length - 1, prev + 1));
-      }
-    },
-    onButtonA: () => {
-      if (focusArea === 'DOCK' && itemRefs.current[dockIndex]) {
-        itemRefs.current[dockIndex]?.click();
-      }
-    },
-  });
 
   return (
     <footer className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none">

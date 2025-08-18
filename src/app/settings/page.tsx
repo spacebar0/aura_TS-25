@@ -1,3 +1,4 @@
+
 // src/app/settings/page.tsx
 'use client';
 
@@ -14,7 +15,6 @@ import { getWifiNetworks } from '@/app/actions';
 import { AuraBeamLoader } from '@/components/aura/AuraBeamLoader';
 import { Button } from '@/components/ui/button';
 import { AppLifecycle } from '../app-lifecycle';
-import { useGamepad } from '@/hooks/use-gamepad';
 import { useFocus } from '@/context/FocusContext';
 
 export type SettingCategory = 'system' | 'audio' | 'display' | 'network' | 'privacy' | 'profiles' | 'accessibility' | 'theme';
@@ -29,8 +29,6 @@ const categories = [
   { id: 'profiles', label: 'Profiles', icon: Users, color: 'hsl(320, 80%, 60%)' },
   { id: 'accessibility', label: 'Accessibility', icon: Accessibility, color: 'hsl(0, 80%, 60%)' },
 ];
-
-const categoryIds: SettingCategory[] = categories.map(c => c.id as SettingCategory);
 
 const SettingsCard = ({ title, description, children }: { title: string, description?: string, children: React.ReactNode }) => (
     <motion.div
@@ -65,29 +63,13 @@ const SettingRow = ({ label, description, children }: {label: string, descriptio
 
 
 function SettingsPageContent() {
-  const [activeCategory, setActiveCategory] = useState<SettingCategory>('system');
+  const { settingsCategory, setSettingsCategory } = useFocus();
   const [audioLevels, setAudioLevels] = useState({ master: 75, chat: 50 });
   const [brightness, setBrightness] = useState(80);
 
   const [networkList, setNetworkList] = useState<string[]>([]);
   const [isNetworkLoading, setIsNetworkLoading] = useState(false);
   const [networkError, setNetworkError] = useState<string | null>(null);
-  const { focusArea } = useFocus();
-
-  useGamepad({
-    onUp: () => {
-      if (focusArea !== 'MAIN') return;
-      const currentIndex = categoryIds.indexOf(activeCategory);
-      const nextIndex = (currentIndex - 1 + categoryIds.length) % categoryIds.length;
-      setActiveCategory(categoryIds[nextIndex]);
-    },
-    onDown: () => {
-      if (focusArea !== 'MAIN') return;
-      const currentIndex = categoryIds.indexOf(activeCategory);
-      const nextIndex = (currentIndex + 1) % categoryIds.length;
-      setActiveCategory(categoryIds[nextIndex]);
-    },
-  });
 
   const handleFetchNetworks = useCallback(async () => {
     setIsNetworkLoading(true);
@@ -102,13 +84,13 @@ function SettingsPageContent() {
   }, []);
 
   useEffect(() => {
-    if (activeCategory === 'network') {
+    if (settingsCategory === 'network') {
       handleFetchNetworks();
     }
-  }, [activeCategory, handleFetchNetworks]);
+  }, [settingsCategory, handleFetchNetworks]);
 
   const renderContent = () => {
-    switch (activeCategory) {
+    switch (settingsCategory) {
       case 'system':
         return (
           <SettingsCard title="System Settings" description="Manage core console behavior and notifications.">
@@ -200,7 +182,7 @@ function SettingsPageContent() {
         );
       default:
         return (
-            <SettingsCard title={categories.find(c => c.id === activeCategory)?.label || 'Settings'}>
+            <SettingsCard title={categories.find(c => c.id === settingsCategory)?.label || 'Settings'}>
                 <p className="text-muted-foreground text-center py-16">
                     Settings for this category are under development.
                 </p>
@@ -214,12 +196,12 @@ function SettingsPageContent() {
       <div className="flex h-full gap-8">
         <SettingsNav 
             categories={categories}
-            activeCategory={activeCategory}
-            setActiveCategory={setActiveCategory}
+            activeCategory={settingsCategory}
+            setActiveCategory={setSettingsCategory}
         />
         <main className="flex-1 relative">
             <AnimatePresence mode="wait">
-                <div key={activeCategory}>
+                <div key={settingsCategory}>
                     {renderContent()}
                 </div>
             </AnimatePresence>

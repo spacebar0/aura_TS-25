@@ -1,3 +1,4 @@
+
 // src/app/store/page.tsx
 'use client'
 
@@ -8,16 +9,26 @@ import { games } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
 import { AppLifecycle } from '../app-lifecycle';
 import { useFocus } from '@/context/FocusContext';
+import { useEffect, useState } from 'react';
+import type { CarouselApi } from '../ui/carousel';
 
 function StorePageContent() {
   const newReleases = [...games].sort(() => 0.5 - Math.random()).slice(0, 7);
   const topRated = [...games].sort((a, b) => b.rating - a.rating).slice(0, 7);
-  const { focusArea } = useFocus();
+  const { focusArea, setStoreCarouselApi } = useFocus();
+  const [api, setApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    if (api) {
+      setStoreCarouselApi(api);
+    }
+  }, [api, setStoreCarouselApi]);
+
 
   return (
     <div className="w-full animate-in fade-in duration-500">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <StoreCarousel isFocused={focusArea === 'MAIN'} />
+        <StoreCarousel setApi={setApi} isFocused={focusArea === 'MAIN'} />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">

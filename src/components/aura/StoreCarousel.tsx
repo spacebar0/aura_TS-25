@@ -1,3 +1,4 @@
+
 // src/components/aura/StoreCarousel.tsx
 'use client';
 
@@ -13,43 +14,45 @@ import {
 } from '@/components/ui/carousel';
 import { storeCarouselImages } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
-import { useGamepad } from '@/hooks/use-gamepad';
 
-export function StoreCarousel({ isFocused }: { isFocused: boolean }) {
-  const [api, setApi] = React.useState<CarouselApi>();
+interface StoreCarouselProps {
+  isFocused: boolean;
+  setApi: (api: CarouselApi | undefined) => void;
+}
+
+export function StoreCarousel({ isFocused, setApi }: StoreCarouselProps) {
   const [current, setCurrent] = React.useState(0);
-
   const plugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
   );
 
-  useGamepad({
-    onLeft: () => { if (isFocused) api?.scrollPrev() },
-    onRight: () => { if (isFocused) api?.scrollNext() },
-  });
+  const handleApi = React.useCallback((api: CarouselApi | undefined) => {
+    setApi(api);
+  }, [setApi]);
 
   React.useEffect(() => {
-    if (!api) {
+    const carouselApi = api; // get the api from the state
+    if (!carouselApi) {
       return;
     }
 
-    setCurrent(api.selectedScrollSnap());
+    setCurrent(carouselApi.selectedScrollSnap());
 
     const onSelect = (api: CarouselApi) => {
       setCurrent(api.selectedScrollSnap());
     };
 
-    api.on('select', onSelect);
+    carouselApi.on('select', onSelect);
 
     return () => {
-      api.off('select', onSelect);
+      carouselApi.off('select', onSelect);
     };
   }, [api]);
 
   return (
     <div className="relative w-full">
       <Carousel
-        setApi={setApi}
+        setApi={handleApi}
         plugins={[plugin.current]}
         className="w-full"
         onMouseEnter={plugin.current.stop}
@@ -78,7 +81,7 @@ export function StoreCarousel({ isFocused }: { isFocused: boolean }) {
         {storeCarouselImages.map((_, index) => (
           <button
             key={index}
-            onClick={() => api?.scrollTo(index)}
+            onClick={() => (api as CarouselApi)?.scrollTo(index)}
             className={cn(
               'w-2 h-2 rounded-full transition-colors',
               current === index ? 'bg-primary' : 'bg-muted/50'

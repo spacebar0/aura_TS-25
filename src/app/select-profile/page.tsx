@@ -1,7 +1,8 @@
+
 // src/app/select-profile/page.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -14,15 +15,23 @@ import { initialUserProfile, UserProfile } from '@/lib/mock-data'; // Using this
 import { AddProfileDialog } from '@/components/aura/AddProfileDialog';
 import { useGamepad } from '@/hooks/use-gamepad';
 import { cn } from '@/lib/utils';
+import { useFocus } from '@/context/FocusContext';
 
 export default function SelectProfilePage() {
   const router = useRouter();
   const { setActiveProfile } = useActiveProfile();
   const { setUserProfile } = useUserProfile();
+  const { selectProfileIndex, setSelectProfileIndex } = useFocus();
   
   const [profiles, setProfiles] = useState<UserProfile[]>([]);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [focusedIndex, setFocusedIndex] = useState(0);
+  const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    cardRefs.current = cardRefs.current.slice(0, profiles.length + 1);
+  }, [profiles]);
+
+  useGamepad();
 
   useEffect(() => {
     // This effect runs on the client, where localStorage is available.
@@ -47,18 +56,6 @@ export default function SelectProfilePage() {
       localStorage.setItem('aura-profiles', JSON.stringify(profiles));
     }
   }, [profiles]);
-
-  useGamepad({
-    onLeft: () => setFocusedIndex(prev => Math.max(0, prev - 1)),
-    onRight: () => setFocusedIndex(prev => Math.min(profiles.length, prev + 1)), // +1 to include Add button
-    onButtonA: () => {
-      if (focusedIndex < profiles.length) {
-        handleProfileSelect(profiles[focusedIndex]);
-      } else {
-        setIsAddDialogOpen(true);
-      }
-    },
-  });
 
   const handleProfileSelect = (profile: UserProfile) => {
     setActiveProfile(profile);
@@ -140,9 +137,10 @@ export default function SelectProfilePage() {
           {profiles.map((profile, index) => (
             <motion.div key={profile.id} variants={itemVariants}>
               <ProfileCard
+                ref={el => cardRefs.current[index] = el}
                 profile={profile}
                 onSelect={() => handleProfileSelect(profile)}
-                isFocused={focusedIndex === index}
+                isFocused={selectProfileIndex === index}
               >
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -172,12 +170,13 @@ export default function SelectProfilePage() {
 
           <motion.div variants={itemVariants}>
             <button
+              ref={el => cardRefs.current[profiles.length] = el}
               onClick={() => setIsAddDialogOpen(true)}
               className={cn(
                 "group w-48 h-64 rounded-2xl border-2 border-dashed border-muted-foreground/50 flex flex-col items-center justify-center text-muted-foreground/80 transition-all duration-300",
                 "hover:border-primary hover:text-primary",
                 "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background",
-                focusedIndex === profiles.length ? "border-primary text-primary shadow-2xl shadow-primary/30 scale-105" : "border-muted-foreground/50"
+                selectProfileIndex === profiles.length ? "border-primary text-primary shadow-2xl shadow-primary/30 scale-105" : "border-muted-foreground/50"
               )}
             >
               <Plus className="w-16 h-16 mb-2 transition-transform duration-300 group-hover:scale-110" />

@@ -1,13 +1,13 @@
+
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LibraryGameCard } from '@/components/aura/LibraryGameCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { usePinnedGames } from '@/context/PinnedGamesContext';
 import { games } from '@/lib/mock-data';
 import { Pin } from 'lucide-react';
 import { AppLifecycle } from '../app-lifecycle';
-import { useGamepad } from '@/hooks/use-gamepad';
 import { useFocus } from '@/context/FocusContext';
 
 const tabValues = ['all', 'pinned', 'recent', 'action', 'rpg'];
@@ -19,23 +19,13 @@ const rpgGames = games.filter(g => g.genre.toLowerCase().includes('rpg'));
 
 function LibraryPageContent() {
   const { pinnedGames } = usePinnedGames();
-  const [activeTab, setActiveTab] = useState(tabValues[0]);
-  const { focusArea } = useFocus();
+  const { setLibraryTab, libraryTab } = useFocus();
 
-  useGamepad({
-    onLeft: () => {
-      if (focusArea !== 'MAIN') return;
-      const currentIndex = tabValues.indexOf(activeTab);
-      const nextIndex = (currentIndex - 1 + tabValues.length) % tabValues.length;
-      setActiveTab(tabValues[nextIndex]);
-    },
-    onRight: () => {
-      if (focusArea !== 'MAIN') return;
-      const currentIndex = tabValues.indexOf(activeTab);
-      const nextIndex = (currentIndex + 1) % tabValues.length;
-      setActiveTab(tabValues[nextIndex]);
-    },
-  });
+  // Sync local state with context for UI rendering
+  const [activeTab, setActiveTab] = useState(libraryTab);
+  useEffect(() => {
+      setActiveTab(libraryTab);
+  }, [libraryTab]);
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500">
@@ -49,7 +39,7 @@ function LibraryPageContent() {
           </p>
         </div>
       </header>
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+      <Tabs value={activeTab} onValueChange={(value) => setLibraryTab(value)} className="w-full">
         <TabsList className="mb-8">
           <TabsTrigger value="all">All</TabsTrigger>
           <TabsTrigger value="pinned">Pinned</TabsTrigger>
