@@ -13,7 +13,6 @@ import { useActiveProfile } from '@/context/ActiveProfileContext';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { initialUserProfile, UserProfile } from '@/lib/mock-data'; // Using this as a template
 import { AddProfileDialog } from '@/components/aura/AddProfileDialog';
-import { useGamepad } from '@/hooks/use-gamepad';
 import { cn } from '@/lib/utils';
 import { useFocus } from '@/context/FocusContext';
 
@@ -32,8 +31,6 @@ export default function SelectProfilePage() {
     cardRefs.current = cardRefs.current.slice(0, profiles.length + 1);
     setSelectProfileItems(cardRefs.current);
   }, [profiles, setSelectProfileItems]);
-
-  useGamepad();
 
   useEffect(() => {
     // This effect runs on the client, where localStorage is available.
