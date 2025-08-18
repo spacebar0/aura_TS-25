@@ -43,7 +43,7 @@ export function Header() {
   const [isClient, setIsClient] = useState(false);
   
   const profileButtonRef = useRef<HTMLButtonElement>(null);
-  const friendsButtonRef = useRef<HTMLButtonElement>(null);
+  const friendsButtonRef = useRef<HTMLAnchorElement>(null);
 
 
   useEffect(() => {
@@ -97,21 +97,17 @@ export function Header() {
           {isClient ? (
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button
+                <Link
+                  href="/friends"
                   ref={friendsButtonRef}
-                  asChild
-                  variant="ghost"
-                  size="icon"
                   className={cn(
-                      "relative rounded-full text-white/80 hover:text-primary hover:bg-primary/20",
+                      "relative rounded-full text-white/80 hover:text-primary hover:bg-primary/20 h-10 w-10 inline-flex items-center justify-center",
                       isFriendsFocused && "ring-2 ring-primary ring-offset-2 ring-offset-background"
                   )}
                 >
-                  <Link href="/friends">
                     <Users className="h-5 w-5" />
                     <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-background" />
-                  </Link>
-                </Button>
+                </Link>
               </TooltipTrigger>
               <TooltipContent side="bottom">
                 <p>{activeFriends} friends online</p>

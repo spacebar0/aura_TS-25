@@ -13,6 +13,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { initialUserProfile, UserProfile } from '@/lib/mock-data'; // Using this as a template
 import { AddProfileDialog } from '@/components/aura/AddProfileDialog';
 import { useGamepad } from '@/hooks/use-gamepad';
+import { cn } from '@/lib/utils';
 
 export default function SelectProfilePage() {
   const router = useRouter();
@@ -172,8 +173,12 @@ export default function SelectProfilePage() {
           <motion.div variants={itemVariants}>
             <button
               onClick={() => setIsAddDialogOpen(true)}
-              className="group w-48 h-64 rounded-2xl border-2 border-dashed border-muted-foreground/50 flex flex-col items-center justify-center text-muted-foreground/80 hover:border-primary hover:text-primary transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background"
-              data-focused={focusedIndex === profiles.length}
+              className={cn(
+                "group w-48 h-64 rounded-2xl border-2 border-dashed border-muted-foreground/50 flex flex-col items-center justify-center text-muted-foreground/80 transition-all duration-300",
+                "hover:border-primary hover:text-primary",
+                "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background",
+                focusedIndex === profiles.length ? "border-primary text-primary shadow-2xl shadow-primary/30 scale-105" : "border-muted-foreground/50"
+              )}
             >
               <Plus className="w-16 h-16 mb-2 transition-transform duration-300 group-hover:scale-110" />
               <span className="font-medium text-lg">Add Profile</span>
