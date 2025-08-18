@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 
 const navItems = [
-  { href: '/', label: 'Home', icon: Home },
+  { href: '/home', label: 'Home', icon: Home },
   { href: '/library', label: 'Library', icon: Library },
 ];
 
@@ -51,7 +51,7 @@ export function Dock() {
               );
             })}
 
-            <Link href="/" className="-mt-2 hover:scale-110 transition-transform duration-300">
+            <Link href="/home" className="-mt-2 hover:scale-110 transition-transform duration-300">
                 <Image src="/images/logo.PNG" alt="AURA Logo" width={48} height={48} className="invert" />
             </Link>
 

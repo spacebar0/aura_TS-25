@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
-import { AppLifecycle } from './app-lifecycle';
 import { PinnedGamesProvider } from '@/context/PinnedGamesContext';
 import { UserProfileProvider } from '@/context/UserProfileContext';
+import { ActiveProfileProvider } from '@/context/ActiveProfileContext';
 
 export const metadata: Metadata = {
   title: 'AURA Console UI',
@@ -29,11 +29,13 @@ export default function RootLayout({
         )}
         suppressHydrationWarning
       >
-        <UserProfileProvider>
-          <PinnedGamesProvider>
-            <AppLifecycle>{children}</AppLifecycle>
-          </PinnedGamesProvider>
-        </UserProfileProvider>
+        <ActiveProfileProvider>
+          <UserProfileProvider>
+            <PinnedGamesProvider>
+              {children}
+            </PinnedGamesProvider>
+          </UserProfileProvider>
+        </ActiveProfileProvider>
         <Toaster />
       </body>
     </html>

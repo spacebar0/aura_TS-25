@@ -13,6 +13,7 @@ import { FriendsList } from '@/components/aura/FriendsList';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useUserProfile } from '@/context/UserProfileContext';
+import { AppLifecycle } from '../app-lifecycle';
 
 const ranks = [
     { name: 'Lumen', level: 1, color: 'text-gray-400' },
@@ -35,7 +36,7 @@ const achievements = [
     { game: 'Blade Symphony', rankName: 'Infinity' },
 ]
 
-export default function ProfilePage() {
+function ProfilePageContent() {
   const { userProfile } = useUserProfile();
   const { pinnedGames } = usePinnedGames();
 
@@ -146,4 +147,12 @@ export default function ProfilePage() {
       </div>
     </div>
   );
+}
+
+export default function ProfilePage() {
+    return (
+        <AppLifecycle>
+            <ProfilePageContent />
+        </AppLifecycle>
+    )
 }

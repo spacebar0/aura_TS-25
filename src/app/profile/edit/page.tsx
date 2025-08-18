@@ -15,6 +15,7 @@ import { Trash2, Upload, User, BadgeCheck, Pin, Save } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useUserProfile } from '@/context/UserProfileContext';
 import { cn } from '@/lib/utils';
+import { AppLifecycle } from '../app-lifecycle';
 
 const allAchievements = [
     { game: 'Cyber Runner 2099', rankName: 'Nova' },
@@ -35,7 +36,7 @@ const presetAvatars = [
     '/images/preset6.png',
 ]
 
-export default function EditProfilePage() {
+function EditProfilePageContent() {
   const router = useRouter();
   const { userProfile, setUserProfile } = useUserProfile();
   const { pinnedGames, togglePinGame } = usePinnedGames(); 
@@ -244,4 +245,13 @@ export default function EditProfilePage() {
       </div>
     </div>
   );
+}
+
+
+export default function EditProfilePage() {
+    return (
+        <AppLifecycle>
+            <EditProfilePageContent />
+        </AppLifecycle>
+    )
 }

@@ -5,13 +5,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { usePinnedGames } from '@/context/PinnedGamesContext';
 import { games } from '@/lib/mock-data';
 import { Pin } from 'lucide-react';
+import { AppLifecycle } from '../app-lifecycle';
 
 const allGames = [...games].sort((a, b) => a.title.localeCompare(b.title));
 const recentGames = [...games].sort((a, b) => new Date(b.lastPlayed).getTime() - new Date(a.lastPlayed).getTime());
 const actionGames = games.filter(g => g.genre.toLowerCase().includes('action'));
 const rpgGames = games.filter(g => g.genre.toLowerCase().includes('rpg'));
 
-export default function LibraryPage() {
+function LibraryPageContent() {
   const { pinnedGames } = usePinnedGames();
 
   return (
@@ -82,4 +83,13 @@ export default function LibraryPage() {
       </Tabs>
     </div>
   );
+}
+
+
+export default function LibraryPage() {
+    return (
+        <AppLifecycle>
+            <LibraryPageContent />
+        </AppLifecycle>
+    )
 }

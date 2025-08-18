@@ -13,6 +13,7 @@ import { ThemeSwitcher } from '@/components/aura/ThemeSwitcher';
 import { getWifiNetworks } from '@/app/actions';
 import { AuraBeamLoader } from '@/components/aura/AuraBeamLoader';
 import { Button } from '@/components/ui/button';
+import { AppLifecycle } from '../app-lifecycle';
 
 export type SettingCategory = 'system' | 'audio' | 'display' | 'network' | 'privacy' | 'profiles' | 'accessibility' | 'theme';
 
@@ -59,7 +60,7 @@ const SettingRow = ({ label, description, children }: {label: string, descriptio
 );
 
 
-export default function SettingsPage() {
+function SettingsPageContent() {
   const [activeCategory, setActiveCategory] = useState<SettingCategory>('system');
   const [audioLevels, setAudioLevels] = useState({ master: 75, chat: 50 });
   const [brightness, setBrightness] = useState(80);
@@ -206,4 +207,13 @@ export default function SettingsPage() {
       </div>
     </div>
   );
+}
+
+
+export default function SettingsPage() {
+    return (
+        <AppLifecycle>
+            <SettingsPageContent />
+        </AppLifecycle>
+    )
 }

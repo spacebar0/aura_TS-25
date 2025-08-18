@@ -3,8 +3,9 @@ import { StoreGameCard } from '@/components/aura/StoreGameCard';
 import { StoreCarousel } from '@/components/aura/StoreCarousel';
 import { games } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
+import { AppLifecycle } from '../app-lifecycle';
 
-export default function StorePage() {
+function StorePageContent() {
   const newReleases = [...games].sort(() => 0.5 - Math.random()).slice(0, 7);
   const topRated = [...games].sort((a, b) => b.rating - a.rating).slice(0, 7);
 
@@ -64,4 +65,12 @@ export default function StorePage() {
       </div>
     </div>
   );
+}
+
+export default function StorePage() {
+    return (
+        <AppLifecycle>
+            <StorePageContent />
+        </AppLifecycle>
+    )
 }

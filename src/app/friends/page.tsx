@@ -8,6 +8,7 @@ import { useUserProfile } from '@/context/UserProfileContext';
 import { type Friend, type RecentPlayer } from '@/lib/mock-data';
 import { ChatSidebar } from '@/components/aura/ChatSidebar';
 import { useToast } from '@/hooks/use-toast';
+import { AppLifecycle } from '../app-lifecycle';
 
 // Helper to convert a RecentPlayer to a Friend for the chat sidebar
 const recentPlayerToFriend = (player: RecentPlayer): Friend => ({
@@ -19,7 +20,7 @@ const recentPlayerToFriend = (player: RecentPlayer): Friend => ({
   invited: false,
 });
 
-export default function FriendsPage() {
+function FriendsPageContent() {
   const { userProfile, toggleFriendInvite } = useUserProfile();
   const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
   const { toast } = useToast();
@@ -113,4 +114,12 @@ export default function FriendsPage() {
       />
     </>
   );
+}
+
+export default function FriendsPage() {
+    return (
+        <AppLifecycle>
+            <FriendsPageContent />
+        </AppLifecycle>
+    )
 }
