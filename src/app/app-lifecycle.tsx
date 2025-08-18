@@ -6,15 +6,10 @@ import { Dock } from "@/components/aura/Dock";
 import { useEffect } from "react";
 import { useActiveProfile } from "@/context/ActiveProfileContext";
 import { useRouter } from "next/navigation";
-import { useGamepad } from "@/hooks/use-gamepad";
 
 export function AppLifecycle({ children }: { children: React.ReactNode }) {
   const { activeProfile } = useActiveProfile();
   const router = useRouter();
-
-  // The global gamepad hook is the single source of truth for navigation.
-  // All page-specific logic is now handled within useGamepad based on context.
-  useGamepad();
 
   useEffect(() => {
     // If no profile is selected, redirect to the selection screen

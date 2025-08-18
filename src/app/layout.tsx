@@ -6,6 +6,7 @@ import { PinnedGamesProvider } from '@/context/PinnedGamesContext';
 import { UserProfileProvider } from '@/context/UserProfileContext';
 import { ActiveProfileProvider } from '@/context/ActiveProfileContext';
 import { FocusProvider } from '@/context/FocusContext';
+import { GamepadController } from '@/components/aura/GamepadController';
 
 export const metadata: Metadata = {
   title: 'AURA Console UI',
@@ -34,6 +35,7 @@ export default function RootLayout({
           <ActiveProfileProvider>
             <UserProfileProvider>
               <PinnedGamesProvider>
+                <GamepadController />
                 {children}
               </PinnedGamesProvider>
             </UserProfileProvider>
