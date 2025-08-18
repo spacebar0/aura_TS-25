@@ -39,17 +39,6 @@ export function Header() {
       <div className="container mx-auto flex justify-end items-center">
         <TooltipProvider>
           <div className="flex items-center gap-4">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button onClick={handleSignOut} variant="ghost" size="icon" className="text-white/80 hover:text-primary hover:bg-transparent">
-                  <LogOut className="h-6 w-6"/>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Switch Profile</p>
-              </TooltipContent>
-            </Tooltip>
-
             {isClient ? (
               <Button asChild variant="ghost" className="relative text-white/80 hover:text-primary hover:bg-transparent transition-colors duration-300 group">
                 <Link href="/friends">
@@ -71,6 +60,16 @@ export function Header() {
                 data-ai-hint="futuristic avatar"
               />
             </Link>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button onClick={handleSignOut} variant="ghost" size="icon" className="text-white/80 hover:text-primary hover:bg-transparent">
+                  <LogOut className="h-6 w-6"/>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Switch Profile</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
         </TooltipProvider>
       </div>
