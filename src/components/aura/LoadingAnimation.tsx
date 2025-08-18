@@ -1,16 +1,22 @@
 // src/components/aura/LoadingAnimation.tsx
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete: () => void }) {
   const [isAnimating, setIsAnimating] = useState(true);
   const [showParticles, setShowParticles] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    const audio = new Audio('/audio/startup2.mp3');
-    audio.play().catch(e => {
-        // Autoplay was prevented.
+    // Initialize audio only once
+    if (!audioRef.current) {
+        audioRef.current = new Audio('/audio/startup2.mp3');
+    }
+    
+    // Attempt to play audio
+    audioRef.current.play().catch(e => {
+        // Autoplay was prevented by the browser.
         console.error("Audio play failed:", e);
     });
 
@@ -25,8 +31,11 @@ export function LoadingAnimation({ onAnimationComplete }: { onAnimationComplete:
     return () => {
       clearTimeout(completeTimer);
       clearTimeout(unmountTimer);
-      audio.pause();
-      audio.currentTime = 0;
+      // Pause audio on cleanup
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
     };
   }, [onAnimationComplete]);
 
