@@ -40,12 +40,12 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
   const particleVariants = {
     hidden: { opacity: 0, scale: 0 },
     visible: (i: number) => ({
-      opacity: Math.random() * 0.2 + 0.1,
-      scale: Math.random() * 0.5 + 0.2,
-      x: (Math.random() - 0.5) * 400,
-      y: (Math.random() - 0.5) * 400,
+      opacity: Math.random() * 0.5 + 0.3, // Increased opacity for brightness
+      scale: Math.random() * 0.7 + 0.3, // Increased base size
+      x: (Math.random() - 0.5) * 500, // Increased movement range
+      y: (Math.random() - 0.5) * 500, // Increased movement range
       transition: {
-        duration: Math.random() * 10 + 15, // Slower: 15 to 25 seconds
+        duration: Math.random() * 10 + 15,
         ease: 'linear',
         delay: i * 0.05,
         repeat: Infinity,
@@ -71,10 +71,10 @@ export default function ParallaxBackground({ backgroundUrl }: { backgroundUrl: s
                 variants={particleVariants}
                 initial="hidden"
                 animate="visible"
-                className="absolute particle bg-primary/30"
+                className="absolute particle bg-primary/50"
                 style={{
-                  width: `${Math.random() * 3 + 1}px`,
-                  height: `${Math.random() * 3 + 1}px`,
+                  width: `${Math.random() * 4 + 2}px`, // Increased base size
+                  height: `${Math.random() * 4 + 2}px`, // Increased base size
                   top: '50%',
                   left: '50%',
                 }}
