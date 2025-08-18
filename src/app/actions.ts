@@ -3,6 +3,7 @@
 import { curateStoreCapsules, CurateStoreCapsulesOutput } from '@/ai/flows/curate-store-capsules';
 import { generateChatMessages, GenerateChatMessagesOutput } from '@/ai/flows/generate-chat-messages';
 import { generateWifiNames, GenerateWifiNamesOutput } from '@/ai/flows/generate-wifi-names';
+import { generateSupportResponse } from '@/ai/flows/contact-support-chat';
 import { games, initialUserProfile, Friend } from '@/lib/mock-data';
 
 export async function getCuratedCapsules(): Promise<CurateStoreCapsulesOutput | { error: string }> {
@@ -55,4 +56,14 @@ export async function getWifiNetworks(): Promise<GenerateWifiNamesOutput | { err
     console.error('Error generating wifi networks:', error);
     return { error: 'Could not load Wi-Fi networks. Please try again.' };
   }
+}
+
+export async function getSupportResponse(userQuery: string, history: string): Promise<{ response: string } | { error: string }> {
+    try {
+        const result = await generateSupportResponse({ userQuery, history });
+        return result;
+    } catch (error) {
+        console.error('Error getting support response:', error);
+        return { error: 'Sorry, I am unable to respond right now. Please try again in a moment.' };
+    }
 }

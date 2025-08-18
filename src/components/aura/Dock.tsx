@@ -5,7 +5,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Home, Library, Store, Settings2 } from 'lucide-react';
+import { Home, Library, Store, Settings2, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 import { useFocus } from '@/context/FocusContext';
@@ -16,6 +16,7 @@ const navItems = [
   { href: '/library', label: 'Library', icon: Library },
   { href: '/home', label: 'Logo', icon: null }, // Placeholder for the logo
   { href: '/store', label: 'Store', icon: Store },
+  { href: '/contact', label: 'Contact', icon: MessageSquare },
   { href: '/settings', label: 'Settings', icon: Settings2 },
 ];
 
@@ -34,14 +35,14 @@ export function Dock() {
 
   return (
     <footer className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none">
-      <nav className="mx-auto mb-4 w-full max-w-lg rounded-full border-t glass-pane p-2 shadow-2xl shadow-black/50 pointer-events-auto">
+      <nav className="mx-auto mb-4 w-full max-w-xl rounded-full border-t glass-pane p-2 shadow-2xl shadow-black/50 pointer-events-auto">
         <TooltipProvider delayDuration={0}>
           <div className="flex items-center justify-around">
             {navItems.map((item, index) => {
               if (item.label === 'Logo') {
                 return (
                   <Link
-                    key={item.href}
+                    key={item.label}
                     href="/home"
                     className={cn(
                         "-mt-2 hover:scale-110 transition-transform duration-300 rounded-full",
@@ -58,7 +59,7 @@ export function Dock() {
               const isFocused = focusArea === 'DOCK' && dockIndex === index;
               
               return (
-                <Tooltip key={item.href}>
+                <Tooltip key={item.label}>
                   <TooltipTrigger asChild>
                     <Link
                       href={item.href}
