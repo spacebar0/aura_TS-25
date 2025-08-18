@@ -20,10 +20,10 @@ export function useGamepad(actions: GamepadActions) {
   const lastPressed = useRef<{ [key: string]: boolean }>({});
 
   const debouncedActions = {
-    onLeft: useDebouncedCallback(actions.onLeft || (() => {}), DEBOUNCED_DELAY, { leading: true, trailing: false }),
-    onRight: useDebouncedCallback(actions.onRight || (() => {}), DEBOUNCED_DELAY, { leading: true, trailing: false }),
-    onUp: useDebouncedCallback(actions.onUp || (() => {}), DEBOUNCED_DELAY, { leading: true, trailing: false }),
-    onDown: useDebouncedCallback(actions.onDown || (() => {}), DEBOUNCED_DELAY, { leading: true, trailing: false }),
+    onLeft: useDebouncedCallback(actions.onLeft || (() => {}), DEBOUNCE_DELAY, { leading: true, trailing: false }),
+    onRight: useDebouncedCallback(actions.onRight || (() => {}), DEBOUNCE_DELAY, { leading: true, trailing: false }),
+    onUp: useDebouncedCallback(actions.onUp || (() => {}), DEBOUNCE_DELAY, { leading: true, trailing: false }),
+    onDown: useDebouncedCallback(actions.onDown || (() => {}), DEBOUNCE_DELAY, { leading: true, trailing: false }),
   };
 
   useEffect(() => {
