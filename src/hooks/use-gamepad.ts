@@ -21,19 +21,13 @@ export function useGamepad() {
   const animationFrameId = useRef<number>();
   const buttonPressState = useRef<{ [key:string]: boolean }>({});
 
-  const handleButtonPress = (buttonName: string, callback: () => void) => {
-    if (buttonPressState.current[buttonName]) {
-      callback();
-    }
-  };
-
   const handleDPad = useDebouncedCallback((direction: 'up' | 'down' | 'left' | 'right') => {
     if (!context) return;
     const { 
         focusArea, setFocusArea, 
         setHeaderIndex, headerItems,
         setDockIndex, dockItems,
-        setSelectProfileIndex,
+        setSelectProfileIndex, selectProfileItems,
         homeCarouselApi,
         setLibraryTab, libraryTab,
         storeCarouselApi,
@@ -44,10 +38,24 @@ export function useGamepad() {
     if (direction === 'up') {
         if (focusArea === 'MAIN') setFocusArea('HEADER');
         else if (focusArea === 'DOCK') setFocusArea('MAIN');
+        else if (focusArea === 'MAIN' && pathname === '/settings') {
+             setSettingsCategory(prev => {
+                const currentIndex = settingsCategoryIds.indexOf(prev as SettingCategory);
+                const nextIndex = (currentIndex - 1 + settingsCategoryIds.length) % settingsCategoryIds.length;
+                return settingsCategoryIds[nextIndex];
+            })
+        }
     }
     if (direction === 'down') {
         if (focusArea === 'MAIN') setFocusArea('DOCK');
         else if (focusArea === 'HEADER') setFocusArea('MAIN');
+        else if (focusArea === 'MAIN' && pathname === '/settings') {
+             setSettingsCategory(prev => {
+                const currentIndex = settingsCategoryIds.indexOf(prev as SettingCategory);
+                const nextIndex = (currentIndex + 1) % settingsCategoryIds.length;
+                return settingsCategoryIds[nextIndex];
+            })
+        }
     }
     
     // --- Horizontal Navigation (Context-Dependent) ---
@@ -69,10 +77,10 @@ export function useGamepad() {
                 break;
             case 'MAIN':
                 if (pathname === '/select-profile') {
-                    // This logic assumes we know the number of profiles from somewhere
-                    // For now, let's just use a fixed number for demonstration. A better way
-                    // would be to pass the profile count to the context.
-                    setSelectProfileIndex(prev => Math.max(0, prev + move));
+                    setSelectProfileIndex(prev => {
+                        const newIndex = prev + move;
+                        return Math.max(0, Math.min(newIndex, selectProfileItems.length - 1));
+                    });
                 } else if (pathname === '/home') {
                     if (move < 0) homeCarouselApi?.scrollPrev(); else homeCarouselApi?.scrollNext();
                 } else if (pathname === '/library') {
@@ -83,13 +91,6 @@ export function useGamepad() {
                     });
                 } else if (pathname === '/store') {
                      if (move < 0) storeCarouselApi?.scrollPrev(); else storeCarouselApi?.scrollNext();
-                } else if (pathname === '/settings') {
-                    setSettingsCategory(prev => {
-                        const currentIndex = settingsCategoryIds.indexOf(prev as SettingCategory);
-                        const nextDirection = direction === 'left' ? -1 : 1; // For settings, up/down maps to left/right on dpad
-                        const nextIndex = (currentIndex + nextDirection + settingsCategoryIds.length) % settingsCategoryIds.length;
-                        return settingsCategoryIds[nextIndex];
-                    })
                 }
                 break;
         }
@@ -99,11 +100,22 @@ export function useGamepad() {
   
   const handleConfirm = useDebouncedCallback(() => {
     if (!context) return;
-    const { focusArea, headerIndex, headerItems, dockIndex, dockItems } = context;
+    const { 
+        focusArea, 
+        headerIndex, headerItems, 
+        dockIndex, dockItems,
+        selectProfileIndex, selectProfileItems
+    } = context;
+
     if (focusArea === 'HEADER') {
         headerItems[headerIndex]?.click();
     } else if (focusArea === 'DOCK') {
         dockItems[dockIndex]?.click();
+    } else if (focusArea === 'MAIN') {
+        if (pathname === '/select-profile') {
+            selectProfileItems[selectProfileIndex]?.click();
+        }
+        // Add logic for other pages here if needed
     }
   }, DEBOUNCE_DELAY, { leading: true, trailing: false });
 
@@ -113,7 +125,10 @@ export function useGamepad() {
     if (focusArea !== 'MAIN') {
       setFocusArea('MAIN');
     } else {
-      router.back();
+      // Allow back navigation only from non-root pages
+      if (pathname !== '/home' && pathname !== '/select-profile') {
+        router.back();
+      }
     }
   }, DEBOUNCE_DELAY, { leading: true, trailing: false });
 
@@ -140,10 +155,18 @@ export function useGamepad() {
       const dPadUp = gp.buttons[12]?.pressed;
       const dPadDown = gp.buttons[13]?.pressed;
 
-      if (xAxis < -0.5 || dPadLeft) handleDPad('left');
-      if (xAxis > 0.5 || dPadRight) handleDPad('right');
-      if (yAxis < -0.5 || dPadUp) handleDPad('up');
-      if (yAxis > 0.5 || dPadDown) handleDPad('down');
+      const deadZone = 0.5;
+
+      if (xAxis < -deadZone || (dPadLeft && !buttonPressState.current['dpad-left'])) handleDPad('left');
+      if (xAxis > deadZone || (dPadRight && !buttonPressState.current['dpad-right'])) handleDPad('right');
+      if (yAxis < -deadZone || (dPadUp && !buttonPressState.current['dpad-up'])) handleDPad('up');
+      if (yAxis > deadZone || (dPadDown && !buttonPressState.current['dpad-down'])) handleDPad('down');
+      
+      buttonPressState.current['dpad-left'] = !!dPadLeft;
+      buttonPressState.current['dpad-right'] = !!dPadRight;
+      buttonPressState.current['dpad-up'] = !!dPadUp;
+      buttonPressState.current['dpad-down'] = !!dPadDown;
+
 
       // --- Buttons ---
       // A Button (Confirm)
@@ -168,8 +191,5 @@ export function useGamepad() {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  // We only list router and pathname as dependencies.
-  // The context object itself is stable, and its properties are accessed inside the debounced callbacks.
-  // This prevents the effect from re-running on every state change inside the context.
-  }, [router, pathname, handleDPad, handleConfirm, handleBack]);
+  }, [pathname, handleDPad, handleConfirm, handleBack]);
 }

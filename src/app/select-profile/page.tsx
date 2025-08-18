@@ -21,15 +21,17 @@ export default function SelectProfilePage() {
   const router = useRouter();
   const { setActiveProfile } = useActiveProfile();
   const { setUserProfile } = useUserProfile();
-  const { selectProfileIndex, setSelectProfileIndex } = useFocus();
+  const { selectProfileIndex, setSelectProfileItems } = useFocus();
   
   const [profiles, setProfiles] = useState<UserProfile[]>([]);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
+    // Pass the refs to the context so the global gamepad hook can use them
     cardRefs.current = cardRefs.current.slice(0, profiles.length + 1);
-  }, [profiles]);
+    setSelectProfileItems(cardRefs.current);
+  }, [profiles, setSelectProfileItems]);
 
   useGamepad();
 

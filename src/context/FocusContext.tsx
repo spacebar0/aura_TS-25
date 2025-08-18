@@ -31,6 +31,8 @@ interface FocusContextType {
   // Select Profile Page
   selectProfileIndex: number;
   setSelectProfileIndex: React.Dispatch<React.SetStateAction<number>>;
+  selectProfileItems: NavItem[];
+  setSelectProfileItems: (items: NavItem[]) => void;
   
   // Home Page
   homeCarouselApi: CarouselApi | undefined;
@@ -64,6 +66,7 @@ export const FocusProvider = ({ children }: { children: ReactNode }) => {
 
   // Page specific states
   const [selectProfileIndex, setSelectProfileIndex] = useState(0);
+  const [selectProfileItems, setSelectProfileItems] = useState<NavItem[]>([]);
   const [homeCarouselApi, setHomeCarouselApi] = useState<CarouselApi>();
   const [libraryTab, setLibraryTab] = useState('all');
   const [storeCarouselApi, setStoreCarouselApi] = useState<CarouselApi>();
@@ -75,7 +78,7 @@ export const FocusProvider = ({ children }: { children: ReactNode }) => {
       focusArea, setFocusArea, 
       headerIndex, setHeaderIndex, headerItems, setHeaderItems,
       dockIndex, setDockIndex, dockItems, setDockItems,
-      selectProfileIndex, setSelectProfileIndex,
+      selectProfileIndex, setSelectProfileIndex, selectProfileItems, setSelectProfileItems,
       homeCarouselApi, setHomeCarouselApi,
       libraryTab, setLibraryTab,
       storeCarouselApi, setStoreCarouselApi,
